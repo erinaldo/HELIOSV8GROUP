@@ -1,0 +1,360 @@
+﻿@model  Helios.Cont.Business.Entity.documentoventaAbarrotes
+
+@{
+    ViewBag.Title = "ver Pedido";
+
+}
+<link href="~/Content/JiuniBundle/StyleGeneral.css" rel="stylesheet" />
+<style>
+    input[type=text] {
+        text-transform: uppercase;
+    }
+    /*.ui-autocomplete
+        {
+            background: none;
+            font-weight: bold;
+            border-color: #2e2e2e;
+            border-style: solid;
+            border-width: 2px 2px 2px 2px;
+            outline: none;
+            padding: 10px 20px 10px 20px;
+            width: 250px;
+        }*/
+
+    .ui-helper-hidden-accessible {
+        border: 0;
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+    }
+
+    span.error {
+        display: block;
+        visibility: hidden;
+        color: red;
+        font-size: 90%;
+    }
+
+    td {
+        font-size: 11px;
+        font-family: 'Segoe UI';
+    }
+
+    tr.error {
+        background-color: rgba(255,0,0,0.35);
+    }
+
+    div.pills-tabContent .master {
+        font-size: 10px;
+    }
+
+
+
+    /*input {
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    height: 30px;
+    padding: 10px;
+    }*/
+
+    select {
+        font-size: 5px;
+        font-weight: normal;
+        font-family: Tahoma;
+    }
+
+
+    input.loading {
+        background: url(http://www.xiconeditor.com/image/icons/loading.gif) no-repeat right center;
+    }
+
+    .ui-button.ui-corner-all.ui-widget.ui-button-icon-only.ui-dialog-titlebar-close {
+        display: none;
+    }
+</style>
+
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>
+            Pedido
+            <small>Ver orden</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="#">Tables</a></li>
+            <li class="active">Pedidos</li>
+        </ol>
+    </section>
+
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- /.box -->
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Ordenes</h3>
+                    </div>
+
+                    <div style="display:none" id="dialog-confirm" title="Ingrese codigo vendedor">
+                        <p>
+                            <input id="jps" type="text" class="form-control" name="jps" value="0" />
+                        </p>
+                    </div>
+
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                            <li class="nav-item active">
+                                <a class="nav-link" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Pedido N°.@Model.numeroVenta</a>
+                            </li>
+                            @*<li class="nav-item">
+                                    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Pagos</a>
+                                </li>*@
+                        </ul>
+
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane active fade in" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                                <input type="hidden" name="idDocumentoVenta" id="idDocumentoVenta" value="@Model.idDocumento" />
+                                <div class="master">
+                                    <div class="form-group pull-right">
+                                        <label>TOTAL</label>
+                                        <input type="text" value="@Model.ImporteNacional" style=" align-content:flex-start; width:70%; color:aliceblue; font-size:15px; font-weight: bold; background-color:slateblue; " class="form-control input pull-right" id="total" />
+                                    </div>
+                                    @*<h3>Editar Pedido</h3>*@
+                                    <table class="table table-responsive" border="0">
+                                        <tr>
+                                            <td>
+                                                <label>Info. comprobante</label>
+                                                @*<input type="text" id="orderNo" class="form-control" />*@
+                                                <select id="orderNo" class="form-control form-control-sm">
+                                                    <option id="1000" value="1000">PRE VENTA</option>
+                                                </select>
+                                                <span class="error">Comprobante no required</span>
+                                                <input type="text" id="FechaDoc" data-date-format="dd-mm-yyyy" data-time-form class="form-control" value="@Model.fechaDoc" />
+                                                <span class="error">Valid order date required (ex: dd-MM-yyyy)</span>
+
+                                                <select id="moneda" class="form-control form-control-sm">
+                                                    <option id="1" value="1">NUEVO SOL</option>
+                                                    <option id="2" value="2">USD</option>
+                                                </select>
+                                                <span class="error">Moneda no required</span>
+
+
+                                            </td>
+                                            <td style="width:70%">
+                                                <label>Información del Cliente</label><br />
+                                                <input type="radio" name="rdbcountry" checked="checked" value="Cliente" />Cliente
+                                                <input type="radio" name="rdbcountry" value="Varios" />Varios &nbsp;
+                                                @*   <button class="btn btn-info btn-sm" id="btnNuevaEntidad" data-target="#loginModal" data-toggle="modal">Nuevo</button>*@
+                                                @*<button class="btn btn-default btn-sm" data-target="#loginModal" data-toggle="modal">Editar</button>*@
+                                                @*  <input id="btnEditEntidad" type="button" value="Editar" class="btn btn-warning btn-sm" />*@
+                                                <span class="error">&nbsp;</span>
+
+                                                <input type="text" id="nrodoc" placeholder="Buscar x nro.doc..." value="@Model.CustomEntidad.nrodoc" class="form-control" />
+                                                <span class="error">Identificar al cliente</span>
+
+                                                <input type="hidden" name="cliente_id" id="cliente_id" value="@Model.CustomEntidad.idEntidad" />
+                                                <input type="text" id="cliente" value="@Model.CustomEntidad.nombreCompleto" disabled="disabled" class="form-control" />
+                                                <span class="error">Identificar al cliente</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                @*<div style="text-align:center;display:none" id="loaderDiv">
+        <img src="~/Content/images/load.gif" />
+                                <img src="~/Content/images/basicloader.gif" />
+                            </div>*@
+                                <div class="details">
+                                    <h4>
+                                        Detalle
+                                    </h4>
+                                    <table class="table table-responsive">
+                                        <tr>
+                                            <td>Producto</td>
+                                            <td>Unidad comercial</td>
+                                            <td>Catalogo de Precios</td>
+                                            <td>Cantidad</td>
+                                            <td>Precio</td>
+                                            <td>Total</td>
+                                          
+                                        </tr>
+                                        @*<tr class="mycontainer" id="mainrow">
+                                                <td>
+                                                    <input type="text" id="txtSearch" class="txtSearch form-control" />
+                                                    <span class="error">Ingresar un producto válido</span>
+                                                </td>
+                                                <td>
+                                                    <select id="productCategory" class="pc form-control" onchange="LoadProduct(this)">
+                                                        <option>Select</option>
+                                                    </select>
+                                                    <span class="error">Select Unidad</span>
+                                                </td>
+                                                <td>
+                                                    <select id="product" class="product form-control" onchange="LoadPrecios(this)">
+                                                        <option>Select catalogo</option>
+                                                    </select>
+                                                    <span class="error">Select Catalogo</span>
+                                                </td>
+                                                <td id="tdCan">
+                                                    <input type="number" id="quantity" value="0" class="quantity form-control" />
+                                                    <span class="error">Valid quantity required</span>
+                                                </td>
+
+                                                <td id="tdPrice">
+                                                    <select id="price" class="price form-control">
+                                                        <option>Select precio</option>
+                                                    </select>
+                                                    <span class="error">Select</span>
+                                                </td>
+
+                                                <td>
+                                                    <input type="number" id="rate" value="0" class="rate form-control" />
+                                                    <span class="error">Valid rate required</span>
+                                                </td>
+                                                <td>
+                                                    <input type="button" id="add" value="add" style="width:80px" class="btn btn-success" />
+                                                </td>
+                                            </tr>*@
+                                        @foreach (var d in Model.documentoventaAbarrotesDet.ToList())
+                                        {
+                                            var Monto = decimal.Parse(@d.importeMN.ToString());
+                                            var Cantidad = decimal.Parse(@d.monto1.ToString());
+                                            var result = Monto / Cantidad;
+
+                                            <tr>
+                                                <td>@d.nombreItem</td>
+                                                <td>@d.CustomEquivalencia.unidadComercial</td>
+                                                <td>@d.CustomCatalogo.nombre_corto</td>
+                                                <td>@d.monto1</td>
+                                                <td>@result</td>
+                                                <td>@d.importeMN</td>
+                                            </tr>
+                                        }
+
+                                    </table>
+                                    @*<div id="orderItems">
+                                            <table class="table table-responsive" id="orderdetailsItems"></table>
+
+                                            @foreach (var d in Model.documentoventaAbarrotesDet.ToList())
+                                            {
+                                                <tr>
+                                                    <td>@d.nombreItem</td>
+                                                    <td>@d.CustomEquivalencia.equivalencia_id</td>
+                                                    <td>@d.CustomCatalogo.idCatalogo</td>
+                                                    <td>@d.monto1</td>
+                                                    <td>@d.precioUnitario</td>
+                                                    <td>@d.importeMN</td>
+                                                </tr>
+                                            }
+
+
+                                            <span id="orderItemError" style="color:red"></span>
+                                        </div>*@
+                                    <div style="padding:10px 0; text-align:right">
+                                        @*    <input id="submit" type="button" value="Save Order" class="btn btn-warning" style="padding:10px 20px" />*@
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">PAGOS</div>
+                        </div>
+
+
+                        @*Ventana modal crear Clientes*@
+
+                        <div class="modal fade" data-keyboard="false" data-backdrop="static" id="loginModal" tabindex="-1">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Cliente</h4>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <form id="frm">
+                                            <input type="hidden" name="cliente_id_modal" id="cliente_id_modal" value="0" />
+                                            <div class="form-group">
+                                                <label for="ip_cli_nro">Número doc.</label>
+                                                <input class="form-control" placeholder="Nro. doc. identidad" type="text" id="ip_cli_nro" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputPassword">Nombres/Razón social</label>
+                                                <input class="form-control" placeholder="Nombre Completo" type="text" id="ip_cli_razon" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputPassword">Nombres/Contacto</label>
+                                                <input class="form-control" placeholder="Nombre contacto" type="text" id="ip_cli_contacto" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputPassword">Domicilio</label>
+                                                <textarea id="ip_cli_dir" class="form-control"></textarea>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        @*<button class="btn btn-success">Grabar</button>*@
+                                        <input id="btnSubmit" type="button" value="Save" class="btn btn-warning" style="padding:10px 20px" />
+                                        <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        @*Ventana modal Seleccionar Usuario Sistema*@
+
+                        <div class="modal fade" data-keyboard="false" data-backdrop="static" id="VendedorModal" tabindex="-1">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Identificar vendedor</h4>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <form id="frmVendedor">
+                                            <div class="form-group">
+                                                <label for="ip_cli_nro">Número doc.</label>
+                                                <input class="form-control" placeholder="Nro. doc. identidad" type="text" id="ip_cli_nro" />
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        @*<button class="btn btn-success">Grabar</button>*@
+                                        <input id="btnAceptarCodigo" type="button" value="Aceptar" class="btn btn-success" style="padding:10px 20px" />
+                                        <button class="btn btn-" data-dismiss="modal">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--     </div> -->
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+

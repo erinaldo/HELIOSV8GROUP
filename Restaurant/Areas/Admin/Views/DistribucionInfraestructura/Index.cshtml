@@ -1,0 +1,146 @@
+﻿@model Model.DistribucionInfraestructuraModel
+
+@{
+    ViewBag.Title = null;
+  
+}
+
+<div class="content-wrapper">
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Control de Mesa
+            <small>restaurant</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Orden</a></li>
+            <li class="active">Nuevo Pedido</li>
+        </ol>
+    </section>
+
+
+    @* <section class="content">*@
+    <div>
+        <button class="buttonMenu buttonMenu2">Todo</button>
+        <button class="buttonMenu buttonMenu1">Disponible</button>
+        <button class="buttonMenu buttonMenu3">Pre Cuenta</button>
+        @*<button class="buttonMenu buttonMenu4">Limpieza</button>*@
+        <button class="buttonMenu buttonMenu5">Limpieza</button>
+    </div>
+    @*</section>*@
+
+    <!-- Main content -->
+    <section class="content">
+
+        <div class="flex-container">
+
+            <div style="flex-grow: 1">
+
+                @foreach (var item in Model.ListaDistribucionInfraestructuras)
+                {
+
+
+                    if (item.estado == "P")
+                    {
+                        <button id="btnActualizarBoton" class="button button3" runat="server" id="btnLogin" onclick="location.href='@Url.Action("Index", "Order")'">
+
+                            <i class="fas fa-utensils fa-2x"></i>
+
+                            <br />
+
+                            @Html.DisplayFor(modelItem => item.descripcionDistribucion)   @Html.DisplayFor(modelItem => item.numeracion)
+
+                            <br />
+
+                            <DIV CLASS="larger"> Importe Total:      @Html.DisplayFor(modelItem => item.conteoPrecioMenor)  </DIV>
+
+                        </button>
+                    }
+                    if (item.estado == "A")
+                    {
+
+                        //SE DECLARA LA VARIABLE Y SE RECUPERA LOS DATOS Y SE ENVIA AL CONTROLADOR
+
+                        var nombreMesa = @Html.DisplayFor(modelItem => item.descripcionDistribucion);
+                        var NumeroMesa = @Html.DisplayFor(modelItem => item.numeracion);
+                        var DistribucionID = @Html.DisplayFor(modelItem => item.idDistribucion);
+
+
+                        <button id="btnActualizarBoton" class="button button1" onclick="location.href='@Url.Action("Create", "Order", new {ID = DistribucionID, nombreMesa = nombreMesa, numeroMesa =  NumeroMesa})'">
+
+                            <i class="fas fa-utensils fa-2x"></i>
+
+                            <br />
+
+                            @Html.DisplayFor(modelItem => item.descripcionDistribucion)   @Html.DisplayFor(modelItem => item.numeracion)
+
+                            <br />
+
+                            <DIV id="DistribucionID" CLASS="larger" value=DistribucionID> Importe Total:  @Html.DisplayFor(modelItem => item.conteoPrecioMenor)  </DIV>
+
+
+                        </button>
+                    }
+
+                    if (item.estado == "L")
+                    {
+                        <button id="btnActualizarBoton" class="button button4" runat="server" onclick="location.href='@Url.Action("Create", "Order")'">
+
+                            <i class="fas fa-utensils fa-2x"></i>
+
+                            <br />
+
+                            @Html.DisplayFor(modelItem => item.descripcionDistribucion)   @Html.DisplayFor(modelItem => item.numeracion)
+
+                            <br />
+
+                            <DIV CLASS="larger"> Importe Total:  @Html.DisplayFor(modelItem => item.conteoPrecioMenor)  </DIV>
+
+                        </button>
+                    }
+
+
+
+                }
+
+                <!-- /.Categorias principales -->
+                <!-- /. box -->
+
+            </div>
+
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+
+<script runat="server">
+    protected void Button1_Click(object sender, System.EventArgs e)
+    {
+        Label1.Text = "You clicked the first button.";
+    }
+
+    protected void Button2_Click(object sender, System.EventArgs e)
+    {
+        Label1.Text = "You clicked the second button.";
+    }
+</script>
+
+<!-- /.content-wrapper -->
+
+@section Scripts
+{
+    <link href="~/Areas/Admin/Assets/css/DistribucionInfraestructura/StyleDistribucionInfraestructura.css" rel="stylesheet" media="all" />
+
+   
+
+    @*<link rel="stylesheet" href="~/css/all.min.css">*@
+
+    @*@<script src="~/Scripts/General/orderJS.js"></script>*@*
+
+    @*@Scripts.Render("~/bundles/bootstrap-select")
+        @Styles.Render("~/Content/Bootstrap-Select/css")*@
+}
+
+

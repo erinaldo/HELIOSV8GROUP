@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="HELIOSModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="HELIOSModelStoreContainer">
+          <EntitySet Name="empresa" EntityType="HELIOSModel.Store.empresa" store:Type="Tables" Schema="dbo" />
+        </EntityContainer>
+        <EntityType Name="empresa">
+          <Key>
+            <PropertyRef Name="idEmpresa" />
+          </Key>
+          <Property Name="idEmpresa" Type="char" Nullable="false" MaxLength="5" />
+          <Property Name="razonSocial" Type="varchar" MaxLength="100" />
+          <Property Name="nombreCorto" Type="varchar" MaxLength="30" />
+          <Property Name="ruc" Type="varchar" MaxLength="15" />
+          <Property Name="direccion" Type="varchar" MaxLength="200" />
+          <Property Name="telefono" Type="varchar" MaxLength="20" />
+          <Property Name="fax" Type="varchar" MaxLength="20" />
+          <Property Name="celular" Type="varchar" MaxLength="20" />
+          <Property Name="e-mail" Type="varchar" MaxLength="50" />
+          <Property Name="regimen" Type="varchar" MaxLength="5" />
+          <Property Name="actividad" Type="varchar" MaxLength="100" />
+          <Property Name="usuarioActualizacion" Type="varchar" MaxLength="40" />
+          <Property Name="fechaActualizacion" Type="datetime" />
+        </EntityType>
+        <Function Name="load_empresas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HELIOSModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="HELIOSEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="empresa" EntityType="HELIOSModel.empresa" />
+          <FunctionImport Name="load_empresas" EntitySet="empresa" ReturnType="Collection(HELIOSModel.empresa)" />
+        </EntityContainer>
+        <EntityType Name="empresa">
+          <Key>
+            <PropertyRef Name="idEmpresa" />
+          </Key>
+          <Property Name="idEmpresa" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="true" />
+          <Property Name="razonSocial" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="nombreCorto" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="ruc" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
+          <Property Name="direccion" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+          <Property Name="telefono" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="fax" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="celular" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="e_mail" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="regimen" Type="String" MaxLength="5" Unicode="false" FixedLength="false" />
+          <Property Name="actividad" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="usuarioActualizacion" Type="String" MaxLength="40" Unicode="false" FixedLength="false" />
+          <Property Name="fechaActualizacion" Type="DateTime" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HELIOSModelStoreContainer" CdmEntityContainer="HELIOSEntities">
+          <EntitySetMapping Name="empresa"><EntityTypeMapping TypeName="HELIOSModel.empresa"><MappingFragment StoreEntitySet="empresa">
+            <ScalarProperty Name="idEmpresa" ColumnName="idEmpresa" />
+            <ScalarProperty Name="razonSocial" ColumnName="razonSocial" />
+            <ScalarProperty Name="nombreCorto" ColumnName="nombreCorto" />
+            <ScalarProperty Name="ruc" ColumnName="ruc" />
+            <ScalarProperty Name="direccion" ColumnName="direccion" />
+            <ScalarProperty Name="telefono" ColumnName="telefono" />
+            <ScalarProperty Name="fax" ColumnName="fax" />
+            <ScalarProperty Name="celular" ColumnName="celular" />
+            <ScalarProperty Name="e_mail" ColumnName="e-mail" />
+            <ScalarProperty Name="regimen" ColumnName="regimen" />
+            <ScalarProperty Name="actividad" ColumnName="actividad" />
+            <ScalarProperty Name="usuarioActualizacion" ColumnName="usuarioActualizacion" />
+            <ScalarProperty Name="fechaActualizacion" ColumnName="fechaActualizacion" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="load_empresas" FunctionName="HELIOSModel.Store.load_empresas" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="Model1">
+        <EntityTypeShape EntityType="HELIOSModel.empresa" Width="1.5" PointX="0.75" PointY="0.75" Height="3.5186979166666665" IsExpanded="true" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,41 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+Helios.Planilla.Business.Logic
+</name>
+</assembly>
+<members>
+<member name="T:Helios.Planilla.Business.Logic.My.Resources.Resources">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:Helios.Planilla.Business.Logic.My.Resources.Resources.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:Helios.Planilla.Business.Logic.My.Resources.Resources.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+<member name="M:Helios.Planilla.Business.Logic.PlantillaBL.PlanillaSaveAll(Helios.Planilla.Business.Entity.Plantilla,Helios.Planilla.Business.Entity.TransactionDataBE)">
+ <summary>
+ Graba información de planilla incluído sus detalles
+ </summary>
+ <param name="item"></param>
+ <remarks></remarks>
+</member>
+<member name="M:Helios.Planilla.Business.Logic.PlantillaDetalleBL.PlantillaDetalleSelxPlantilla(Helios.Planilla.Business.Entity.PlantillaDetalle)">
+ <summary>
+ Retorna la lista de conceptors asociados a una plantilla
+ </summary>
+ <param name="item">plantillaDetalle.IDPlantilla</param>
+ <returns>lista de objetos PlantillaDetalle que representa los conceptos asociados</returns>
+ <remarks></remarks>
+</member>
+</members>
+</doc>

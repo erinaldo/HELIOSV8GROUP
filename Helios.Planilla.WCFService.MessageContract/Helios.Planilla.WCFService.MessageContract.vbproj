@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FAD87780-94EE-4C03-B94C-AC31E0B27C0A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Helios.Planilla.WCFService.MessageContract</RootNamespace>
+    <AssemblyName>Helios.Planilla.WCFService.MessageContract</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>Helios.Planilla.WCFService.MessageContract.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>Helios.Planilla.WCFService.MessageContract.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AFP\AFPOperation .vb" />
+    <Compile Include="AFP\AFPRequest.vb" />
+    <Compile Include="AFP\AFPResponse.vb" />
+    <Compile Include="BaseMC.vb" />
+    <Compile Include="Cargos\CargosRequest.vb" />
+    <Compile Include="Cargos\CargosOperation.vb" />
+    <Compile Include="Cargos\CargosResponse.vb" />
+    <Compile Include="Concepto\ConceptoOperation.vb" />
+    <Compile Include="Concepto\ConceptoResponse.vb" />
+    <Compile Include="Concepto\ConceptoResquest.vb" />
+    <Compile Include="ControlAsistencia\ControlAsistenciaOperation.vb" />
+    <Compile Include="ControlAsistencia\ControlAsistenciaRequest.vb" />
+    <Compile Include="ControlAsistencia\ControlAsistenciaResponse.vb" />
+    <Compile Include="ControlDeAsistencia\ControlDeAsistenciaOperation.vb" />
+    <Compile Include="ControlDeAsistencia\ControlDeAsistenciaRequest.vb" />
+    <Compile Include="ControlDeAsistencia\ControlDeAsistenciaResponse.vb" />
+    <Compile Include="DerechoHabientes\DerechoHabientesRequest.vb" />
+    <Compile Include="DerechoHabientes\DerechoHabientesOperation.vb" />
+    <Compile Include="DerechoHabientes\DerechoHabientesResponse.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Periodos\PeriodosOperation.vb" />
+    <Compile Include="Periodos\PeriodosRequest.vb" />
+    <Compile Include="Periodos\PeriodosResponse.vb" />
+    <Compile Include="PersonalCargo\PersonalCargoOperation.vb" />
+    <Compile Include="PersonalCargo\PersonalCargoRequest.vb" />
+    <Compile Include="PersonalCargo\PersonalCargoResponse.vb" />
+    <Compile Include="PersonalConceptos\PersonalConceptosOperation.vb" />
+    <Compile Include="PersonalConceptos\PersonalConceptosResponse.vb" />
+    <Compile Include="PersonalConceptos\PersonalConceptosResquest.vb" />
+    <Compile Include="PersonalHorarios\PersonalHorariosOperation.vb" />
+    <Compile Include="PersonalHorarios\PersonalHorariosResponse.vb" />
+    <Compile Include="PersonalHorarios\PersonalHorariosResquest.vb" />
+    <Compile Include="Personal\PersonalRequest.vb" />
+    <Compile Include="Personal\PersonalOperation.vb" />
+    <Compile Include="Personal\PersonalResponse.vb" />
+    <Compile Include="PlanillaGeneral\PlanillaGeneralOperation.vb" />
+    <Compile Include="PlanillaGeneral\PlanillaGeneralResponse.vb" />
+    <Compile Include="PlanillaGeneral\PlanillaGeneralRequest.vb" />
+    <Compile Include="PlantillaDetalle\PlantillaDetalleOperation.vb" />
+    <Compile Include="PlantillaDetalle\PlantillaDetalleRequest.vb" />
+    <Compile Include="PlantillaDetalle\PlantillaDetalleResponse.vb" />
+    <Compile Include="Plantilla\PlantillaOperation.vb" />
+    <Compile Include="Plantilla\PlantillaRequest.vb" />
+    <Compile Include="Plantilla\PlantillaResponse.vb" />
+    <Compile Include="TablaDetalle\TablaDetalleOperation .vb" />
+    <Compile Include="TablaDetalle\TablaDetalleRequest.vb" />
+    <Compile Include="TablaDetalle\TablaDetalleResponse.vb" />
+    <Compile Include="VariablesDelSistema\VariablesDelSistemaOperation.vb" />
+    <Compile Include="VariablesDelSistema\VariablesDelSistemaResponse.vb" />
+    <Compile Include="VariablesDelSistema\VariablesDelSistemaResquest.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Helios.Planilla.Business.Entity\Helios.Planilla.Business.Entity.vbproj">
+      <Project>{832373a4-edce-4917-824d-2497f8f57cff}</Project>
+      <Name>Helios.Planilla.Business.Entity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

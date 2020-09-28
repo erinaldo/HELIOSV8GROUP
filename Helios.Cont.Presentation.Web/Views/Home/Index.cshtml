@@ -1,0 +1,229 @@
+﻿@*@model IEnumerable<Helios.Cont.Business.Entity.detalleitems>*@
+    
+@{
+    // Layout = null;
+}
+
+<h3>Principal</h3>
+
+
+@*<style>
+
+
+    /*.ui-autocomplete
+        {
+            background: none;
+            font-weight: bold;
+            border-color: #2e2e2e;
+            border-style: solid;
+            border-width: 2px 2px 2px 2px;
+            outline: none;
+            padding: 10px 20px 10px 20px;
+            width: 250px;
+        }*/
+
+    .ui-helper-hidden-accessible {
+        border: 0;
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+    }
+
+    span.error {
+        display: block;
+        visibility: hidden;
+        color: red;
+        font-size: 90%;
+    }
+
+    tr.error {
+        background-color: rgba(255,0,0,0.35);
+    }
+</style>
+
+<div class="container">
+    <br />
+    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <li class="nav-item active">
+            <a class="nav-link" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Pedido</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Pagos</a>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane active fade in" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+
+            <div class="master">
+                <h3>Pedido</h3>
+                <table class="table table-responsive" border="0">
+                    <tr>
+                        <td>Comprobante</td>
+                        <td>
+                            @*<input type="text" id="orderNo" class="form-control" /
+                            <select id="orderNo" class="form-control">
+                                <option id="1000" value="1000">PRE VENTA</option>                                
+                            </select>
+                            <span class="error">Comprobante no required</span>
+                        </td>
+
+                        <td>
+                            <select id="moneda" class="form-control">
+                                <option id="1" value="1">SOL</option>
+                                <option id="2" value="2">USD</option>
+                            </select>
+                            <span class="error">Moneda no required</span>
+                        </td>
+
+                        @*<td>Fecha Pedido</td>
+                    <td>
+                        <form class="form-inline">
+                            <input type="text" style="width: 40%" id="orderDate" data-date-format="dd-mm-yyyy" class="form-control" />
+                            <label>TOTAL</label>
+                            <input type="text" style="width: 40%" id="total" class="form-control" />
+                        </form>
+                        <span class="error">Valid order date required (ex: dd-MM-yyyy)</span>
+                    </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <input type="radio" name="rdbcountry" checked="checked" value="Cliente" />Cliente
+                            <input type="radio" name="rdbcountry" value="Varios" />Varios
+                        </td>
+
+                        <td>
+                            @*<input type="hidden" name="cliente_id" id="cliente_id" value="@ViewBag.MyInitialValue" />
+                            <input type="text" id="nrodoc" placeholder="Buscar x nro.doc..." class="form-control" />
+                        </td>
+                        <td>
+                            <input type="hidden" name="cliente_id" id="cliente_id" value="0" />
+                            <input type="text" style="width: 100%" id="cliente" disabled="disabled" class="form-control" />
+                        </td>
+                        <td>
+                            <button class="btn btn-info btn-sm" id="btnNuevaEntidad" data-target="#loginModal" data-toggle="modal">Nuevo</button>
+                          
+                            <input id="btnEditEntidad" type="button" value="Editar" class="btn btn-warning btn-sm" />
+                        </td>
+                        
+                    </tr>
+
+                </table>
+            </div>
+            <div class="details">
+                <h3>
+                    Detalle
+                </h3>
+                <table class="table table-responsive">
+                    <tr>
+                        <td>Producto</td>
+                        <td>Unidad comercial</td>
+                        <td>Catalogo de Precios</td>
+                        <td>Cantidad</td>
+                        <td>Precio</td>
+                        <td>Total</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr class="mycontainer" id="mainrow">
+                        <td>
+         
+                            <input type="text" id="txtSearch" class="txtSearch form-control" />
+                            <span class="error">Ingresar un producto válido</span>
+                        </td>
+                        <td>
+                            <select id="productCategory" class="pc form-control" onchange="LoadProduct(this)">
+                                <option>Select</option>
+                            </select>
+                            <span class="error">Select Unidad</span>
+                        </td>
+                        <td>
+                            <select id="product" class="product form-control" onchange="LoadPrecios(this)">
+                                <option>Select catalogo</option>
+                            </select>
+                            <span class="error">Select Catalogo</span>
+                        </td>
+                        <td id="tdCan">
+                            <input type="number" id="quantity" value="0" class="quantity form-control" />
+                            <span class="error">Valid quantity required</span>
+                        </td>
+
+                        <td id="tdPrice">
+                            <select id="price" class="price form-control">
+                                <option>Select precio</option>
+                            </select>
+                            <span class="error">Select</span>
+                        </td>
+
+                        <td>
+                            <input type="number" id="rate" value="0" class="rate form-control" />
+                            <span class="error">Valid rate required</span>
+                        </td>
+                        <td>
+                            <input type="button" id="add" value="add" style="width:80px" class="btn btn-success" />
+                        </td>
+                    </tr>
+                </table>
+                <div id="orderItems">
+                    <table class="table table-responsive" id="orderdetailsItems"></table>
+                    <span id="orderItemError" style="color:red"></span>
+                </div>
+                <div style="padding:10px 0; text-align:right">
+                    <input id="submit" type="button" value="Save Order" class="btn btn-warning" style="padding:10px 20px" />
+                </div>
+            </div>
+
+        </div>
+        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">PAGOS</div>
+    </div>
+
+
+
+    <div class="modal fade" data-keyboard="false" data-backdrop="static" id="loginModal" tabindex="-1">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Cliente</h4>
+                </div>
+                <div class="modal-body">
+
+                    <form id="frm">                        
+                        <input type="hidden" name="cliente_id_modal" id="cliente_id_modal" value="0" />                        
+                        <div class="form-group">
+                            <label for="ip_cli_nro">Número doc.</label>
+                            <input class="form-control" placeholder="Nro. doc. identidad" type="text" id="ip_cli_nro" />
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword">Nombres/Razón social</label>
+                            <input class="form-control" placeholder="Nombre Completo" type="text" id="ip_cli_razon" />
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword">Nombres/Contacto</label>
+                            <input class="form-control" placeholder="Nombre contacto" type="text" id="ip_cli_contacto" />
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword">Domicilio</label>
+                            <textarea id="ip_cli_dir" class="form-control"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                               
+                    <input id="btnSubmit" type="button" value="Save" class="btn btn-warning" style="padding:10px 20px" />
+                    <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>*@
+
+
+
+
+
+

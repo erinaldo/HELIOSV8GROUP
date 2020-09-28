@@ -1,0 +1,214 @@
+﻿@model  List<Helios.Cont.Business.Entity.documentoventaAbarrotes>
+
+@{
+    ViewBag.Title = "Caja centralizada";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Ordenes
+            <small>@Model.Count() - nuevos pedidos</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Pedidos</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-3">
+                <a href="@Url.Action("Compose", "Mailbox")" class="btn btn-primary btn-block margin-bottom">Nuevo pedido</a>
+                <div class="box box-solid">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Folders</h3>
+                        <div class="box-tools">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body no-padding">
+                        <ul class="nav nav-pills nav-stacked">
+                            <li class="@Html.IsSelected(action: "Mailbox")">
+                                <a href="@Url.Action("Mailbox", "Mailbox")">
+                                    <i class="fa fa-inbox"></i> En espera
+                                    <span class="label label-primary pull-right">@Model.Count()</span>
+                                </a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-envelope-o"></i> Sent</a></li>
+                            <li><a href="#"><i class="fa fa-file-text-o"></i> Drafts</a></li>
+                            <li>
+                                <a href="#"><i class="fa fa-filter"></i> Junk <span class="label label-warning pull-right">65</span></a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-trash-o"></i> Trash</a></li>
+                        </ul>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /. box -->
+                <div class="box box-solid">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Labels</h3>
+                        <div class="box-tools">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body no-padding">
+                        <ul class="nav nav-pills nav-stacked">
+                            <li><a href="#"><i class="fa fa-circle-o text-red"></i> Important</a></li>
+                            <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> Promotions</a></li>
+                            <li><a href="#"><i class="fa fa-circle-o text-light-blue"></i> Social</a></li>
+                        </ul>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-9">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Pendientes</h3>
+                        <div class="box-tools pull-right">
+                            <div class="has-feedback">
+                                <input type="text" class="form-control input-sm" placeholder="Search Mail">
+                                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <!-- /.box-tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body no-padding">
+                        <div class="mailbox-controls">
+                            <!-- Check all button -->
+                            <button type="button" class="btn btn-default btn-sm checkbox-toggle">
+                                <i class="fa fa-square-o"></i>
+                            </button>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
+                                @*<button type="button" class="btn btn-default btn-sm"><i class="fa fa-reply"></i></button>
+                        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-share"></i></button>*@
+                            </div>
+                            <!-- /.btn-group -->
+                            <button id="BtUpdateOrders" type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
+                            <!-- /.pull-right -->
+                        </div>
+                        <div class="table-responsive mailbox-messages">
+                            <table id="tablaCobros" class="table table-hover table-striped">
+                                <tbody>
+                                    @foreach (var d in Model)
+                                    {
+                                        <tr>
+                                            <td><input type="hidden" name="documento_id" id="documento_id" value="@d.idDocumento" /></td>
+                                            <td><input type="checkbox"></td>
+                                            <td class="mailbox-star"><a href="#"><i class="fa fa-star text-yellow"></i></a></td>
+                                            <td class="mailbox-name"><a href="@Url.Action("ReadMail", "Mailbox")">@d.NombreEntidad</a></td>
+                                            <td class="mailbox-subject">
+                                                <b>Pedido Nro.</b> - @d.serieVenta - @d.numeroVenta
+                                            </td>
+                                            <td class="mailbox-name"> @d.ImporteNacional.GetValueOrDefault().ToString("N2")</td>
+                                            <td class="mailbox-date">@d.fechaDoc</td>
+                                            <td><button class="btn btn-success btn-sm">Cobrar</button></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            <!-- /.table -->
+                        </div>
+                        <!-- /.mail-box-messages -->
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer no-padding">
+                        <div class="mailbox-controls">
+                            <!-- Check all button -->
+                            <button type="button" class="btn btn-default btn-sm checkbox-toggle">
+                                <i class="fa fa-square-o"></i>
+                            </button>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
+                                @*<button type="button" class="btn btn-default btn-sm"><i class="fa fa-reply"></i></button>
+                        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-share"></i></button>*@
+                            </div>
+                            <!-- /.btn-group -->
+                            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
+
+                            <!-- /.pull-right -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box box-warning">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Pagar Pedido</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <form role="form">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Comprobante</label>
+                                <select id="ComboComprobante" class="form-control form-control-sm">
+                                    <option id="1000" value="03">BOLETA</option>
+                                    <option id="1001" value="01">FACTURA</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Moneda</label>
+                                <select id="moneda" class="form-control form-control-sm">
+                                    <option id="1" value="1">NUEVO SOL</option>
+                                    <option id="2" value="2">USD</option>
+                                </select>
+                            </div>
+                            @*<div class="form-group">
+                                <input type="radio" name="rbCliente" checked="checked" value="Cliente" />Cliente
+                                <input type="radio" name="rbCliente" value="Varios" />Varios &nbsp;
+                            
+                            </div>*@
+
+                            <div class="form-group">
+                                <input type="text" id="nrodocCli" placeholder="Buscar x nro.doc..." class="form-control" />
+                            </div>
+
+                            <div class="form-group">
+                                <input type="hidden" name="clienteid" id="clienteid" value="0" />
+                                <input type="text" id="clienterazon" disabled="disabled" class="form-control" />
+                            </div>
+
+
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+
+
+                @*Ventana modal crear Clientes*@
+
+                
+
+
+                <!-- /. box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+
+<script>
+    $(document).ready(function () {
+        alert('Hola');
+    });
+</script>

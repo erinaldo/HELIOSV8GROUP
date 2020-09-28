@@ -1,0 +1,35 @@
+﻿
+@model Helios.Cont.Business.Entity.documentocompra
+    <div>
+
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="myModalLabel">Productos ingresados</h4>
+        </div>      
+
+        <div class="modal-body">
+            <table style="width:100%">
+                <tr>
+                    <th>Afecta.</th>
+                    <th>Producto</th>
+                    <th>U.M.</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
+                </tr>
+                @foreach (var item in Model.documentocompradetalle.ToList())
+                {
+                    <tr>
+                        <td>@item.destino</td>
+                        <td>@item.descripcionItem</td>
+                        <td>@item.unidad1</td>
+                        <td>@item.monto1</td>
+                        <td>@item.importe</td>
+                    </tr>
+                }
+            </table>
+        </div>
+
+
+       
+    </div>
+

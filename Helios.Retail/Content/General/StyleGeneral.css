@@ -1,0 +1,93 @@
+﻿table {
+    width: 750px;
+    border-collapse: collapse;
+    margin: 50px auto;
+}
+
+/* Zebra striping */
+tr:nth-of-type(odd) {
+    background: #eee;
+}
+
+th {
+    background: #3498db;
+    color: white;
+    font-weight: bold;
+}
+
+td, th {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+    font-size: 18px;
+}
+
+
+@media (max-width: 800px), handheld and (orientation: portrait) {
+    .sidebar-mini.sidebar-collapse .content-wrapper,
+    .sidebar-mini.sidebar-collapse .right-side,
+    .sidebar-mini.sidebar-collapse .main-footer {
+        margin-left: 50px !important;
+        z-index: 840;
+    }
+
+    .sidebar-mini.sidebar-collapse .main-sidebar {
+        -webkit-transform: translate(0, 0);
+        -ms-transform: translate(0, 0);
+        -o-transform: translate(0, 0);
+        transform: translate(0, 0);
+        width: 50px !important;
+        z-index: 850;
+    }
+
+    .sidebar-mini.sidebar-collapse .sidebar-menu > li {
+        position: relative;
+    }
+
+        .sidebar-mini.sidebar-collapse .sidebar-menu > li > a {
+            margin-right: 0;
+        }
+
+            .sidebar-mini.sidebar-collapse .sidebar-menu > li > a > span {
+                border-top-right-radius: 4px;
+            }
+
+        .sidebar-mini.sidebar-collapse .sidebar-menu > li:not(.treeview) > a > span {
+            border-bottom-right-radius: 4px;
+        }
+
+        .sidebar-mini.sidebar-collapse .sidebar-menu > li > .treeview-menu {
+            padding-top: 5px;
+            padding-bottom: 5px;
+            border-bottom-right-radius: 4px;
+        }
+
+        .sidebar-mini.sidebar-collapse .main-sidebar .user-panel > .info,
+        .sidebar-mini.sidebar-collapse .sidebar-form,
+        .sidebar-mini.sidebar-collapse .sidebar-menu > li > a > span,
+        .sidebar-mini.sidebar-collapse .sidebar-menu > li > .treeview-menu,
+        .sidebar-mini.sidebar-collapse .sidebar-menu > li > a > .pull-right,
+        .sidebar-mini.sidebar-collapse .sidebar-menu li.header {
+            display: none !important;
+            -webkit-transform: translateZ(0);
+        }
+
+    .sidebar-mini.sidebar-collapse .main-header .logo {
+        width: 50px;
+    }
+
+        .sidebar-mini.sidebar-collapse .main-header .logo > .logo-mini {
+            display: block;
+            margin-left: -15px;
+            margin-right: -15px;
+            font-size: 18px;
+        }
+
+        .sidebar-mini.sidebar-collapse .main-header .logo > .logo-lg {
+            display: none;
+        }
+
+    .sidebar-mini.sidebar-collapse .main-header .navbar {
+        margin-left: 50px;
+    }
+}

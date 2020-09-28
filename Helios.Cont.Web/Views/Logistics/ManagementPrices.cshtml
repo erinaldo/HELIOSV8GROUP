@@ -1,0 +1,267 @@
+﻿
+
+@{
+    ViewBag.Title = "Administrar precios de los productos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>      
+    .Pager span {
+        text-align: center;
+        color: #333;
+        display: inline-block;
+        width: 20px;
+        background-color: #B8DBFD;
+        margin-right: 3px;
+        line-height: 150%;
+        border: 1px solid #B8DBFD;
+    }
+
+    .Pager a {
+        text-align: center;
+        display: inline-block;
+        width: 20px;
+        background-color: #ccc;
+        color: #333;
+        border: 1px solid #ccc;
+        margin-right: 3px;
+        line-height: 150%;
+        text-decoration: none;
+    }
+
+    .uniqueClassName {
+        text-align: center;
+    }
+
+    .gray {
+        background: rgba(0, 0, 0, 0.8);
+        position: relative;
+        line-height: 1.7;
+        font-family: 'Open Sans';
+    }
+</style>
+
+
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Logistica
+            <small>Administrar precios</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Logistica</a></li>
+            <li><a href="#">Precios</a></li>
+            <li class="active">Listado de productos</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- /.box -->
+
+                <div class="box">
+                    <table class="table table-responsive" border="0">
+                        <tr>
+                            <td width="25%">
+                                <div class="box-tools pull-left">
+                                    <div class="has-feedback">
+                                        @*<input type="text" class="form-control input-sm" placeholder="Search Mail">*@
+                                        <input type="text" id="TextSearchProduct" class="form-control" style="width:240px;padding:2px;background-color :#FCFCFC" value="" placeholder="Buscar producto...">
+                                        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                                    </div>
+                                </div>
+
+                              @*  <input type="text" id="TextSearchProduct" class="form-control" style="width:240px;padding:2px;background-color :#FCFCFC" value="" placeholder="Buscar producto...">*@
+                              
+                            </td>
+
+                            <td width="10">
+                                <button id="btnConsultarEntradas" class="btn btn-success">Consultar</button>
+                            </td>
+                            <td>
+                                @*<input id="btnNuevoProduct" type="button" class="btn btn-primary" value="Nuevo" onclick="location.href='@Url.Action("CreateWarehouse", "Logistics")'" />*@
+                                <input id="btnNuevoProduct" type="button" class="btn btn-primary" value="Nuevo" />
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table id="dtProductsPrices" class="table table-responsive table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Categoría</th>
+                                        <th>Codigo</th>
+                                        <th>Producto</th>
+                                        <th>Unidad medida</th>
+                                        <th>Tipo existencia</th>
+                                        <th>Afectación</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+
+                            <br />
+                            <div class="Pager"></div>
+                            <div />
+
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+
+                    <div id="loading" class="overlay">
+                        @*  <i class="fa fa-refresh fa-spin"></i>*@
+                    </div>
+                </div>
+                <!-- /.col -->
+            </div>
+        </div>
+
+        @*<div id="modal-container" class="modal fade" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+
+                        </div>
+                        <div class="modal-body">
+
+                        </div>
+                        <div class="modal-footer">
+
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+
+        <div id='myModal' class='modal fade' tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div id='myModalContent'></div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+
+    <section class="content">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <i class="ion ion-clipboard"></i>
+                        <h3 class="box-title">Unidades comerciales</h3>
+                        <!--<div class="box-tools pull-right">
+        <ul class="pagination pagination-sm inline">
+            <li><a href="#">&laquo;</a></li>
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">&raquo;</a></li>
+        </ul>
+    </div> -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div id="infra" class="box-body">
+                        <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
+                        <ul id="menuUnidad" class="todo-list">
+                        </ul>
+                        @*<div id="menu" class="box-body no-padding" style="display: none;">
+
+                        </div>*@
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer clearfix no-border">
+                        <button type="button" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Nuevo</button>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col -->
+            <div class="col-md-7">
+                <div class="box box-warning">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Catálogos de precio</h3>
+                        <div class="box-tools pull-right">
+                            <div class="has-feedback">
+                                
+                                <select id="ComboCatalogos" style="width:120px;" class="form-control">
+                                    <option id="0" value="-1"> -Selec catalog- </option>                                
+                                </select>
+                              
+                            </div>
+                        </div>
+                        <!-- /.box-tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body no-padding">
+                        
+                        <div class="table-responsive mailbox-messages">
+                            <table id="dtProductPrices" class="table table-hover table-striped">
+                                <tbody>
+                                   
+                                </tbody>
+                            </table>
+                            <!-- /.table -->
+                        </div>
+                        <!-- /.mail-box-messages -->
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer clearfix no-border">
+                        <button id="btAddPrice" type="button" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Nuevo</button>
+                    </div>
+                </div>
+                <!-- /. box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+</div>
+<!-- /.content-wrapper -->
+
+
+@section Scripts
+{
+    <script src="~/Scripts/ASPSnippets_Pager.min.js"></script>
+    <link href="~/Content/bootstrape-select/bootstrap-select.min.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrape-select/bootstrap-select.min.js"></script>
+    <script src="~/Scripts/Logistic/jPrices.js"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            var testDiv = document.getElementById('infra');
+
+            //Bind onclick event for the div#test object
+            testDiv.onclick = function (e) {
+
+                //Prevent the default href action (optional)
+                e.preventDefault();
+
+                //Check whether the target element is an Anchor tag
+                if (e.target.nodeName == 'A') {
+                    alert(e.target.innerHTML);
+                }
+
+            }
+        });
+    //    });
+
+    </script>
+
+    @*Scripts*@
+
+    @*  @Scripts.Render("~/bundles/bootstrap-select")*@
+
+    @*Styles*@
+    @*   @Styles.Render("~/Content/Bootstrap-Select/css")*@
+}

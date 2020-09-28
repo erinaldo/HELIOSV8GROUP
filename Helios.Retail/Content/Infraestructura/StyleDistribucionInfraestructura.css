@@ -1,0 +1,142 @@
+﻿body {
+}
+
+.flex-container {
+    display: inline-flex;
+    flex-wrap: wrap;
+    background-color: white;
+    align-content: space-between;
+}
+
+
+.button {
+    box-shadow: 0px 0px 0px 1px #3dc21b;
+    background-color: white;
+    border-radius: 15px;
+    border: 2px solid #18ab29;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-family: Arial;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 30px 45px;
+    text-decoration: none;
+    margin: 8px 5px;
+    transition-duration: 0.2s;
+    width: 250px;
+}
+
+.small {
+    font-size: xx-small;
+    color: #FF0000;
+}
+
+.larger {
+    font-size: 12pt;
+    color: #FF0000;
+}
+
+/*color blanco*/
+.flex-container > div,
+.flex-container .button1 {
+    background-color: white;
+    color: black;
+    border: 2px solid white;
+    justify-content: flex-start;
+}
+
+.button1:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/*color azul*/
+.flex-container .button2 {
+    background-color: #008CBA;
+    color: white;
+    border: 2px solid #008CBA;
+    justify-content: flex-start;
+}
+
+.button2:hover {
+    background-color: white;
+    color: black;
+}
+
+/*color rojo*/
+.flex-container .button3 {
+    background-color: #f44336;
+    color: white;
+    border: 2px solid #f44336;
+    justify-content: flex-start;
+}
+
+.button3:hover {
+    background-color: white;
+    color: black;
+}
+
+/*color marron*/
+.flex-container .button4 {
+    background-color: #e7e7e7;
+    color: white;
+    border: 2px solid #e7e7e7;
+    justify-content: flex-start;
+}
+
+.button4:hover {
+    background-color: white;
+    color: black;
+}
+
+/*color negro*/
+.flex-container .button5 {
+    background-color: #FF5733;
+    color: white;
+    border: 2px solid #FF5733;
+    justify-content: flex-start;
+}
+
+.button5:hover {
+    background-color: white;
+    color: black;
+}
+
+
+.buttonMenu {
+    background-color: #4CAF50; /* Green */
+    border-radius: 15px;
+    border: none;
+    color: white;
+    padding: 15px 100px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 4px;
+    cursor: pointer;
+}
+
+.buttonMenu2 {
+    background-color: white;
+    color: black;
+}
+
+.buttonMenu2 {
+    background-color: #008CBA;
+}
+/* Blue */
+.buttonMenu3 {
+    background-color: #f44336;
+}
+/* Red */
+.buttonMenu4 {
+    background-color: #e7e7e7;
+    color: black;
+}
+/* Gray */
+.buttonMenu5 {
+    background-color: #FF5733;
+}
+/* Black */

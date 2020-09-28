@@ -1,0 +1,156 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+Helios.Cont.Business.Logic
+</name>
+</assembly>
+<members>
+<member name="T:Helios.Cont.Business.Logic.My.Resources.Resources">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:Helios.Cont.Business.Logic.My.Resources.Resources.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:Helios.Cont.Business.Logic.My.Resources.Resources.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+<member name="M:Helios.Cont.Business.Logic.AsientoBL.Insert(Helios.Cont.Business.Entity.asiento,System.Int32)">
+ <summary>
+ inserta un asiento con todos su moviemientos
+ </summary>
+ <param name="asientoBE"></param>
+ <remarks></remarks>
+</member>
+<member name="M:Helios.Cont.Business.Logic.documentoBL.EliminarVentaTicketDirecta(Helios.Cont.Business.Entity.documento)">
+ <summary>
+ Eliminar venta directa con Ticket POS
+ </summary>
+ <param name="documentoBE"></param>
+ <remarks></remarks>
+</member>
+<member name="M:Helios.Cont.Business.Logic.documentoBL.EliminarComprobanteORPByCosto(Helios.Cont.Business.Entity.documento)">
+ <summary>
+ Eliminar Comprobante Otras Entradas a almacen de un Costo de producción
+ </summary>
+ <param name="documentoBE"></param>
+ <remarks></remarks>
+</member>
+<member name="M:Helios.Cont.Business.Logic.documentoCajaBL.ListadoComprobaNtesXidPadre(System.Int32)">
+ <summary>
+ Id comprobante de origen
+ </summary>
+ <param name="iNtPadre"></param>
+ <returns></returns>
+</member>
+<member name="M:Helios.Cont.Business.Logic.documentoCajaBL.ListaComprasPendientesXproveedor(System.Int32,System.Int32)">
+ <summary>
+ Función que devuelve el número de compras pendientes de pago
+ </summary>
+ <param name="intIdEstablecimiento"></param>
+ <param name="intIdProveedor"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:Helios.Cont.Business.Logic.documentoCajaBL.AnularOtrosPagos(Helios.Cont.Business.Entity.documento)">
+ <summary>
+ Anular Operaciones: Otras entradas y salidas de caja
+ </summary>
+</member>
+<member name="M:Helios.Cont.Business.Logic.documentocompraBL.GetPagosByDocumento(Helios.Cont.Business.Entity.documentocompra)">
+ <summary>
+ 
+ </summary>
+ <param name="be">IdDocumento|Estado Pago</param>
+ <returns></returns>
+</member>
+<member name="M:Helios.Cont.Business.Logic.documentocompraBL.GetTransferenciasByEmpresa(System.Int32)">
+ <summary>
+ Transferencias x establecimientos y empresa
+ </summary>
+ <param name="intIdEstablecimiento">Establecimiento</param>
+ <returns></returns>
+</member>
+<member name="M:Helios.Cont.Business.Logic.documentoLibroDiarioBL.TienenAperturaInventario(Helios.Cont.Business.Entity.documentoLibroDiario)">
+ <summary>
+ Verificacion si se ha ingresado el inventario de apertura
+ </summary>
+ <param name="be"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:Helios.Cont.Business.Logic.documentoventaAbarrotesBL.GetVentasDelDiaXTipoVenta(Helios.Cont.Business.Entity.documentoventaAbarrotes)">
+ <summary>
+ resúmen de ventas del día, por tipo de venta
+ </summary>
+ <param name="be"></param>
+ <returns></returns>
+</member>
+<member name="M:Helios.Cont.Business.Logic.documentoventaAbarrotesBL.Grabar_VentaEspecial(System.Collections.Generic.List{Helios.Cont.Business.Entity.documento})">
+ <summary>
+ Omitiendo separacion de comprobantes y notas
+ </summary>
+ <param name="listaDocumento"></param>
+ <returns></returns>
+</member>
+<member name="M:Helios.Cont.Business.Logic.detalleitemsBL.GetArticulosSinAlmacen(System.String,System.Byte)">
+ <summary>
+ Articulos sin almacenes
+ </summary>
+ <param name="empresa"></param>
+ <param name="opcion"></param>
+ <returns></returns>
+</member>
+<member name="M:Helios.Cont.Business.Logic.InventarioMovimientoBL.GetTieneArticulosEnTransitoCompra(Helios.Cont.Business.Entity.documentocompra)">
+ <summary>
+ Verificar si un comprobante de compra tiene articulos en transito
+ </summary>
+ <param name="be"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:Helios.Cont.Business.Logic.InventarioMovimientoBL.GetKardexByAnioDiaLaboral(Helios.Cont.Business.Entity.InventarioMovimiento)">
+ <summary>
+ Mostrar Kardex por día laboral (x año)
+ </summary>
+ <param name="be"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:Helios.Cont.Business.Logic.InventarioMovimientoBL.GetCuracionEntradasAlmacenByArticulo(Helios.Cont.Business.Entity.InventarioMovimiento,Helios.Cont.Business.Entity.cierreinventario)">
+ <summary>
+ Retorna Lista de kardex de un articulo x producto o articulo
+ </summary>
+ <param name="be"></param>
+ <param name="cierre"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:Helios.Cont.Business.Logic.movimientoBL.BalanceGeneralAnual(Helios.Cont.Business.Entity.asiento)">
+ <summary>
+ Reporte Banance General de Cuentas Contables
+ </summary>
+ <param name="asientoBE"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:Helios.Cont.Business.Logic.totalesAlmacenBL.DeleteTotalesAlmacenOSalidas(System.Collections.Generic.List{Helios.Cont.Business.Entity.totalesAlmacen})">
+ <summary>
+ Método para eliminar elmentos de otras salidas tabla documento compra
+ </summary>
+ <param name="objDeleteLiquidacion"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:Helios.Cont.Business.Logic.CronogramaBL.UpdateEstado(Helios.Cont.Business.Entity.Cronograma)">
+3444
+</member>
+</members>
+</doc>

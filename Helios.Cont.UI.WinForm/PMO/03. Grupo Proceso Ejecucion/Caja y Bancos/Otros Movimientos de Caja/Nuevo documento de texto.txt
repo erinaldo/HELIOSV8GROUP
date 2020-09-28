@@ -1,0 +1,301 @@
+ Public Function SaveGroupCajaVentasME(objDocumentoBE As documento, cajaUsuario As cajaUsuario) As Integer
+        Dim miServicio = General.GetHeliosProxy()
+        Return miServicio.SaveGroupCajaVentasME(objDocumentoBE, cajaUsuario)
+    End Function
+
+ <OperationContract()> _
+ _
+    Function SaveGroupCajaVentasME(objDocumentoBE As documento, cajaUsuario As cajaUsuario) As Integer
+
+
+ Public Function SaveGroupCajaVentasME(objDocumentoBE As documento, cajaUsuario As cajaUsuario) As Integer Implements IContService.SaveGroupCajaVentasME
+        Dim cajaBL As New documentoCajaBL
+        Return cajaBL.SaveGroupCajaVentasME(objDocumentoBE, cajaUsuario)
+    End Function
+
+ Public Function SaveGroupCajaVentasME(objDocumentoBE As documento, cajaUsuario As cajaUsuario) As Integer
+        Dim documentoBL As New documentoBL
+        Dim cajaDetalleBL As New documentoCajaDetalleBL
+        Dim AsientoBL As New AsientoBL
+        Dim idDocumentoRecuperado As Integer
+        Try
+            Using ts As New TransactionScope()
+                Dim codigoPadre = objDocumentoBE.documentoCaja.documentoCajaDetalle(0).documentoAfectado
+                Dim ventaoriginal As documentoventaAbarrotes = (HeliosData.documentoventaAbarrotes.Where(Function(o) _
+                                                            o.idDocumento = codigoPadre)).FirstOrDefault
+                documentoBL.Insert(objDocumentoBE)
+                idDocumentoRecuperado = Me.Insert(objDocumentoBE.documentoCaja, objDocumentoBE.idDocumento)
+                cajaDetalleBL.InsertPagosDeCajaME(objDocumentoBE, idDocumentoRecuperado)
+                AsientoBL.SavebyGroupDoc(objDocumentoBE)
+
+                Dim ventaDetalle = (From n In HeliosData.documentoventaAbarrotesDet _
+                                   Where n.idDocumento = ventaoriginal.idDocumento AndAlso n.estadoPago = TIPO_VENTA.PAGO.PENDIENTE_PAGO).Count
+                If ventaDetalle > 0 Then
+                    ventaoriginal.estadoCobro = TIPO_VENTA.PAGO.PENDIENTE_PAGO
+                Else
+                    ventaoriginal.estadoCobro = TIPO_VENTA.PAGO.COBRADO
+                End If
+
+                HeliosData.SaveChanges()
+                ts.Complete()
+                Return idDocumentoRecuperado
+            End Using
+        Catch ex As Exception
+            Throw ex
+        End Try
+    End Function
+
+ Public Sub InsertPagosDeCajaME(objDocumentoBE As documento, intDocCaja As Integer)
+        ' Dim idDocumentoRecuperado As Integer
+        Dim saldoME As Decimal = 0
+        Dim lista As New List(Of String)
+        lista.Add("2")
+        lista.Add("0")
+
+        Dim saldoItem As Decimal = 0
+        Dim saldoItemME As Decimal = 0
+        Dim nDetalle As New documentoCajaDetalle
+        Dim objItemsaldo As New documentoCajaDetalle
+        Dim cajaDetalleBL As New documentoCajaDetalleBL
+
+        Using ts As New TransactionScope
+            For Each i In objDocumentoBE.documentoCaja.documentoCajaDetalle
+                Dim NCventa = Aggregate det In HeliosData.documentoventaAbarrotesDet _
+                            Join v In HeliosData.documentoventaAbarrotes On v.idDocumento Equals det.idDocumento _
+                            Where v.tipoDocumento = "07" And det.idPadreDTVenta = i.documentoAfectadodetalle _
+                            Into NCmn = Sum(det.importeMN), _
+                                 NCme = Sum(det.importeME)
+
+                Dim NBventa = Aggregate det In HeliosData.documentoventaAbarrotesDet _
+                             Join v In HeliosData.documentoventaAbarrotes On v.idDocumento Equals det.idDocumento _
+                             Where v.tipoDocumento = "08" And det.idPadreDTVenta = i.documentoAfectadodetalle _
+                             Into NBmn = Sum(det.importeMN), _
+                                  NBme = Sum(det.importeME)
+
+
+                objItemsaldo = cajaDetalleBL.ObtenerCuentasPorCobrarPorProducto(i.documentoAfectado, i.documentoAfectadodetalle)
+
+                Dim VentaDetalle As documentoventaAbarrotesDet = HeliosData.documentoventaAbarrotesDet.Where(Function(o) o.secuencia = i.documentoAfectadodetalle).FirstOrDefault
+
+                saldoItem = objItemsaldo.MontoDeudaSoles - i.montoSoles - objItemsaldo.MontoPagadoSoles - NCventa.NCmn.GetValueOrDefault + NBventa.NBmn.GetValueOrDefault
+                saldoItemME = objItemsaldo.MontoDeudaUSD - i.montoUsd - objItemsaldo.MontoPagadoUSD - NCventa.NCme.GetValueOrDefault + NBventa.NBme.GetValueOrDefault
+
+                If saldoItem <= 0 Then
+                    VentaDetalle.estadoPago = TIPO_VENTA.PAGO.COBRADO
+                Else
+                    VentaDetalle.estadoPago = TIPO_VENTA.PAGO.PENDIENTE_PAGO
+                End If
+
+                If (i.TipoConfirmacion = "OEC" Or i.TipoConfirmacion = "AR" Or i.TipoConfirmacion = "DC") Then
+                    nDetalle = New documentoCajaDetalle
+                    nDetalle.idDocumento = intDocCaja
+                    nDetalle.documentoAfectado = intDocCaja
+                    nDetalle.secuencia = i.secuencia
+                    nDetalle.fecha = i.fecha
+                    nDetalle.idItem = i.idItem
+                    nDetalle.DetalleItem = i.DetalleItem
+                    nDetalle.montoSoles = i.montoSoles
+                    nDetalle.montoSolesRef = i.montoSolesRef
+                    nDetalle.montoUsd = i.montoUsd
+                    nDetalle.montoUsdRef = i.montoUsdRef
+                    nDetalle.montoItf = i.montoItf
+                    nDetalle.montoItfusd = i.montoItfusd
+                    nDetalle.entregado = i.entregado
+                    nDetalle.diferTipoCambio = i.diferTipoCambio
+                    nDetalle.difME = i.difME
+                    nDetalle.difMN = i.difMN
+                    nDetalle.usuarioModificacion = i.usuarioModificacion
+                    nDetalle.fechaModificacion = i.fechaModificacion
+                    nDetalle.estadoCaja = i.estadoCaja
+
+                    HeliosData.documentoCajaDetalle.Add(nDetalle)
+                ElseIf (i.TipoConfirmacion = "OSC" Or i.TipoConfirmacion = "AO" Or i.TipoConfirmacion = "PG") Then
+
+                    Dim consultaCaja = (From c In HeliosData.documentoCaja _
+                                        Join d In HeliosData.documentoCajaDetalle _
+                                        On c.idDocumento Equals d.idDocumento _
+                                Where c.tipoMovimiento = "DC" And _
+                                lista.Contains(d.estadoCaja)).ToList
+
+                    For Each item In consultaCaja
+                        saldoME = i.montoUsd
+                        If (saldoME > 0) Then
+                            If (item.d.montoUsdRef >= i.montoUsd And i.montoUsd = 0) Then
+                                nDetalle = New documentoCajaDetalle
+                                nDetalle.idDocumento = intDocCaja
+                                nDetalle.documentoAfectado = intDocCaja
+                                nDetalle.secuencia = i.secuencia
+                                nDetalle.fecha = i.fecha
+                                nDetalle.idItem = i.idItem
+                                nDetalle.DetalleItem = i.DetalleItem
+                                nDetalle.montoSoles = i.montoSoles
+                                nDetalle.montoUsd = i.montoUsd
+                                nDetalle.montoItf = i.montoItf
+                                nDetalle.montoItfusd = i.montoItfusd
+                                nDetalle.entregado = i.entregado
+                                nDetalle.diferTipoCambio = i.diferTipoCambio
+                                nDetalle.difME = i.difME
+                                nDetalle.difMN = i.difMN
+                                nDetalle.usuarioModificacion = i.usuarioModificacion
+                                nDetalle.fechaModificacion = i.fechaModificacion
+                                nDetalle.estadoCaja = i.estadoCaja
+                                saldoME = item.d.montoUsd - i.montoUsd
+                                i.montoUsd = saldoME
+                                HeliosData.documentoCajaDetalle.Add(nDetalle)
+                            ElseIf (item.d.montoUsdRef <= i.montoUsd And i.montoUsd = 0) Then
+                                nDetalle = New documentoCajaDetalle
+                                nDetalle.idDocumento = intDocCaja
+                                nDetalle.documentoAfectado = intDocCaja
+                                nDetalle.secuencia = i.secuencia
+                                nDetalle.fecha = i.fecha
+                                nDetalle.idItem = i.idItem
+                                nDetalle.DetalleItem = i.DetalleItem
+                                nDetalle.montoSoles = i.montoSoles
+                                nDetalle.montoUsd = i.montoUsd
+                                nDetalle.montoItf = i.montoItf
+                                nDetalle.montoItfusd = i.montoItfusd
+                                nDetalle.entregado = i.entregado
+                                nDetalle.diferTipoCambio = i.diferTipoCambio
+                                nDetalle.difME = i.difME
+                                nDetalle.difMN = i.difMN
+                                nDetalle.usuarioModificacion = i.usuarioModificacion
+                                nDetalle.fechaModificacion = i.fechaModificacion
+                                nDetalle.estadoCaja = i.estadoCaja
+                                saldoME = item.d.montoUsd - i.montoUsd
+                                i.montoUsd = saldoME
+                                HeliosData.documentoCajaDetalle.Add(nDetalle)
+                            ElseIf (item.d.montoUsdRef < i.montoUsd And i.montoUsd > 0) Then
+                                nDetalle = New documentoCajaDetalle
+                                nDetalle.idDocumento = intDocCaja
+                                nDetalle.documentoAfectado = intDocCaja
+                                nDetalle.secuencia = i.secuencia
+                                nDetalle.fecha = i.fecha
+                                nDetalle.idItem = i.idItem
+                                nDetalle.DetalleItem = i.DetalleItem
+                                nDetalle.montoSoles = CDec(item.d.montoUsdRef * item.d.diferTipoCambio)
+                                nDetalle.montoUsd = item.d.montoUsdRef
+                                nDetalle.montoItf = i.montoItf
+                                nDetalle.montoItfusd = i.montoItfusd
+                                nDetalle.entregado = i.entregado
+                                nDetalle.diferTipoCambio = item.d.diferTipoCambio
+                                nDetalle.difME = i.difME
+                                nDetalle.difMN = i.difMN
+                                nDetalle.usuarioModificacion = i.usuarioModificacion
+                                nDetalle.fechaModificacion = i.fechaModificacion
+                                nDetalle.estadoCaja = "1"
+                                UpdateEstadoCaja(item.d.idDocumento, "1", item.d.montoUsdRef)
+                                saldoME = saldoME - nDetalle.montoUsd
+                                i.montoUsd = saldoME
+                                HeliosData.documentoCajaDetalle.Add(nDetalle)
+                            ElseIf (item.d.montoUsdRef > i.montoUsd And i.montoUsd > 0) Then
+                                nDetalle = New documentoCajaDetalle
+                                nDetalle.idDocumento = intDocCaja
+                                nDetalle.documentoAfectado = intDocCaja
+                                nDetalle.secuencia = i.secuencia
+                                nDetalle.fecha = i.fecha
+                                nDetalle.idItem = i.idItem
+                                nDetalle.DetalleItem = i.DetalleItem
+                                nDetalle.montoSoles = CDec(i.montoUsd * item.d.diferTipoCambio)
+                                nDetalle.montoUsd = i.montoUsd
+                                nDetalle.montoItf = i.montoItf
+                                nDetalle.montoItfusd = i.montoItfusd
+                                nDetalle.entregado = i.entregado
+                                nDetalle.diferTipoCambio = item.d.diferTipoCambio
+                                nDetalle.difME = i.difME
+                                nDetalle.difMN = i.difMN
+                                nDetalle.usuarioModificacion = i.usuarioModificacion
+                                nDetalle.fechaModificacion = i.fechaModificacion
+                                nDetalle.estadoCaja = i.estadoCaja
+                                nDetalle.estadoCaja = "1"
+                                UpdateEstadoCaja(item.d.idDocumento, "2", i.montoUsd)
+                                saldoME = saldoME - i.montoUsd
+                                i.montoUsd = saldoME
+                                HeliosData.documentoCajaDetalle.Add(nDetalle)
+                            ElseIf (item.d.montoUsdRef > i.montoUsd And i.montoUsd < 0) Then
+                                nDetalle = New documentoCajaDetalle
+                                nDetalle.idDocumento = intDocCaja
+                                nDetalle.documentoAfectado = intDocCaja
+                                nDetalle.secuencia = i.secuencia
+                                nDetalle.fecha = i.fecha
+                                nDetalle.idItem = i.idItem
+                                nDetalle.DetalleItem = i.DetalleItem
+                                nDetalle.montoSoles = CDec((i.montoUsd * -1) * item.d.diferTipoCambio)
+                                nDetalle.montoUsd = (i.montoUsd * -1)
+                                nDetalle.montoItf = i.montoItf
+                                nDetalle.montoItfusd = i.montoItfusd
+                                nDetalle.entregado = i.entregado
+                                nDetalle.diferTipoCambio = item.d.diferTipoCambio
+                                nDetalle.difME = i.difME
+                                nDetalle.difMN = i.difMN
+                                nDetalle.usuarioModificacion = i.usuarioModificacion
+                                nDetalle.fechaModificacion = i.fechaModificacion
+                                nDetalle.estadoCaja = "1"
+                                UpdateEstadoCaja(item.d.idDocumento, "2", i.montoUsd)
+                                saldoME = item.d.montoUsd - i.montoUsd
+                                i.montoUsd = saldoME
+                                HeliosData.documentoCajaDetalle.Add(nDetalle)
+                            ElseIf (item.d.montoUsdRef = i.montoUsd And i.montoUsd > 0) Then
+                                nDetalle = New documentoCajaDetalle
+                                nDetalle.idDocumento = intDocCaja
+                                nDetalle.documentoAfectado = intDocCaja
+                                nDetalle.secuencia = i.secuencia
+                                nDetalle.fecha = i.fecha
+                                nDetalle.idItem = i.idItem
+                                nDetalle.DetalleItem = i.DetalleItem
+                                nDetalle.montoSoles = CDec(i.montoUsd * item.d.diferTipoCambio)
+                                nDetalle.montoUsd = i.montoUsd
+                                nDetalle.montoItf = i.montoItf
+                                nDetalle.montoItfusd = i.montoItfusd
+                                nDetalle.entregado = i.entregado
+                                nDetalle.diferTipoCambio = item.d.diferTipoCambio
+                                nDetalle.difME = i.difME
+                                nDetalle.difMN = i.difMN
+                                nDetalle.usuarioModificacion = i.usuarioModificacion
+                                nDetalle.fechaModificacion = i.fechaModificacion
+                                nDetalle.estadoCaja = i.estadoCaja
+                                nDetalle.estadoCaja = "1"
+                                UpdateEstadoCaja(item.d.idDocumento, "1", i.montoUsd)
+                                saldoME = saldoME - i.montoUsd
+                                i.montoUsd = saldoME
+                                HeliosData.documentoCajaDetalle.Add(nDetalle)
+                            End If
+                        End If
+                    Next
+                End If
+
+            Next
+            HeliosData.SaveChanges()
+            ts.Complete()
+        End Using
+    End Sub
+
+ Public Sub UpdateEstadoCaja(intIdDocumentoCaja As Integer, estadoCaja As String, montoRetiro As Decimal)
+        Using ts As New TransactionScope
+            Dim nDetalle As documentoCajaDetalle = HeliosData.documentoCajaDetalle.Where(Function(o) o.idDocumento = intIdDocumentoCaja).First
+            nDetalle.estadoCaja = estadoCaja
+            Select Case nDetalle.estadoCaja
+                Case 1
+                    If (CDec(nDetalle.montoUsdRef = montoRetiro)) Then
+                        nDetalle.montoUsdRef = 0
+                        nDetalle.montoSolesRef = 0
+                    Else
+                        nDetalle.montoUsdRef = Math.Round(CDec(nDetalle.montoUsdRef - CDec(montoRetiro)), 2)
+                        nDetalle.montoSolesRef = Math.Round(CDec((nDetalle.montoUsdRef - montoRetiro) * nDetalle.diferTipoCambio), 2)
+                    End If
+                Case 2
+                    If (CDec(nDetalle.montoUsdRef >= montoRetiro) And montoRetiro < 0) Then
+                        nDetalle.montoUsdRef = Math.Round(CDec(nDetalle.montoUsdRef - CDec(montoRetiro * -1)), 2)
+                        nDetalle.montoSolesRef = Math.Round(CDec((nDetalle.montoUsdRef - (montoRetiro * -1)) * nDetalle.diferTipoCambio), 2)
+                    ElseIf (CDec(nDetalle.montoUsdRef >= montoRetiro) And montoRetiro > 0) Then
+                        nDetalle.montoUsdRef = Math.Round(CDec(nDetalle.montoUsdRef - montoRetiro), 2)
+                        nDetalle.montoSolesRef = Math.Round(CDec((nDetalle.montoUsdRef) * nDetalle.diferTipoCambio), 2)
+                    Else
+                        nDetalle.montoUsdRef = 0
+                        nDetalle.montoSolesRef = 0
+                    End If
+            End Select
+
+            HeliosData.SaveChanges()
+            ts.Complete()
+        End Using
+    End Sub

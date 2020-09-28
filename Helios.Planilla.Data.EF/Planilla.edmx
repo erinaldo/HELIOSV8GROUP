@@ -1,0 +1,1592 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="PlanillaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Afp">
+          <Key>
+            <PropertyRef Name="IDAFP" />
+          </Key>
+          <Property Name="IDAFP" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DescripcionCorta" Type="varchar" MaxLength="20" />
+          <Property Name="DescripcionLarga" Type="varchar" MaxLength="120" />
+          <Property Name="AporteObligatorio" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="PrimaSeguro" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="ComisionPorcentual" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="AporteVoluntario" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="LimitedeSueldo" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="UsuarioModificacion" Type="varchar" MaxLength="20" />
+          <Property Name="FechaModificacion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Cargos">
+          <Key>
+            <PropertyRef Name="IDCargo" />
+          </Key>
+          <Property Name="IDCargo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DescripcionCorta" Type="varchar" MaxLength="20" />
+          <Property Name="DescripcionLargo" Type="varchar" MaxLength="150" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="UsuarioModificacion" Type="varchar" MaxLength="20" />
+          <Property Name="TipoPlanilla" Type="varchar" MaxLength="2" />
+          <Property Name="Importe" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="Concepto">
+          <Key>
+            <PropertyRef Name="IDConcepto" />
+            <PropertyRef Name="IDSunat" />
+            <PropertyRef Name="IDContable" />
+            <PropertyRef Name="TipoPlanilla" />
+          </Key>
+          <Property Name="IDConcepto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Orden" Type="varchar" MaxLength="5" />
+          <Property Name="DescripcionCorta" Type="varchar" MaxLength="50" />
+          <Property Name="DescripcionLarga" Type="varchar" MaxLength="150" />
+          <Property Name="IDSunat" Type="int" Nullable="false" />
+          <Property Name="IDContable" Type="int" Nullable="false" />
+          <Property Name="TipoConcepto" Type="varchar" MaxLength="4" />
+          <Property Name="Moneda" Type="varchar" MaxLength="2" />
+          <Property Name="TipoCalculo" Type="varchar" MaxLength="2" />
+          <Property Name="ValorCalculo" Type="decimal" Precision="19" Scale="4" />
+          <Property Name="Formula" Type="varchar" MaxLength="250" />
+          <Property Name="Activo" Type="bit" />
+          <Property Name="TipoPlanilla" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="UsuarioModificacion" Type="varchar" MaxLength="30" />
+          <Property Name="SeleccionarRegistro" Type="bit" />
+        </EntityType>
+        <EntityType Name="ControlAsistencia">
+          <Key>
+            <PropertyRef Name="IDAsistencia" />
+            <PropertyRef Name="IDPersonal" />
+            <PropertyRef Name="IDCargo" />
+          </Key>
+          <Property Name="IDAsistencia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDPersonal" Type="int" Nullable="false" />
+          <Property Name="IDCargo" Type="int" Nullable="false" />
+          <Property Name="TipoAcesso" Type="varchar" MaxLength="2" />
+          <Property Name="Fecha" Type="datetime" />
+          <Property Name="Hora" Type="time" Precision="7" />
+          <Property Name="HoraPersonal" Type="time" Precision="7" />
+          <Property Name="HoraExtras" Type="int" />
+          <Property Name="HorasFaltas" Type="int" />
+          <Property Name="Tolerancia" Type="time" Precision="7" />
+          <Property Name="Penalidad" Type="time" Precision="7" />
+          <Property Name="Anotaciones" Type="varchar" MaxLength="250" />
+          <Property Name="FaltaJustificada" Type="bit" />
+          <Property Name="Tardanza" Type="time" Precision="7" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="UsuarioModificacion" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="ControlDeAsistencia">
+          <Key>
+            <PropertyRef Name="IDAsistencia" />
+            <PropertyRef Name="IDPersonal" />
+          </Key>
+          <Property Name="IDAsistencia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDPersonal" Type="int" Nullable="false" />
+          <Property Name="iddocumentoref" Type="int" />
+          <Property Name="tipoPersona" Type="varchar" MaxLength="2" />
+          <Property Name="TipoAcesso" Type="varchar" MaxLength="2" />
+          <Property Name="FechaAsistencia" Type="datetime" />
+          <Property Name="HoraIngreso" Type="time" Precision="7" />
+          <Property Name="Tardanza" Type="time" Precision="7" />
+          <Property Name="HorasTotales" Type="time" Precision="7" />
+          <Property Name="HorasExtras" Type="time" Precision="7" />
+          <Property Name="Faltas" Type="int" />
+          <Property Name="MesAsistencia" Type="int" />
+          <Property Name="AñoAsistencia" Type="int" />
+          <Property Name="DiaAsistencia" Type="int" />
+          <Property Name="status" Type="smallint" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="UsuarioModificacion" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="DerechoHabientes">
+          <Key>
+            <PropertyRef Name="IDHabiente" />
+            <PropertyRef Name="IDPersonal" />
+          </Key>
+          <Property Name="IDHabiente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDPersonal" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="70" />
+          <Property Name="Sexo" Type="varchar" MaxLength="1" />
+          <Property Name="fechanacimiento" Type="datetime" />
+          <Property Name="Vinculo" Type="nchar" MaxLength="10" />
+          <Property Name="Situacion" Type="varchar" MaxLength="10" />
+          <Property Name="Incapacidad" Type="int" />
+          <Property Name="CertificadoMedico" Type="varchar" MaxLength="70" />
+          <Property Name="Domicilio" Type="int" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="UsuarioModificacion" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Periodos">
+          <Key>
+            <PropertyRef Name="IDPeriodo" />
+          </Key>
+          <Property Name="IDPeriodo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Mes" Type="varchar" MaxLength="70" />
+          <Property Name="FechaInicio" Type="datetime" />
+          <Property Name="fechafin" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Personal">
+          <Key>
+            <PropertyRef Name="IDPersonal" />
+          </Key>
+          <Property Name="IDPersonal" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idEstablecimiento" Type="int" />
+          <Property Name="ApellidoPaterno" Type="varchar" MaxLength="20" />
+          <Property Name="ApellidoMaterno" Type="varchar" MaxLength="20" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="Telefono" Type="varchar" MaxLength="20" />
+          <Property Name="Celular" Type="varchar" MaxLength="20" />
+          <Property Name="Sexo" Type="char" MaxLength="1" />
+          <Property Name="FechaNacimiento" Type="datetime" />
+          <Property Name="Estadocivil" Type="varchar" MaxLength="1" />
+          <Property Name="Email" Type="varchar" MaxLength="150" />
+          <Property Name="paisEmisorComprobante" Type="varchar" MaxLength="7" />
+          <Property Name="Fotografia" Type="varchar" MaxLength="250" />
+          <Property Name="Tipodocumento" Type="varchar" MaxLength="2" />
+          <Property Name="Numerodocumento" Type="varchar" MaxLength="15" />
+          <Property Name="codigoLargaDistancia" Type="varchar" MaxLength="2" />
+          <Property Name="regimenLaboral" Type="varchar" MaxLength="2" />
+          <Property Name="CategoriaOcupacional" Type="varchar" MaxLength="2" />
+          <Property Name="tipoContrato" Type="varchar" MaxLength="2" />
+          <Property Name="JornadaTrabajoMaximo" Type="bit" />
+          <Property Name="JornadaTrabajoAtipica" Type="bit" />
+          <Property Name="JornadaTrabajoNocturno" Type="bit" />
+          <Property Name="SituacionEspecial" Type="varchar" MaxLength="2" />
+          <Property Name="Discapacidad" Type="bit" />
+          <Property Name="Sindicalizado" Type="bit" />
+          <Property Name="RegimenSalud" Type="varchar" MaxLength="2" />
+          <Property Name="RegimenSalud_Inicio" Type="date" />
+          <Property Name="RegimenSalud_Fin" Type="date" />
+          <Property Name="PrimeraDireccion" Type="varchar" MaxLength="200" />
+          <Property Name="SegundaDireccion" Type="int" />
+          <Property Name="Estado" Type="varchar" MaxLength="2" />
+          <Property Name="ViaTipo" Type="varchar" MaxLength="2" />
+          <Property Name="ViaNombre" Type="varchar" MaxLength="30" />
+          <Property Name="ViaNumero" Type="varchar" MaxLength="10" />
+          <Property Name="ViaDpto" Type="varchar" MaxLength="10" />
+          <Property Name="ViaInterior" Type="varchar" MaxLength="10" />
+          <Property Name="ViaManzana" Type="varchar" MaxLength="10" />
+          <Property Name="ViaLote" Type="varchar" MaxLength="10" />
+          <Property Name="Zonatipo" Type="varchar" MaxLength="2" />
+          <Property Name="Zonanombre" Type="varchar" MaxLength="30" />
+          <Property Name="Referencia" Type="varchar" MaxLength="100" />
+          <Property Name="Departamneto" Type="varchar" MaxLength="70" />
+          <Property Name="Provincia" Type="varchar" MaxLength="70" />
+          <Property Name="Distrito" Type="varchar" MaxLength="70" />
+          <Property Name="Nacionalidad" Type="varchar" MaxLength="30" />
+          <Property Name="CondicionDomiciliado" Type="varchar" MaxLength="25" />
+          <Property Name="Area" Type="varchar" MaxLength="25" />
+          <Property Name="TipoTrabajador" Type="varchar" MaxLength="2" />
+          <Property Name="LocalizacionTrabajador" Type="int" />
+          <Property Name="FormadePago" Type="varchar" MaxLength="15" />
+          <Property Name="periodicidadpago" Type="varchar" MaxLength="5" />
+          <Property Name="FechaIngreso" Type="datetime" />
+          <Property Name="FechaCese" Type="datetime" />
+          <Property Name="Situacion" Type="varchar" MaxLength="10" />
+          <Property Name="NivelEducacion" Type="varchar" MaxLength="25" />
+          <Property Name="RegimenPension" Type="varchar" MaxLength="5" />
+          <Property Name="InicioPension" Type="datetime" />
+          <Property Name="FinalizaPension" Type="date" />
+          <Property Name="IDAfp" Type="int" />
+          <Property Name="CoberturaPension" Type="varchar" MaxLength="8" />
+          <Property Name="CoberturaSalud" Type="varchar" MaxLength="8" />
+          <Property Name="SCRT" Type="varchar" MaxLength="1" />
+          <Property Name="AsignacionFamiliar" Type="bit" />
+          <Property Name="CoberturaSaludInicio" Type="date" />
+          <Property Name="CoberturaSaludFinaliza" Type="date" />
+          <Property Name="Banco" Type="varchar" MaxLength="3" />
+          <Property Name="BancoCuenta" Type="varchar" MaxLength="25" />
+          <Property Name="CTS" Type="varchar" MaxLength="3" />
+          <Property Name="CTSCuenta" Type="varchar" MaxLength="25" />
+          <Property Name="LIR" Type="bit" />
+          <Property Name="EvitaDobleImposicion" Type="bit" />
+          <Property Name="HoraInicio" Type="time" Precision="7" />
+          <Property Name="HoraFinal" Type="time" Precision="7" />
+          <Property Name="RefrigerioInicio" Type="time" Precision="7" />
+          <Property Name="RefrigerioFin" Type="time" Precision="7" />
+          <Property Name="DiasLaborables" Type="int" />
+          <Property Name="SueldoBasico" Type="decimal" Precision="19" Scale="4" />
+          <Property Name="tipoHorario" Type="char" MaxLength="1" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="UsuarioModificacion" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="PersonalCargo">
+          <Key>
+            <PropertyRef Name="IDCargo" />
+            <PropertyRef Name="IDPersonal" />
+          </Key>
+          <Property Name="IDCargo" Type="int" Nullable="false" />
+          <Property Name="IDPersonal" Type="int" Nullable="false" />
+          <Property Name="DescripcionCorta" Type="varchar" MaxLength="30" />
+          <Property Name="DescripcionLarga" Type="varchar" MaxLength="180" />
+          <Property Name="DiasLaborales" Type="varchar" MaxLength="50" />
+          <Property Name="Totalhoras" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="status" Type="smallint" />
+        </EntityType>
+        <EntityType Name="PersonalConceptos">
+          <Key>
+            <PropertyRef Name="IDConcepto" />
+            <PropertyRef Name="IDPersonal" />
+            <PropertyRef Name="IDCargo" />
+          </Key>
+          <Property Name="IDConcepto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDPersonal" Type="int" Nullable="false" />
+          <Property Name="IDCargo" Type="int" Nullable="false" />
+          <Property Name="IDTipoPlanilla" Type="int" />
+          <Property Name="orden" Type="varchar" MaxLength="5" />
+          <Property Name="DescripcionCorta" Type="varchar" MaxLength="50" />
+          <Property Name="DescripcionLarga" Type="varchar" MaxLength="150" />
+          <Property Name="IDSunat" Type="int" />
+          <Property Name="IDContable" Type="int" />
+          <Property Name="Moneda" Type="varchar" MaxLength="2" />
+          <Property Name="TipoCalculo" Type="varchar" MaxLength="2" />
+          <Property Name="Formula" Type="varchar" MaxLength="250" />
+          <Property Name="Activo" Type="bit" />
+          <Property Name="TipoConcepto" Type="varchar" MaxLength="3" />
+          <Property Name="ValorCalculo" Type="decimal" Precision="19" Scale="4" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="UsuarioModificacion" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="PersonalHorarios">
+          <Key>
+            <PropertyRef Name="IDHorario" />
+          </Key>
+          <Property Name="IDHorario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDPersonal" Type="int" />
+          <Property Name="IDCargo" Type="int" />
+          <Property Name="detalle" Type="varchar" MaxLength="70" />
+          <Property Name="DiaNumero" Type="int" />
+          <Property Name="DiaSemana" Type="varchar" MaxLength="15" />
+          <Property Name="HoraIngreso" Type="time" Precision="7" />
+          <Property Name="HoraSalida" Type="time" Precision="7" />
+          <Property Name="Refrigerio" Type="time" Precision="7" />
+          <Property Name="Reingreso" Type="time" Precision="7" />
+          <Property Name="fechamodificacion" Type="datetime" />
+          <Property Name="usuariomodificacion" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="PersonalProyecto">
+          <Key>
+            <PropertyRef Name="IDCosto" />
+            <PropertyRef Name="IDPersonal" />
+          </Key>
+          <Property Name="IDCosto" Type="int" Nullable="false" />
+          <Property Name="IDPersonal" Type="int" Nullable="false" />
+          <Property Name="IDCargo" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PlanillaGeneral">
+          <Key>
+            <PropertyRef Name="IDPlanilla" />
+          </Key>
+          <Property Name="IDPlanilla" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDAsistencia" Type="int" Nullable="false" />
+          <Property Name="IDPersonal" Type="int" Nullable="false" />
+          <Property Name="IDCargo" Type="int" Nullable="false" />
+          <Property Name="TipoConcepto" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="IDConcepto" Type="int" />
+          <Property Name="MesPlanilla" Type="int" Nullable="false" />
+          <Property Name="AnioPlanilla" Type="int" Nullable="false" />
+          <Property Name="FechaPlanilla" Type="datetime" />
+          <Property Name="TipoPlanilla" Type="varchar" MaxLength="5" />
+          <Property Name="DescripcionCorta" Type="varchar" MaxLength="20" />
+          <Property Name="DescripcionLarga" Type="varchar" MaxLength="150" />
+          <Property Name="Importe" Type="decimal" Precision="19" Scale="4" />
+          <Property Name="statusPago" Type="int" />
+          <Property Name="Fechamodificacion" Type="datetime" />
+          <Property Name="UsuarioModificacion" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Plantilla">
+          <Key>
+            <PropertyRef Name="IDPlantilla" />
+          </Key>
+          <Property Name="IDPlantilla" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DescripcionCorta" Type="varchar" MaxLength="50" />
+          <Property Name="DescripcionLarga" Type="varchar" MaxLength="150" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="UsuarioModificacion" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="PlantillaDetalle">
+          <Key>
+            <PropertyRef Name="IDPlantilla" />
+            <PropertyRef Name="IDConcepto" />
+          </Key>
+          <Property Name="IDPlantilla" Type="int" Nullable="false" />
+          <Property Name="IDConcepto" Type="int" Nullable="false" />
+          <Property Name="DescripcionCorta" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Orden" Type="smallint" Nullable="false" />
+          <Property Name="Requerido" Type="bit" Nullable="false" />
+          <Property Name="valorConcepto" Type="decimal" Precision="15" Scale="2" />
+          <Property Name="FechaModificacion" Type="datetime" Nullable="false" />
+          <Property Name="UsuarioModificacion" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sunat_statements">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="IDSunat" Type="varchar" MaxLength="50" />
+          <Property Name="anio" Type="int" />
+          <Property Name="mes" Type="int" />
+          <Property Name="importe" Type="decimal" Precision="19" Scale="4" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="UsuarioModificacion" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Tabla">
+          <Key>
+            <PropertyRef Name="IDTabla" />
+          </Key>
+          <Property Name="IDTabla" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDSunat" Type="int" />
+          <Property Name="DescripcionCorta" Type="varchar" MaxLength="50" />
+          <Property Name="DescripcionLarga" Type="varchar" MaxLength="150" />
+          <Property Name="Estado" Type="bit" />
+          <Property Name="UsuarioModificacion" Type="varchar" MaxLength="30" />
+          <Property Name="FechaModificacion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TablaDetalle">
+          <Key>
+            <PropertyRef Name="IDTablaDetalle" />
+            <PropertyRef Name="IDTabla" />
+          </Key>
+          <Property Name="IDTablaDetalle" Type="int" Nullable="false" />
+          <Property Name="IDTabla" Type="int" Nullable="false" />
+          <Property Name="DescripcionCorta" Type="varchar" MaxLength="65" />
+          <Property Name="DescripcionLarga" Type="varchar" MaxLength="250" />
+          <Property Name="Estado" Type="bit" />
+          <Property Name="UsuarioModificacion" Type="varchar" MaxLength="30" />
+          <Property Name="FechaModificacion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="VariablesDelSistema">
+          <Key>
+            <PropertyRef Name="IdConcepto" />
+          </Key>
+          <Property Name="IdConcepto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DescripcionCorta" Type="varchar" MaxLength="20" />
+          <Property Name="DescripcionLarga" Type="varchar" MaxLength="130" />
+          <Property Name="TipoConcepto" Type="varchar" MaxLength="2" />
+          <Property Name="TipoValor" Type="varchar" MaxLength="2" />
+          <Property Name="Valor" Type="decimal" Precision="18" Scale="5" />
+          <Property Name="Activo" Type="bit" />
+        </EntityType>
+        <Association Name="FK_DerechoHabientes_Personal">
+          <End Role="Personal" Type="Self.Personal" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DerechoHabientes" Type="Self.DerechoHabientes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Personal">
+              <PropertyRef Name="IDPersonal" />
+            </Principal>
+            <Dependent Role="DerechoHabientes">
+              <PropertyRef Name="IDPersonal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonalCargo_Cargos">
+          <End Role="Cargos" Type="Self.Cargos" Multiplicity="1" />
+          <End Role="PersonalCargo" Type="Self.PersonalCargo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cargos">
+              <PropertyRef Name="IDCargo" />
+            </Principal>
+            <Dependent Role="PersonalCargo">
+              <PropertyRef Name="IDCargo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonalCargo_Personal">
+          <End Role="Personal" Type="Self.Personal" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PersonalCargo" Type="Self.PersonalCargo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Personal">
+              <PropertyRef Name="IDPersonal" />
+            </Principal>
+            <Dependent Role="PersonalCargo">
+              <PropertyRef Name="IDPersonal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonalConceptos_PersonalCargo">
+          <End Role="PersonalCargo" Type="Self.PersonalCargo" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PersonalConceptos" Type="Self.PersonalConceptos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PersonalCargo">
+              <PropertyRef Name="IDCargo" />
+              <PropertyRef Name="IDPersonal" />
+            </Principal>
+            <Dependent Role="PersonalConceptos">
+              <PropertyRef Name="IDCargo" />
+              <PropertyRef Name="IDPersonal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonalHorarios_PersonalCargo">
+          <End Role="PersonalCargo" Type="Self.PersonalCargo" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PersonalHorarios" Type="Self.PersonalHorarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PersonalCargo">
+              <PropertyRef Name="IDCargo" />
+              <PropertyRef Name="IDPersonal" />
+            </Principal>
+            <Dependent Role="PersonalHorarios">
+              <PropertyRef Name="IDCargo" />
+              <PropertyRef Name="IDPersonal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonalProyecto_Personal">
+          <End Role="Personal" Type="Self.Personal" Multiplicity="1" />
+          <End Role="PersonalProyecto" Type="Self.PersonalProyecto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Personal">
+              <PropertyRef Name="IDPersonal" />
+            </Principal>
+            <Dependent Role="PersonalProyecto">
+              <PropertyRef Name="IDPersonal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlanillaGeneral_ControlAsistencia">
+          <End Role="ControlAsistencia" Type="Self.ControlAsistencia" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PlanillaGeneral" Type="Self.PlanillaGeneral" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ControlAsistencia">
+              <PropertyRef Name="IDAsistencia" />
+              <PropertyRef Name="IDPersonal" />
+              <PropertyRef Name="IDCargo" />
+            </Principal>
+            <Dependent Role="PlanillaGeneral">
+              <PropertyRef Name="IDAsistencia" />
+              <PropertyRef Name="IDPersonal" />
+              <PropertyRef Name="IDCargo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlantillaDetalle_Plantilla">
+          <End Role="Plantilla" Type="Self.Plantilla" Multiplicity="1" />
+          <End Role="PlantillaDetalle" Type="Self.PlantillaDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Plantilla">
+              <PropertyRef Name="IDPlantilla" />
+            </Principal>
+            <Dependent Role="PlantillaDetalle">
+              <PropertyRef Name="IDPlantilla" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TablaDetalle_Tabla">
+          <End Role="Tabla" Type="Self.Tabla" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TablaDetalle" Type="Self.TablaDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tabla">
+              <PropertyRef Name="IDTabla" />
+            </Principal>
+            <Dependent Role="TablaDetalle">
+              <PropertyRef Name="IDTabla" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="usp_GetAsistenciaXtrabajador" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idPersonal" Type="int" Mode="In" />
+          <Parameter Name="anio" Type="int" Mode="In" />
+          <Parameter Name="mes" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="PlanillaModelStoreContainer">
+          <EntitySet Name="Afp" EntityType="Self.Afp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cargos" EntityType="Self.Cargos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Concepto" EntityType="Self.Concepto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ControlAsistencia" EntityType="Self.ControlAsistencia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ControlDeAsistencia" EntityType="Self.ControlDeAsistencia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DerechoHabientes" EntityType="Self.DerechoHabientes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Periodos" EntityType="Self.Periodos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Personal" EntityType="Self.Personal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PersonalCargo" EntityType="Self.PersonalCargo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PersonalConceptos" EntityType="Self.PersonalConceptos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PersonalHorarios" EntityType="Self.PersonalHorarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PersonalProyecto" EntityType="Self.PersonalProyecto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PlanillaGeneral" EntityType="Self.PlanillaGeneral" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Plantilla" EntityType="Self.Plantilla" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PlantillaDetalle" EntityType="Self.PlantillaDetalle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sunat_statements" EntityType="Self.Sunat_statements" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tabla" EntityType="Self.Tabla" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TablaDetalle" EntityType="Self.TablaDetalle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VariablesDelSistema" EntityType="Self.VariablesDelSistema" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DerechoHabientes_Personal" Association="Self.FK_DerechoHabientes_Personal">
+            <End Role="Personal" EntitySet="Personal" />
+            <End Role="DerechoHabientes" EntitySet="DerechoHabientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonalCargo_Cargos" Association="Self.FK_PersonalCargo_Cargos">
+            <End Role="Cargos" EntitySet="Cargos" />
+            <End Role="PersonalCargo" EntitySet="PersonalCargo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonalCargo_Personal" Association="Self.FK_PersonalCargo_Personal">
+            <End Role="Personal" EntitySet="Personal" />
+            <End Role="PersonalCargo" EntitySet="PersonalCargo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonalConceptos_PersonalCargo" Association="Self.FK_PersonalConceptos_PersonalCargo">
+            <End Role="PersonalCargo" EntitySet="PersonalCargo" />
+            <End Role="PersonalConceptos" EntitySet="PersonalConceptos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonalHorarios_PersonalCargo" Association="Self.FK_PersonalHorarios_PersonalCargo">
+            <End Role="PersonalCargo" EntitySet="PersonalCargo" />
+            <End Role="PersonalHorarios" EntitySet="PersonalHorarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonalProyecto_Personal" Association="Self.FK_PersonalProyecto_Personal">
+            <End Role="Personal" EntitySet="Personal" />
+            <End Role="PersonalProyecto" EntitySet="PersonalProyecto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlanillaGeneral_ControlAsistencia" Association="Self.FK_PlanillaGeneral_ControlAsistencia">
+            <End Role="ControlAsistencia" EntitySet="ControlAsistencia" />
+            <End Role="PlanillaGeneral" EntitySet="PlanillaGeneral" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlantillaDetalle_Plantilla" Association="Self.FK_PlantillaDetalle_Plantilla">
+            <End Role="Plantilla" EntitySet="Plantilla" />
+            <End Role="PlantillaDetalle" EntitySet="PlantillaDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TablaDetalle_Tabla" Association="Self.FK_TablaDetalle_Tabla">
+            <End Role="Tabla" EntitySet="Tabla" />
+            <End Role="TablaDetalle" EntitySet="TablaDetalle" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PlanillaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Afp">
+          <Key>
+            <PropertyRef Name="IDAFP" />
+          </Key>
+          <Property Name="IDAFP" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DescripcionCorta" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DescripcionLarga" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="AporteObligatorio" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="PrimaSeguro" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="ComisionPorcentual" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="AporteVoluntario" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="LimitedeSueldo" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="UsuarioModificacion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Cargos">
+          <Key>
+            <PropertyRef Name="IDCargo" />
+          </Key>
+          <Property Name="IDCargo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DescripcionCorta" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DescripcionLargo" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <Property Name="UsuarioModificacion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="TipoPlanilla" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Importe" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="PersonalCargo" Relationship="Self.FK_PersonalCargo_Cargos" FromRole="Cargos" ToRole="PersonalCargo" />
+        </EntityType>
+        <EntityType Name="Concepto">
+          <Key>
+            <PropertyRef Name="IDConcepto" />
+            <PropertyRef Name="IDSunat" />
+            <PropertyRef Name="IDContable" />
+            <PropertyRef Name="TipoPlanilla" />
+          </Key>
+          <Property Name="IDConcepto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Orden" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="DescripcionCorta" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DescripcionLarga" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="IDSunat" Type="Int32" Nullable="false" />
+          <Property Name="IDContable" Type="Int32" Nullable="false" />
+          <Property Name="TipoConcepto" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Moneda" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="TipoCalculo" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="ValorCalculo" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Formula" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="Boolean" />
+          <Property Name="TipoPlanilla" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <Property Name="UsuarioModificacion" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="SeleccionarRegistro" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="ControlAsistencia">
+          <Key>
+            <PropertyRef Name="IDAsistencia" />
+            <PropertyRef Name="IDPersonal" />
+            <PropertyRef Name="IDCargo" />
+          </Key>
+          <Property Name="IDAsistencia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDPersonal" Type="Int32" Nullable="false" />
+          <Property Name="IDCargo" Type="Int32" Nullable="false" />
+          <Property Name="TipoAcesso" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
+          <Property Name="Hora" Type="Time" Precision="7" />
+          <Property Name="HoraPersonal" Type="Time" Precision="7" />
+          <Property Name="HoraExtras" Type="Int32" />
+          <Property Name="HorasFaltas" Type="Int32" />
+          <Property Name="Tolerancia" Type="Time" Precision="7" />
+          <Property Name="Penalidad" Type="Time" Precision="7" />
+          <Property Name="Anotaciones" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="FaltaJustificada" Type="Boolean" />
+          <Property Name="Tardanza" Type="Time" Precision="7" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <Property Name="UsuarioModificacion" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PlanillaGeneral" Relationship="Self.FK_PlanillaGeneral_ControlAsistencia" FromRole="ControlAsistencia" ToRole="PlanillaGeneral" />
+        </EntityType>
+        <EntityType Name="ControlDeAsistencia">
+          <Key>
+            <PropertyRef Name="IDAsistencia" />
+            <PropertyRef Name="IDPersonal" />
+          </Key>
+          <Property Name="IDAsistencia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDPersonal" Type="Int32" Nullable="false" />
+          <Property Name="iddocumentoref" Type="Int32" />
+          <Property Name="tipoPersona" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="TipoAcesso" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="FechaAsistencia" Type="DateTime" Precision="3" />
+          <Property Name="HoraIngreso" Type="Time" Precision="7" />
+          <Property Name="Tardanza" Type="Time" Precision="7" />
+          <Property Name="HorasTotales" Type="Time" Precision="7" />
+          <Property Name="HorasExtras" Type="Time" Precision="7" />
+          <Property Name="Faltas" Type="Int32" />
+          <Property Name="MesAsistencia" Type="Int32" />
+          <Property Name="AñoAsistencia" Type="Int32" />
+          <Property Name="DiaAsistencia" Type="Int32" />
+          <Property Name="status" Type="Int16" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <Property Name="UsuarioModificacion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="DerechoHabientes">
+          <Key>
+            <PropertyRef Name="IDHabiente" />
+            <PropertyRef Name="IDPersonal" />
+          </Key>
+          <Property Name="IDHabiente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDPersonal" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="Sexo" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="fechanacimiento" Type="DateTime" Precision="3" />
+          <Property Name="Vinculo" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Situacion" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Incapacidad" Type="Int32" />
+          <Property Name="CertificadoMedico" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="Domicilio" Type="Int32" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <Property Name="UsuarioModificacion" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Personal" Relationship="Self.FK_DerechoHabientes_Personal" FromRole="DerechoHabientes" ToRole="Personal" />
+        </EntityType>
+        <EntityType Name="Periodos">
+          <Key>
+            <PropertyRef Name="IDPeriodo" />
+          </Key>
+          <Property Name="IDPeriodo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Mes" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="FechaInicio" Type="DateTime" Precision="3" />
+          <Property Name="fechafin" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Personal">
+          <Key>
+            <PropertyRef Name="IDPersonal" />
+          </Key>
+          <Property Name="IDPersonal" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idEstablecimiento" Type="Int32" />
+          <Property Name="ApellidoPaterno" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ApellidoMaterno" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Celular" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Sexo" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="FechaNacimiento" Type="DateTime" Precision="3" />
+          <Property Name="Estadocivil" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="paisEmisorComprobante" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="Fotografia" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Tipodocumento" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Numerodocumento" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="codigoLargaDistancia" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="regimenLaboral" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="CategoriaOcupacional" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="tipoContrato" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="JornadaTrabajoMaximo" Type="Boolean" />
+          <Property Name="JornadaTrabajoAtipica" Type="Boolean" />
+          <Property Name="JornadaTrabajoNocturno" Type="Boolean" />
+          <Property Name="SituacionEspecial" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Discapacidad" Type="Boolean" />
+          <Property Name="Sindicalizado" Type="Boolean" />
+          <Property Name="RegimenSalud" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="RegimenSalud_Inicio" Type="DateTime" Precision="0" />
+          <Property Name="RegimenSalud_Fin" Type="DateTime" Precision="0" />
+          <Property Name="PrimeraDireccion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="SegundaDireccion" Type="Int32" />
+          <Property Name="Estado" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="ViaTipo" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="ViaNombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ViaNumero" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ViaDpto" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ViaInterior" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ViaManzana" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ViaLote" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Zonatipo" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Zonanombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Referencia" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Departamneto" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="Provincia" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="Distrito" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="Nacionalidad" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CondicionDomiciliado" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Area" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="TipoTrabajador" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="LocalizacionTrabajador" Type="Int32" />
+          <Property Name="FormadePago" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="periodicidadpago" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="FechaIngreso" Type="DateTime" Precision="3" />
+          <Property Name="FechaCese" Type="DateTime" Precision="3" />
+          <Property Name="Situacion" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NivelEducacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="RegimenPension" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="InicioPension" Type="DateTime" Precision="3" />
+          <Property Name="FinalizaPension" Type="DateTime" Precision="0" />
+          <Property Name="IDAfp" Type="Int32" />
+          <Property Name="CoberturaPension" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="CoberturaSalud" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="SCRT" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="AsignacionFamiliar" Type="Boolean" />
+          <Property Name="CoberturaSaludInicio" Type="DateTime" Precision="0" />
+          <Property Name="CoberturaSaludFinaliza" Type="DateTime" Precision="0" />
+          <Property Name="Banco" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="BancoCuenta" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="CTS" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="CTSCuenta" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="LIR" Type="Boolean" />
+          <Property Name="EvitaDobleImposicion" Type="Boolean" />
+          <Property Name="HoraInicio" Type="Time" Precision="7" />
+          <Property Name="HoraFinal" Type="Time" Precision="7" />
+          <Property Name="RefrigerioInicio" Type="Time" Precision="7" />
+          <Property Name="RefrigerioFin" Type="Time" Precision="7" />
+          <Property Name="DiasLaborables" Type="Int32" />
+          <Property Name="SueldoBasico" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="tipoHorario" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <Property Name="UsuarioModificacion" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DerechoHabientes" Relationship="Self.FK_DerechoHabientes_Personal" FromRole="Personal" ToRole="DerechoHabientes" />
+          <NavigationProperty Name="PersonalCargo" Relationship="Self.FK_PersonalCargo_Personal" FromRole="Personal" ToRole="PersonalCargo" />
+          <NavigationProperty Name="PersonalProyecto" Relationship="Self.FK_PersonalProyecto_Personal" FromRole="Personal" ToRole="PersonalProyecto" />
+        </EntityType>
+        <EntityType Name="PersonalCargo">
+          <Key>
+            <PropertyRef Name="IDCargo" />
+            <PropertyRef Name="IDPersonal" />
+          </Key>
+          <Property Name="IDCargo" Type="Int32" Nullable="false" />
+          <Property Name="IDPersonal" Type="Int32" Nullable="false" />
+          <Property Name="DescripcionCorta" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DescripcionLarga" Type="String" MaxLength="180" FixedLength="false" Unicode="false" />
+          <Property Name="DiasLaborales" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Totalhoras" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="status" Type="Int16" />
+          <NavigationProperty Name="Cargos" Relationship="Self.FK_PersonalCargo_Cargos" FromRole="PersonalCargo" ToRole="Cargos" />
+          <NavigationProperty Name="Personal" Relationship="Self.FK_PersonalCargo_Personal" FromRole="PersonalCargo" ToRole="Personal" />
+          <NavigationProperty Name="PersonalConceptos" Relationship="Self.FK_PersonalConceptos_PersonalCargo" FromRole="PersonalCargo" ToRole="PersonalConceptos" />
+          <NavigationProperty Name="PersonalHorarios" Relationship="Self.FK_PersonalHorarios_PersonalCargo" FromRole="PersonalCargo" ToRole="PersonalHorarios" />
+        </EntityType>
+        <EntityType Name="PersonalConceptos">
+          <Key>
+            <PropertyRef Name="IDConcepto" />
+            <PropertyRef Name="IDPersonal" />
+            <PropertyRef Name="IDCargo" />
+          </Key>
+          <Property Name="IDConcepto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDPersonal" Type="Int32" Nullable="false" />
+          <Property Name="IDCargo" Type="Int32" Nullable="false" />
+          <Property Name="IDTipoPlanilla" Type="Int32" />
+          <Property Name="orden" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="DescripcionCorta" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DescripcionLarga" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="IDSunat" Type="Int32" />
+          <Property Name="IDContable" Type="Int32" />
+          <Property Name="Moneda" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="TipoCalculo" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Formula" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="Boolean" />
+          <Property Name="TipoConcepto" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="ValorCalculo" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <Property Name="UsuarioModificacion" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PersonalCargo" Relationship="Self.FK_PersonalConceptos_PersonalCargo" FromRole="PersonalConceptos" ToRole="PersonalCargo" />
+        </EntityType>
+        <EntityType Name="PersonalHorarios">
+          <Key>
+            <PropertyRef Name="IDHorario" />
+          </Key>
+          <Property Name="IDHorario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDPersonal" Type="Int32" />
+          <Property Name="IDCargo" Type="Int32" />
+          <Property Name="detalle" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="DiaNumero" Type="Int32" />
+          <Property Name="DiaSemana" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="HoraIngreso" Type="Time" Precision="7" />
+          <Property Name="HoraSalida" Type="Time" Precision="7" />
+          <Property Name="Refrigerio" Type="Time" Precision="7" />
+          <Property Name="Reingreso" Type="Time" Precision="7" />
+          <Property Name="fechamodificacion" Type="DateTime" Precision="3" />
+          <Property Name="usuariomodificacion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PersonalCargo" Relationship="Self.FK_PersonalHorarios_PersonalCargo" FromRole="PersonalHorarios" ToRole="PersonalCargo" />
+        </EntityType>
+        <EntityType Name="PersonalProyecto">
+          <Key>
+            <PropertyRef Name="IDCosto" />
+            <PropertyRef Name="IDPersonal" />
+          </Key>
+          <Property Name="IDCosto" Type="Int32" Nullable="false" />
+          <Property Name="IDPersonal" Type="Int32" Nullable="false" />
+          <Property Name="IDCargo" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Personal" Relationship="Self.FK_PersonalProyecto_Personal" FromRole="PersonalProyecto" ToRole="Personal" />
+        </EntityType>
+        <EntityType Name="PlanillaGeneral">
+          <Key>
+            <PropertyRef Name="IDPlanilla" />
+          </Key>
+          <Property Name="IDPlanilla" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDAsistencia" Type="Int32" Nullable="false" />
+          <Property Name="IDPersonal" Type="Int32" Nullable="false" />
+          <Property Name="IDCargo" Type="Int32" Nullable="false" />
+          <Property Name="TipoConcepto" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IDConcepto" Type="Int32" />
+          <Property Name="MesPlanilla" Type="Int32" Nullable="false" />
+          <Property Name="AnioPlanilla" Type="Int32" Nullable="false" />
+          <Property Name="FechaPlanilla" Type="DateTime" Precision="3" />
+          <Property Name="TipoPlanilla" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="DescripcionCorta" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DescripcionLarga" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Importe" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="statusPago" Type="Int32" />
+          <Property Name="Fechamodificacion" Type="DateTime" Precision="3" />
+          <Property Name="UsuarioModificacion" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ControlAsistencia" Relationship="Self.FK_PlanillaGeneral_ControlAsistencia" FromRole="PlanillaGeneral" ToRole="ControlAsistencia" />
+        </EntityType>
+        <EntityType Name="Plantilla">
+          <Key>
+            <PropertyRef Name="IDPlantilla" />
+          </Key>
+          <Property Name="IDPlantilla" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DescripcionCorta" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DescripcionLarga" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <Property Name="UsuarioModificacion" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PlantillaDetalle" Relationship="Self.FK_PlantillaDetalle_Plantilla" FromRole="Plantilla" ToRole="PlantillaDetalle" />
+        </EntityType>
+        <EntityType Name="PlantillaDetalle">
+          <Key>
+            <PropertyRef Name="IDPlantilla" />
+            <PropertyRef Name="IDConcepto" />
+          </Key>
+          <Property Name="IDPlantilla" Type="Int32" Nullable="false" />
+          <Property Name="IDConcepto" Type="Int32" Nullable="false" />
+          <Property Name="DescripcionCorta" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Orden" Type="Int16" Nullable="false" />
+          <Property Name="Requerido" Type="Boolean" Nullable="false" />
+          <Property Name="valorConcepto" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="FechaModificacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UsuarioModificacion" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Plantilla" Relationship="Self.FK_PlantillaDetalle_Plantilla" FromRole="PlantillaDetalle" ToRole="Plantilla" />
+        </EntityType>
+        <EntityType Name="Sunat_statements">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="IDSunat" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="anio" Type="Int32" />
+          <Property Name="mes" Type="Int32" />
+          <Property Name="importe" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <Property Name="UsuarioModificacion" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Tabla">
+          <Key>
+            <PropertyRef Name="IDTabla" />
+          </Key>
+          <Property Name="IDTabla" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDSunat" Type="Int32" />
+          <Property Name="DescripcionCorta" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DescripcionLarga" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="Boolean" />
+          <Property Name="UsuarioModificacion" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="TablaDetalle" Relationship="Self.FK_TablaDetalle_Tabla" FromRole="Tabla" ToRole="TablaDetalle" />
+        </EntityType>
+        <EntityType Name="TablaDetalle">
+          <Key>
+            <PropertyRef Name="IDTablaDetalle" />
+            <PropertyRef Name="IDTabla" />
+          </Key>
+          <Property Name="IDTablaDetalle" Type="Int32" Nullable="false" />
+          <Property Name="IDTabla" Type="Int32" Nullable="false" />
+          <Property Name="DescripcionCorta" Type="String" MaxLength="65" FixedLength="false" Unicode="false" />
+          <Property Name="DescripcionLarga" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="Boolean" />
+          <Property Name="UsuarioModificacion" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Tabla" Relationship="Self.FK_TablaDetalle_Tabla" FromRole="TablaDetalle" ToRole="Tabla" />
+        </EntityType>
+        <EntityType Name="VariablesDelSistema">
+          <Key>
+            <PropertyRef Name="IdConcepto" />
+          </Key>
+          <Property Name="IdConcepto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DescripcionCorta" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DescripcionLarga" Type="String" MaxLength="130" FixedLength="false" Unicode="false" />
+          <Property Name="TipoConcepto" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="TipoValor" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Valor" Type="Decimal" Precision="18" Scale="5" />
+          <Property Name="Activo" Type="Boolean" />
+        </EntityType>
+        <Association Name="FK_PersonalCargo_Cargos">
+          <End Role="Cargos" Type="Self.Cargos" Multiplicity="1" />
+          <End Role="PersonalCargo" Type="Self.PersonalCargo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cargos">
+              <PropertyRef Name="IDCargo" />
+            </Principal>
+            <Dependent Role="PersonalCargo">
+              <PropertyRef Name="IDCargo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlanillaGeneral_ControlAsistencia">
+          <End Role="ControlAsistencia" Type="Self.ControlAsistencia" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PlanillaGeneral" Type="Self.PlanillaGeneral" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ControlAsistencia">
+              <PropertyRef Name="IDAsistencia" />
+              <PropertyRef Name="IDPersonal" />
+              <PropertyRef Name="IDCargo" />
+            </Principal>
+            <Dependent Role="PlanillaGeneral">
+              <PropertyRef Name="IDAsistencia" />
+              <PropertyRef Name="IDPersonal" />
+              <PropertyRef Name="IDCargo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DerechoHabientes_Personal">
+          <End Role="Personal" Type="Self.Personal" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DerechoHabientes" Type="Self.DerechoHabientes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Personal">
+              <PropertyRef Name="IDPersonal" />
+            </Principal>
+            <Dependent Role="DerechoHabientes">
+              <PropertyRef Name="IDPersonal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonalCargo_Personal">
+          <End Role="Personal" Type="Self.Personal" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PersonalCargo" Type="Self.PersonalCargo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Personal">
+              <PropertyRef Name="IDPersonal" />
+            </Principal>
+            <Dependent Role="PersonalCargo">
+              <PropertyRef Name="IDPersonal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonalProyecto_Personal">
+          <End Role="Personal" Type="Self.Personal" Multiplicity="1" />
+          <End Role="PersonalProyecto" Type="Self.PersonalProyecto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Personal">
+              <PropertyRef Name="IDPersonal" />
+            </Principal>
+            <Dependent Role="PersonalProyecto">
+              <PropertyRef Name="IDPersonal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonalConceptos_PersonalCargo">
+          <End Role="PersonalCargo" Type="Self.PersonalCargo" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PersonalConceptos" Type="Self.PersonalConceptos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PersonalCargo">
+              <PropertyRef Name="IDCargo" />
+              <PropertyRef Name="IDPersonal" />
+            </Principal>
+            <Dependent Role="PersonalConceptos">
+              <PropertyRef Name="IDCargo" />
+              <PropertyRef Name="IDPersonal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonalHorarios_PersonalCargo">
+          <End Role="PersonalCargo" Type="Self.PersonalCargo" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PersonalHorarios" Type="Self.PersonalHorarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PersonalCargo">
+              <PropertyRef Name="IDCargo" />
+              <PropertyRef Name="IDPersonal" />
+            </Principal>
+            <Dependent Role="PersonalHorarios">
+              <PropertyRef Name="IDCargo" />
+              <PropertyRef Name="IDPersonal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlantillaDetalle_Plantilla">
+          <End Role="Plantilla" Type="Self.Plantilla" Multiplicity="1" />
+          <End Role="PlantillaDetalle" Type="Self.PlantillaDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Plantilla">
+              <PropertyRef Name="IDPlantilla" />
+            </Principal>
+            <Dependent Role="PlantillaDetalle">
+              <PropertyRef Name="IDPlantilla" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TablaDetalle_Tabla">
+          <End Role="Tabla" Type="Self.Tabla" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TablaDetalle" Type="Self.TablaDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tabla">
+              <PropertyRef Name="IDTabla" />
+            </Principal>
+            <Dependent Role="TablaDetalle">
+              <PropertyRef Name="IDTabla" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PlanillaEntities" annotation:LazyLoadingEnabled="false">
+          <EntitySet Name="Afp" EntityType="Self.Afp" />
+          <EntitySet Name="Cargos" EntityType="Self.Cargos" />
+          <EntitySet Name="Concepto" EntityType="Self.Concepto" />
+          <EntitySet Name="ControlAsistencia" EntityType="Self.ControlAsistencia" />
+          <EntitySet Name="ControlDeAsistencia" EntityType="Self.ControlDeAsistencia" />
+          <EntitySet Name="DerechoHabientes" EntityType="Self.DerechoHabientes" />
+          <EntitySet Name="Periodos" EntityType="Self.Periodos" />
+          <EntitySet Name="Personal" EntityType="Self.Personal" />
+          <EntitySet Name="PersonalCargo" EntityType="Self.PersonalCargo" />
+          <EntitySet Name="PersonalConceptos" EntityType="Self.PersonalConceptos" />
+          <EntitySet Name="PersonalHorarios" EntityType="Self.PersonalHorarios" />
+          <EntitySet Name="PersonalProyecto" EntityType="Self.PersonalProyecto" />
+          <EntitySet Name="PlanillaGeneral" EntityType="Self.PlanillaGeneral" />
+          <EntitySet Name="Plantilla" EntityType="Self.Plantilla" />
+          <EntitySet Name="PlantillaDetalle" EntityType="Self.PlantillaDetalle" />
+          <EntitySet Name="Sunat_statements" EntityType="Self.Sunat_statements" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Tabla" EntityType="Self.Tabla" />
+          <EntitySet Name="TablaDetalle" EntityType="Self.TablaDetalle" />
+          <EntitySet Name="VariablesDelSistema" EntityType="Self.VariablesDelSistema" />
+          <AssociationSet Name="FK_PersonalCargo_Cargos" Association="Self.FK_PersonalCargo_Cargos">
+            <End Role="Cargos" EntitySet="Cargos" />
+            <End Role="PersonalCargo" EntitySet="PersonalCargo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlanillaGeneral_ControlAsistencia" Association="Self.FK_PlanillaGeneral_ControlAsistencia">
+            <End Role="ControlAsistencia" EntitySet="ControlAsistencia" />
+            <End Role="PlanillaGeneral" EntitySet="PlanillaGeneral" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DerechoHabientes_Personal" Association="Self.FK_DerechoHabientes_Personal">
+            <End Role="Personal" EntitySet="Personal" />
+            <End Role="DerechoHabientes" EntitySet="DerechoHabientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonalCargo_Personal" Association="Self.FK_PersonalCargo_Personal">
+            <End Role="Personal" EntitySet="Personal" />
+            <End Role="PersonalCargo" EntitySet="PersonalCargo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonalProyecto_Personal" Association="Self.FK_PersonalProyecto_Personal">
+            <End Role="Personal" EntitySet="Personal" />
+            <End Role="PersonalProyecto" EntitySet="PersonalProyecto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonalConceptos_PersonalCargo" Association="Self.FK_PersonalConceptos_PersonalCargo">
+            <End Role="PersonalCargo" EntitySet="PersonalCargo" />
+            <End Role="PersonalConceptos" EntitySet="PersonalConceptos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonalHorarios_PersonalCargo" Association="Self.FK_PersonalHorarios_PersonalCargo">
+            <End Role="PersonalCargo" EntitySet="PersonalCargo" />
+            <End Role="PersonalHorarios" EntitySet="PersonalHorarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlantillaDetalle_Plantilla" Association="Self.FK_PlantillaDetalle_Plantilla">
+            <End Role="Plantilla" EntitySet="Plantilla" />
+            <End Role="PlantillaDetalle" EntitySet="PlantillaDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TablaDetalle_Tabla" Association="Self.FK_TablaDetalle_Tabla">
+            <End Role="Tabla" EntitySet="Tabla" />
+            <End Role="TablaDetalle" EntitySet="TablaDetalle" />
+          </AssociationSet>
+          <FunctionImport Name="usp_GetAsistenciaXtrabajador" ReturnType="Collection(PlanillaModel.usp_GetAsistenciaXtrabajador_Result)">
+            <Parameter Name="idPersonal" Mode="In" Type="Int32" />
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="mes" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="usp_GetAsistenciaXtrabajador_Result">
+          <Property Type="Int32" Name="AñoAsistencia" Nullable="true" />
+          <Property Type="Int32" Name="MesAsistencia" Nullable="true" />
+          <Property Type="Int32" Name="DiaAsistencia" Nullable="true" />
+          <Property Type="String" Name="tardanzas" Nullable="false" MaxLength="38" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PlanillaModelStoreContainer" CdmEntityContainer="PlanillaEntities">
+          <EntitySetMapping Name="Afp">
+            <EntityTypeMapping TypeName="PlanillaModel.Afp">
+              <MappingFragment StoreEntitySet="Afp">
+                <ScalarProperty Name="IDAFP" ColumnName="IDAFP" />
+                <ScalarProperty Name="DescripcionCorta" ColumnName="DescripcionCorta" />
+                <ScalarProperty Name="DescripcionLarga" ColumnName="DescripcionLarga" />
+                <ScalarProperty Name="AporteObligatorio" ColumnName="AporteObligatorio" />
+                <ScalarProperty Name="PrimaSeguro" ColumnName="PrimaSeguro" />
+                <ScalarProperty Name="ComisionPorcentual" ColumnName="ComisionPorcentual" />
+                <ScalarProperty Name="AporteVoluntario" ColumnName="AporteVoluntario" />
+                <ScalarProperty Name="LimitedeSueldo" ColumnName="LimitedeSueldo" />
+                <ScalarProperty Name="UsuarioModificacion" ColumnName="UsuarioModificacion" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cargos">
+            <EntityTypeMapping TypeName="PlanillaModel.Cargos">
+              <MappingFragment StoreEntitySet="Cargos">
+                <ScalarProperty Name="IDCargo" ColumnName="IDCargo" />
+                <ScalarProperty Name="DescripcionCorta" ColumnName="DescripcionCorta" />
+                <ScalarProperty Name="DescripcionLargo" ColumnName="DescripcionLargo" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="UsuarioModificacion" ColumnName="UsuarioModificacion" />
+                <ScalarProperty Name="TipoPlanilla" ColumnName="TipoPlanilla" />
+                <ScalarProperty Name="Importe" ColumnName="Importe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Concepto">
+            <EntityTypeMapping TypeName="PlanillaModel.Concepto">
+              <MappingFragment StoreEntitySet="Concepto">
+                <ScalarProperty Name="IDConcepto" ColumnName="IDConcepto" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="DescripcionCorta" ColumnName="DescripcionCorta" />
+                <ScalarProperty Name="DescripcionLarga" ColumnName="DescripcionLarga" />
+                <ScalarProperty Name="IDSunat" ColumnName="IDSunat" />
+                <ScalarProperty Name="IDContable" ColumnName="IDContable" />
+                <ScalarProperty Name="TipoConcepto" ColumnName="TipoConcepto" />
+                <ScalarProperty Name="Moneda" ColumnName="Moneda" />
+                <ScalarProperty Name="TipoCalculo" ColumnName="TipoCalculo" />
+                <ScalarProperty Name="ValorCalculo" ColumnName="ValorCalculo" />
+                <ScalarProperty Name="Formula" ColumnName="Formula" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="TipoPlanilla" ColumnName="TipoPlanilla" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="UsuarioModificacion" ColumnName="UsuarioModificacion" />
+                <ScalarProperty Name="SeleccionarRegistro" ColumnName="SeleccionarRegistro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ControlAsistencia">
+            <EntityTypeMapping TypeName="PlanillaModel.ControlAsistencia">
+              <MappingFragment StoreEntitySet="ControlAsistencia">
+                <ScalarProperty Name="IDAsistencia" ColumnName="IDAsistencia" />
+                <ScalarProperty Name="IDPersonal" ColumnName="IDPersonal" />
+                <ScalarProperty Name="IDCargo" ColumnName="IDCargo" />
+                <ScalarProperty Name="TipoAcesso" ColumnName="TipoAcesso" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Hora" ColumnName="Hora" />
+                <ScalarProperty Name="HoraPersonal" ColumnName="HoraPersonal" />
+                <ScalarProperty Name="HoraExtras" ColumnName="HoraExtras" />
+                <ScalarProperty Name="HorasFaltas" ColumnName="HorasFaltas" />
+                <ScalarProperty Name="Tolerancia" ColumnName="Tolerancia" />
+                <ScalarProperty Name="Penalidad" ColumnName="Penalidad" />
+                <ScalarProperty Name="Anotaciones" ColumnName="Anotaciones" />
+                <ScalarProperty Name="FaltaJustificada" ColumnName="FaltaJustificada" />
+                <ScalarProperty Name="Tardanza" ColumnName="Tardanza" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="UsuarioModificacion" ColumnName="UsuarioModificacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ControlDeAsistencia">
+            <EntityTypeMapping TypeName="PlanillaModel.ControlDeAsistencia">
+              <MappingFragment StoreEntitySet="ControlDeAsistencia">
+                <ScalarProperty Name="IDAsistencia" ColumnName="IDAsistencia" />
+                <ScalarProperty Name="IDPersonal" ColumnName="IDPersonal" />
+                <ScalarProperty Name="iddocumentoref" ColumnName="iddocumentoref" />
+                <ScalarProperty Name="tipoPersona" ColumnName="tipoPersona" />
+                <ScalarProperty Name="TipoAcesso" ColumnName="TipoAcesso" />
+                <ScalarProperty Name="FechaAsistencia" ColumnName="FechaAsistencia" />
+                <ScalarProperty Name="HoraIngreso" ColumnName="HoraIngreso" />
+                <ScalarProperty Name="Tardanza" ColumnName="Tardanza" />
+                <ScalarProperty Name="HorasTotales" ColumnName="HorasTotales" />
+                <ScalarProperty Name="HorasExtras" ColumnName="HorasExtras" />
+                <ScalarProperty Name="Faltas" ColumnName="Faltas" />
+                <ScalarProperty Name="MesAsistencia" ColumnName="MesAsistencia" />
+                <ScalarProperty Name="AñoAsistencia" ColumnName="AñoAsistencia" />
+                <ScalarProperty Name="DiaAsistencia" ColumnName="DiaAsistencia" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="UsuarioModificacion" ColumnName="UsuarioModificacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DerechoHabientes">
+            <EntityTypeMapping TypeName="PlanillaModel.DerechoHabientes">
+              <MappingFragment StoreEntitySet="DerechoHabientes">
+                <ScalarProperty Name="IDHabiente" ColumnName="IDHabiente" />
+                <ScalarProperty Name="IDPersonal" ColumnName="IDPersonal" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Sexo" ColumnName="Sexo" />
+                <ScalarProperty Name="fechanacimiento" ColumnName="fechanacimiento" />
+                <ScalarProperty Name="Vinculo" ColumnName="Vinculo" />
+                <ScalarProperty Name="Situacion" ColumnName="Situacion" />
+                <ScalarProperty Name="Incapacidad" ColumnName="Incapacidad" />
+                <ScalarProperty Name="CertificadoMedico" ColumnName="CertificadoMedico" />
+                <ScalarProperty Name="Domicilio" ColumnName="Domicilio" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="UsuarioModificacion" ColumnName="UsuarioModificacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Periodos">
+            <EntityTypeMapping TypeName="PlanillaModel.Periodos">
+              <MappingFragment StoreEntitySet="Periodos">
+                <ScalarProperty Name="IDPeriodo" ColumnName="IDPeriodo" />
+                <ScalarProperty Name="Mes" ColumnName="Mes" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="fechafin" ColumnName="fechafin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Personal">
+            <EntityTypeMapping TypeName="PlanillaModel.Personal">
+              <MappingFragment StoreEntitySet="Personal">
+                <ScalarProperty Name="IDPersonal" ColumnName="IDPersonal" />
+                <ScalarProperty Name="idEstablecimiento" ColumnName="idEstablecimiento" />
+                <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
+                <ScalarProperty Name="ApellidoMaterno" ColumnName="ApellidoMaterno" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Celular" ColumnName="Celular" />
+                <ScalarProperty Name="Sexo" ColumnName="Sexo" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+                <ScalarProperty Name="Estadocivil" ColumnName="Estadocivil" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="paisEmisorComprobante" ColumnName="paisEmisorComprobante" />
+                <ScalarProperty Name="Fotografia" ColumnName="Fotografia" />
+                <ScalarProperty Name="Tipodocumento" ColumnName="Tipodocumento" />
+                <ScalarProperty Name="Numerodocumento" ColumnName="Numerodocumento" />
+                <ScalarProperty Name="codigoLargaDistancia" ColumnName="codigoLargaDistancia" />
+                <ScalarProperty Name="regimenLaboral" ColumnName="regimenLaboral" />
+                <ScalarProperty Name="CategoriaOcupacional" ColumnName="CategoriaOcupacional" />
+                <ScalarProperty Name="tipoContrato" ColumnName="tipoContrato" />
+                <ScalarProperty Name="JornadaTrabajoMaximo" ColumnName="JornadaTrabajoMaximo" />
+                <ScalarProperty Name="JornadaTrabajoAtipica" ColumnName="JornadaTrabajoAtipica" />
+                <ScalarProperty Name="JornadaTrabajoNocturno" ColumnName="JornadaTrabajoNocturno" />
+                <ScalarProperty Name="SituacionEspecial" ColumnName="SituacionEspecial" />
+                <ScalarProperty Name="Discapacidad" ColumnName="Discapacidad" />
+                <ScalarProperty Name="Sindicalizado" ColumnName="Sindicalizado" />
+                <ScalarProperty Name="RegimenSalud" ColumnName="RegimenSalud" />
+                <ScalarProperty Name="RegimenSalud_Inicio" ColumnName="RegimenSalud_Inicio" />
+                <ScalarProperty Name="RegimenSalud_Fin" ColumnName="RegimenSalud_Fin" />
+                <ScalarProperty Name="PrimeraDireccion" ColumnName="PrimeraDireccion" />
+                <ScalarProperty Name="SegundaDireccion" ColumnName="SegundaDireccion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="ViaTipo" ColumnName="ViaTipo" />
+                <ScalarProperty Name="ViaNombre" ColumnName="ViaNombre" />
+                <ScalarProperty Name="ViaNumero" ColumnName="ViaNumero" />
+                <ScalarProperty Name="ViaDpto" ColumnName="ViaDpto" />
+                <ScalarProperty Name="ViaInterior" ColumnName="ViaInterior" />
+                <ScalarProperty Name="ViaManzana" ColumnName="ViaManzana" />
+                <ScalarProperty Name="ViaLote" ColumnName="ViaLote" />
+                <ScalarProperty Name="Zonatipo" ColumnName="Zonatipo" />
+                <ScalarProperty Name="Zonanombre" ColumnName="Zonanombre" />
+                <ScalarProperty Name="Referencia" ColumnName="Referencia" />
+                <ScalarProperty Name="Departamneto" ColumnName="Departamneto" />
+                <ScalarProperty Name="Provincia" ColumnName="Provincia" />
+                <ScalarProperty Name="Distrito" ColumnName="Distrito" />
+                <ScalarProperty Name="Nacionalidad" ColumnName="Nacionalidad" />
+                <ScalarProperty Name="CondicionDomiciliado" ColumnName="CondicionDomiciliado" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="TipoTrabajador" ColumnName="TipoTrabajador" />
+                <ScalarProperty Name="LocalizacionTrabajador" ColumnName="LocalizacionTrabajador" />
+                <ScalarProperty Name="FormadePago" ColumnName="FormadePago" />
+                <ScalarProperty Name="periodicidadpago" ColumnName="periodicidadpago" />
+                <ScalarProperty Name="FechaIngreso" ColumnName="FechaIngreso" />
+                <ScalarProperty Name="FechaCese" ColumnName="FechaCese" />
+                <ScalarProperty Name="Situacion" ColumnName="Situacion" />
+                <ScalarProperty Name="NivelEducacion" ColumnName="NivelEducacion" />
+                <ScalarProperty Name="RegimenPension" ColumnName="RegimenPension" />
+                <ScalarProperty Name="InicioPension" ColumnName="InicioPension" />
+                <ScalarProperty Name="FinalizaPension" ColumnName="FinalizaPension" />
+                <ScalarProperty Name="IDAfp" ColumnName="IDAfp" />
+                <ScalarProperty Name="CoberturaPension" ColumnName="CoberturaPension" />
+                <ScalarProperty Name="CoberturaSalud" ColumnName="CoberturaSalud" />
+                <ScalarProperty Name="SCRT" ColumnName="SCRT" />
+                <ScalarProperty Name="AsignacionFamiliar" ColumnName="AsignacionFamiliar" />
+                <ScalarProperty Name="CoberturaSaludInicio" ColumnName="CoberturaSaludInicio" />
+                <ScalarProperty Name="CoberturaSaludFinaliza" ColumnName="CoberturaSaludFinaliza" />
+                <ScalarProperty Name="Banco" ColumnName="Banco" />
+                <ScalarProperty Name="BancoCuenta" ColumnName="BancoCuenta" />
+                <ScalarProperty Name="CTS" ColumnName="CTS" />
+                <ScalarProperty Name="CTSCuenta" ColumnName="CTSCuenta" />
+                <ScalarProperty Name="LIR" ColumnName="LIR" />
+                <ScalarProperty Name="EvitaDobleImposicion" ColumnName="EvitaDobleImposicion" />
+                <ScalarProperty Name="HoraInicio" ColumnName="HoraInicio" />
+                <ScalarProperty Name="HoraFinal" ColumnName="HoraFinal" />
+                <ScalarProperty Name="RefrigerioInicio" ColumnName="RefrigerioInicio" />
+                <ScalarProperty Name="RefrigerioFin" ColumnName="RefrigerioFin" />
+                <ScalarProperty Name="DiasLaborables" ColumnName="DiasLaborables" />
+                <ScalarProperty Name="SueldoBasico" ColumnName="SueldoBasico" />
+                <ScalarProperty Name="tipoHorario" ColumnName="tipoHorario" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="UsuarioModificacion" ColumnName="UsuarioModificacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PersonalCargo">
+            <EntityTypeMapping TypeName="PlanillaModel.PersonalCargo">
+              <MappingFragment StoreEntitySet="PersonalCargo">
+                <ScalarProperty Name="IDCargo" ColumnName="IDCargo" />
+                <ScalarProperty Name="IDPersonal" ColumnName="IDPersonal" />
+                <ScalarProperty Name="DescripcionCorta" ColumnName="DescripcionCorta" />
+                <ScalarProperty Name="DescripcionLarga" ColumnName="DescripcionLarga" />
+                <ScalarProperty Name="DiasLaborales" ColumnName="DiasLaborales" />
+                <ScalarProperty Name="Totalhoras" ColumnName="Totalhoras" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PersonalConceptos">
+            <EntityTypeMapping TypeName="PlanillaModel.PersonalConceptos">
+              <MappingFragment StoreEntitySet="PersonalConceptos">
+                <ScalarProperty Name="IDConcepto" ColumnName="IDConcepto" />
+                <ScalarProperty Name="IDPersonal" ColumnName="IDPersonal" />
+                <ScalarProperty Name="IDCargo" ColumnName="IDCargo" />
+                <ScalarProperty Name="IDTipoPlanilla" ColumnName="IDTipoPlanilla" />
+                <ScalarProperty Name="orden" ColumnName="orden" />
+                <ScalarProperty Name="DescripcionCorta" ColumnName="DescripcionCorta" />
+                <ScalarProperty Name="DescripcionLarga" ColumnName="DescripcionLarga" />
+                <ScalarProperty Name="IDSunat" ColumnName="IDSunat" />
+                <ScalarProperty Name="IDContable" ColumnName="IDContable" />
+                <ScalarProperty Name="Moneda" ColumnName="Moneda" />
+                <ScalarProperty Name="TipoCalculo" ColumnName="TipoCalculo" />
+                <ScalarProperty Name="Formula" ColumnName="Formula" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="TipoConcepto" ColumnName="TipoConcepto" />
+                <ScalarProperty Name="ValorCalculo" ColumnName="ValorCalculo" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="UsuarioModificacion" ColumnName="UsuarioModificacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PersonalHorarios">
+            <EntityTypeMapping TypeName="PlanillaModel.PersonalHorarios">
+              <MappingFragment StoreEntitySet="PersonalHorarios">
+                <ScalarProperty Name="IDHorario" ColumnName="IDHorario" />
+                <ScalarProperty Name="IDPersonal" ColumnName="IDPersonal" />
+                <ScalarProperty Name="IDCargo" ColumnName="IDCargo" />
+                <ScalarProperty Name="detalle" ColumnName="detalle" />
+                <ScalarProperty Name="DiaNumero" ColumnName="DiaNumero" />
+                <ScalarProperty Name="DiaSemana" ColumnName="DiaSemana" />
+                <ScalarProperty Name="HoraIngreso" ColumnName="HoraIngreso" />
+                <ScalarProperty Name="HoraSalida" ColumnName="HoraSalida" />
+                <ScalarProperty Name="Refrigerio" ColumnName="Refrigerio" />
+                <ScalarProperty Name="Reingreso" ColumnName="Reingreso" />
+                <ScalarProperty Name="fechamodificacion" ColumnName="fechamodificacion" />
+                <ScalarProperty Name="usuariomodificacion" ColumnName="usuariomodificacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PersonalProyecto">
+            <EntityTypeMapping TypeName="PlanillaModel.PersonalProyecto">
+              <MappingFragment StoreEntitySet="PersonalProyecto">
+                <ScalarProperty Name="IDCosto" ColumnName="IDCosto" />
+                <ScalarProperty Name="IDPersonal" ColumnName="IDPersonal" />
+                <ScalarProperty Name="IDCargo" ColumnName="IDCargo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlanillaGeneral">
+            <EntityTypeMapping TypeName="PlanillaModel.PlanillaGeneral">
+              <MappingFragment StoreEntitySet="PlanillaGeneral">
+                <ScalarProperty Name="IDPlanilla" ColumnName="IDPlanilla" />
+                <ScalarProperty Name="IDAsistencia" ColumnName="IDAsistencia" />
+                <ScalarProperty Name="IDPersonal" ColumnName="IDPersonal" />
+                <ScalarProperty Name="IDCargo" ColumnName="IDCargo" />
+                <ScalarProperty Name="TipoConcepto" ColumnName="TipoConcepto" />
+                <ScalarProperty Name="IDConcepto" ColumnName="IDConcepto" />
+                <ScalarProperty Name="MesPlanilla" ColumnName="MesPlanilla" />
+                <ScalarProperty Name="AnioPlanilla" ColumnName="AnioPlanilla" />
+                <ScalarProperty Name="FechaPlanilla" ColumnName="FechaPlanilla" />
+                <ScalarProperty Name="TipoPlanilla" ColumnName="TipoPlanilla" />
+                <ScalarProperty Name="DescripcionCorta" ColumnName="DescripcionCorta" />
+                <ScalarProperty Name="DescripcionLarga" ColumnName="DescripcionLarga" />
+                <ScalarProperty Name="Importe" ColumnName="Importe" />
+                <ScalarProperty Name="statusPago" ColumnName="statusPago" />
+                <ScalarProperty Name="Fechamodificacion" ColumnName="Fechamodificacion" />
+                <ScalarProperty Name="UsuarioModificacion" ColumnName="UsuarioModificacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Plantilla">
+            <EntityTypeMapping TypeName="PlanillaModel.Plantilla">
+              <MappingFragment StoreEntitySet="Plantilla">
+                <ScalarProperty Name="IDPlantilla" ColumnName="IDPlantilla" />
+                <ScalarProperty Name="DescripcionCorta" ColumnName="DescripcionCorta" />
+                <ScalarProperty Name="DescripcionLarga" ColumnName="DescripcionLarga" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="UsuarioModificacion" ColumnName="UsuarioModificacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlantillaDetalle">
+            <EntityTypeMapping TypeName="PlanillaModel.PlantillaDetalle">
+              <MappingFragment StoreEntitySet="PlantillaDetalle">
+                <ScalarProperty Name="IDPlantilla" ColumnName="IDPlantilla" />
+                <ScalarProperty Name="IDConcepto" ColumnName="IDConcepto" />
+                <ScalarProperty Name="DescripcionCorta" ColumnName="DescripcionCorta" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="Requerido" ColumnName="Requerido" />
+                <ScalarProperty Name="valorConcepto" ColumnName="valorConcepto" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="UsuarioModificacion" ColumnName="UsuarioModificacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sunat_statements">
+            <EntityTypeMapping TypeName="PlanillaModel.Sunat_statements">
+              <MappingFragment StoreEntitySet="Sunat_statements">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="IDSunat" ColumnName="IDSunat" />
+                <ScalarProperty Name="anio" ColumnName="anio" />
+                <ScalarProperty Name="mes" ColumnName="mes" />
+                <ScalarProperty Name="importe" ColumnName="importe" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="UsuarioModificacion" ColumnName="UsuarioModificacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="PlanillaModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tabla">
+            <EntityTypeMapping TypeName="PlanillaModel.Tabla">
+              <MappingFragment StoreEntitySet="Tabla">
+                <ScalarProperty Name="IDTabla" ColumnName="IDTabla" />
+                <ScalarProperty Name="IDSunat" ColumnName="IDSunat" />
+                <ScalarProperty Name="DescripcionCorta" ColumnName="DescripcionCorta" />
+                <ScalarProperty Name="DescripcionLarga" ColumnName="DescripcionLarga" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="UsuarioModificacion" ColumnName="UsuarioModificacion" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TablaDetalle">
+            <EntityTypeMapping TypeName="PlanillaModel.TablaDetalle">
+              <MappingFragment StoreEntitySet="TablaDetalle">
+                <ScalarProperty Name="IDTablaDetalle" ColumnName="IDTablaDetalle" />
+                <ScalarProperty Name="IDTabla" ColumnName="IDTabla" />
+                <ScalarProperty Name="DescripcionCorta" ColumnName="DescripcionCorta" />
+                <ScalarProperty Name="DescripcionLarga" ColumnName="DescripcionLarga" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="UsuarioModificacion" ColumnName="UsuarioModificacion" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VariablesDelSistema">
+            <EntityTypeMapping TypeName="PlanillaModel.VariablesDelSistema">
+              <MappingFragment StoreEntitySet="VariablesDelSistema">
+                <ScalarProperty Name="IdConcepto" ColumnName="IdConcepto" />
+                <ScalarProperty Name="DescripcionCorta" ColumnName="DescripcionCorta" />
+                <ScalarProperty Name="DescripcionLarga" ColumnName="DescripcionLarga" />
+                <ScalarProperty Name="TipoConcepto" ColumnName="TipoConcepto" />
+                <ScalarProperty Name="TipoValor" ColumnName="TipoValor" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="usp_GetAsistenciaXtrabajador" FunctionName="PlanillaModel.Store.usp_GetAsistenciaXtrabajador">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PlanillaModel.usp_GetAsistenciaXtrabajador_Result">
+                <ScalarProperty Name="AñoAsistencia" ColumnName="AñoAsistencia" />
+                <ScalarProperty Name="MesAsistencia" ColumnName="MesAsistencia" />
+                <ScalarProperty Name="DiaAsistencia" ColumnName="DiaAsistencia" />
+                <ScalarProperty Name="tardanzas" ColumnName="tardanzas" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

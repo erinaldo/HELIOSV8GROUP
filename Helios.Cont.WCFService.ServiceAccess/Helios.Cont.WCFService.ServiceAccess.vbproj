@@ -1,0 +1,299 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>
+    </SchemaVersion>
+    <ProjectGuid>{3D096505-D407-4806-86F2-005438F5E1C1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Helios.Cont.WCFService.ServiceAccess</RootNamespace>
+    <AssemblyName>Helios.Cont.WCFService.ServiceAccess</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>Helios.Cont.WCFService.ServiceAccess.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>Helios.Cont.WCFService.ServiceAccess.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="JNetFx.Framework.Data">
+      <HintPath>..\librerias\varios\JNetFx.Framework.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="JNetFx.Framework.General">
+      <HintPath>..\librerias\varios\JNetFx.Framework.General.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Activos\ActivosFijosSA.vb" />
+    <Compile Include="Afiliacion\BeneficioDetalleSA.vb" />
+    <Compile Include="Afiliacion\BeneficioProduccionConsumoSA.vb" />
+    <Compile Include="Afiliacion\beneficioSA.vb" />
+    <Compile Include="Afiliacion\EntidadAfiliacionBeneficioSA.vb" />
+    <Compile Include="Asientos Contables\AsientoSA.vb" />
+    <Compile Include="Asientos Contables\MovimientoSA.vb" />
+    <Compile Include="Asientos Contables\Reportes\HojaTrabajoFinalRPTSA.vb" />
+    <Compile Include="Asientos Contables\Reportes\InformeClaseRPTSA.vb" />
+    <Compile Include="Asientos Contables\Reportes\InformeCuentaContableRPTSA.vb" />
+    <Compile Include="Asientos Contables\Reportes\LibroDiarioRPTSA.vb" />
+    <Compile Include="Asientos Contables\Reportes\LibroMayorRPTSA.vb" />
+    <Compile Include="Caja Extranjera\movimientocajaextranjeraSA.vb" />
+    <Compile Include="Calzado\recursoCostoLoteTallaSA.vb" />
+    <Compile Include="Calzado\tallaSA.vb" />
+    <Compile Include="Calzado\totalesAlmacenOthersSA.vb" />
+    <Compile Include="caracteristicaItemSA.vb" />
+    <Compile Include="Comision\detalleitemcatalogo_comisiondetalleSA.vb" />
+    <Compile Include="Comision\detalleitemcatalogo_comisionSA.vb" />
+    <Compile Include="Comision\registrocomision_autorizacionSA.vb" />
+    <Compile Include="Comision\registrocomision_usuarios_detalleSA.vb" />
+    <Compile Include="Configuracion General\ConfiguracionInicioSA.vb" />
+    <Compile Include="Configuracion General\ModuloConfiguracionSA.vb" />
+    <Compile Include="CONTABILIDAD\almacen\almacenSA.vb" />
+    <Compile Include="CONTABILIDAD\almacen\ListadoPrecioSA.vb" />
+    <Compile Include="CONTABILIDAD\almacen\Precios\ConfiguracionPrecioProductoSA.vb" />
+    <Compile Include="CONTABILIDAD\almacen\Precios\ConfiguracionPrecioSA.vb" />
+    <Compile Include="CONTABILIDAD\almacen\Reporte\totalesAlmacenRPTSA.vb" />
+    <Compile Include="CONTABILIDAD\almacen\TotalesAlmacenSA.vb" />
+    <Compile Include="CONTABILIDAD\Cierres\CierreCajaSA.vb" />
+    <Compile Include="CONTABILIDAD\Cierres\CierreContableSA.vb" />
+    <Compile Include="CONTABILIDAD\Cierres\cierreCostoVentaSA.vb" />
+    <Compile Include="CONTABILIDAD\Cierres\CierreInventarioSA.vb" />
+    <Compile Include="CONTABILIDAD\Cierres\cierreResultadosSA.vb" />
+    <Compile Include="CONTABILIDAD\Costo\recursoCostoDetalleSA.vb" />
+    <Compile Include="CONTABILIDAD\Costo\recursoCostoLoteSA.vb" />
+    <Compile Include="CONTABILIDAD\Costo\recursoCostoSA.vb" />
+    <Compile Include="CONTABILIDAD\documentoCaja\cajaUsuarioDetalleSA.vb" />
+    <Compile Include="CONTABILIDAD\documentoCaja\cajaUsuarioSA.vb" />
+    <Compile Include="CONTABILIDAD\documentoCaja\DocumentoCajaDetalleSA.vb" />
+    <Compile Include="CONTABILIDAD\documentoCaja\DocumentoCajaSA.vb" />
+    <Compile Include="CONTABILIDAD\documento\Anticipos\documentoAnticipoConciliacionSA.vb" />
+    <Compile Include="CONTABILIDAD\documento\Anticipos\documentoAnticipoDetalleSA.vb" />
+    <Compile Include="CONTABILIDAD\documento\Anticipos\documentoAnticipoSA.vb" />
+    <Compile Include="CONTABILIDAD\documento\Cuentas Manuales\documentoLibroDiarioSA.vb" />
+    <Compile Include="CONTABILIDAD\documento\Datos extras\DocumentoOtrosDatosSA.vb" />
+    <Compile Include="CONTABILIDAD\documento\documentoconsumodirectoSA.vb" />
+    <Compile Include="CONTABILIDAD\documento\GuiaRemision\DocumentoGuiaDetalleCondicionSA.vb" />
+    <Compile Include="CONTABILIDAD\documento\ReporteCaja\cajaUsuarioRPTSA.vb" />
+    <Compile Include="CONTABILIDAD\documento\ReporteCaja\documentoCajaRPTSA.vb" />
+    <Compile Include="CONTABILIDAD\estados financieros\EstadosFinancierosConfiguracionPagosSA.vb" />
+    <Compile Include="CONTABILIDAD\Inventario\reporte\inventarioMovimientoRPTSA.vb" />
+    <Compile Include="CONTABILIDAD\notificacionAlmacen\notificacionAlmacenDetalleSA.vb" />
+    <Compile Include="CONTABILIDAD\notificacionAlmacen\notificacionAlmacenSA.vb" />
+    <Compile Include="CONTABILIDAD\prestamos\documentoPrestamoSA.vb" />
+    <Compile Include="CONTABILIDAD\prestamos\prestamosSA.vb" />
+    <Compile Include="CONTABILIDAD\documento\DocumentoCompraDetalleSA.vb" />
+    <Compile Include="CONTABILIDAD\documento\DocumentoCompraSA.vb" />
+    <Compile Include="CONTABILIDAD\documento\DocumentoSA.vb" />
+    <Compile Include="CONTABILIDAD\documento\GuiaRemision\DocumentoGuiaDetalleSA.vb" />
+    <Compile Include="CONTABILIDAD\documento\GuiaRemision\DocumentoGuiaSA.vb" />
+    <Compile Include="CONTABILIDAD\documento\ReporteCompra\documentoCompraRPTSA.vb" />
+    <Compile Include="CONTABILIDAD\documento\ReporteVenta\documentoVentaRPTSA.vb" />
+    <Compile Include="CONTABILIDAD\documento\venta\documentoVentaAbarrotesDetSA.vb" />
+    <Compile Include="CONTABILIDAD\documento\venta\documentoVentaAbarrotesSA.vb" />
+    <Compile Include="CONTABILIDAD\estados financieros\EstadosFinancierosSA.vb" />
+    <Compile Include="CONTABILIDAD\Inventario\inventarioMovimientoSA.vb" />
+    <Compile Include="CONTABILIDAD\Mascara Gastos\mascaraGastosEmpresaSA.vb" />
+    <Compile Include="CONTABILIDAD\numeracion boleta\NumeracionBoletaSA.vb" />
+    <Compile Include="CONTABILIDAD\saldo inicio\saldoInicioDetalleSA.vb" />
+    <Compile Include="CONTABILIDAD\saldo inicio\saldoInicioSA.vb" />
+    <Compile Include="CONTABILIDAD\Servicios\servicioSA.vb" />
+    <Compile Include="CONTABILIDAD\Tributos Obligaciones\DocumentoObligacionDetalleSA.vb" />
+    <Compile Include="CONTABILIDAD\Tributos Obligaciones\DocumentoObligacionTributariaSA.vb" />
+    <Compile Include="CONTABILIDAD\ubigeo\ubigeoSA.vb" />
+    <Compile Include="Cronograma\CronogramaSA.vb" />
+    <Compile Include="cuenta mascara\cuentaMascaraSA.vb" />
+    <Compile Include="Empresa\datosGeneralesSA.vb" />
+    <Compile Include="Empresa\empresaCierreMensualSA.vb" />
+    <Compile Include="Empresa\empresaPeriodoSA.vb" />
+    <Compile Include="Empresa\empresaSA.vb" />
+    <Compile Include="Empresa\empresaSerieSA.vb" />
+    <Compile Include="Establecimiento\establecimientoSA.vb" />
+    <Compile Include="General.vb" />
+    <Compile Include="Gymnasio\actividadPersonalSA.vb" />
+    <Compile Include="Gymnasio\clasehorariosSA.vb" />
+    <Compile Include="Gymnasio\Entidadmembresia_GymSA.vb" />
+    <Compile Include="Gymnasio\membresia_congelamientoSA.vb" />
+    <Compile Include="Gymnasio\membresia_GymSA.vb" />
+    <Compile Include="Informacion\informacionSA.vb" />
+    <Compile Include="ORGANIGRAMA\Centro Costos\CentrocostosSA.vb" />
+    <Compile Include="ORGANIGRAMA\Jerarquia\JerarquiaSA.vb" />
+    <Compile Include="ORGANIGRAMA\OrganizacionSA.vb" />
+    <Compile Include="ORGANIGRAMA\perfilAnexoSA.vb" />
+    <Compile Include="UnidadDeNegocio\Global\ActivoDistribucionSA.vb" />
+    <Compile Include="UnidadDeNegocio\Global\centroCostoHorarioSA.vb" />
+    <Compile Include="UnidadDeNegocio\Global\centroCostosXNComercialSA.vb" />
+    <Compile Include="UnidadDeNegocio\Global\comercioEspecializado_PrecioSA.vb" />
+    <Compile Include="UnidadDeNegocio\Global\componenteXDistribucionSA.vb" />
+    <Compile Include="UnidadDeNegocio\Global\distribucionComponenteSA.vb" />
+    <Compile Include="UnidadDeNegocio\Global\distribucionNumeracionAOSA.vb" />
+    <Compile Include="UnidadDeNegocio\Global\negocioComercialSA.vb" />
+    <Compile Include="UnidadDeNegocio\Global\ProductoXAreaOperativaSA.vb" />
+    <Compile Include="UnidadDeNegocio\Infraestructura\categoriaInfraestructuraSA.vb" />
+    <Compile Include="UnidadDeNegocio\Infraestructura\componenteSA.vb" />
+    <Compile Include="UnidadDeNegocio\Infraestructura\composicionSA.vb" />
+    <Compile Include="UnidadDeNegocio\Infraestructura\distribucionInfraestructuraSA.vb" />
+    <Compile Include="UnidadDeNegocio\Infraestructura\distribucionTipoServicioSA.vb" />
+    <Compile Include="UnidadDeNegocio\Infraestructura\documentoPedidoDetSA.vb" />
+    <Compile Include="UnidadDeNegocio\Infraestructura\documentoPedidoSA.vb" />
+    <Compile Include="UnidadDeNegocio\Infraestructura\infraestructuraSA.vb" />
+    <Compile Include="UnidadDeNegocio\Infraestructura\ocupacionInfraestructuraSA.vb" />
+    <Compile Include="UnidadDeNegocio\Infraestructura\personaBeneficioSA.vb" />
+    <Compile Include="UnidadDeNegocio\Infraestructura\tipoServicioInfraestructuraDetSA.vb" />
+    <Compile Include="UnidadDeNegocio\Infraestructura\tipoServicioInfraestructuraSA.vb" />
+    <Compile Include="LoteDetalleSA.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Ofertas\OfertaSA.vb" />
+    <Compile Include="Persona\PersonaSA.vb" />
+    <Compile Include="Plan contable\cuentaplanContableEmpresaSA.vb" />
+    <Compile Include="Plantilla\articuloplantillaSA.vb" />
+    <Compile Include="Plantilla\asientoContablePlantillaSA.vb" />
+    <Compile Include="PMO\Actividad\ActividadesSA.vb" />
+    <Compile Include="PMO\ENTIDAD\entidadAtributosSA.vb" />
+    <Compile Include="PMO\ENTIDAD\entidadSA.vb" />
+    <Compile Include="PMO\INSUMOS\detalleitemequivalencia_beneficioSA.vb" />
+    <Compile Include="PMO\INSUMOS\detalleitemequivalencia_catalogosSA.vb" />
+    <Compile Include="PMO\INSUMOS\detalleitemequivalencia_preciosSA.vb" />
+    <Compile Include="PMO\INSUMOS\detalleitemsSA.vb" />
+    <Compile Include="PMO\INSUMOS\detalleitems_conexoSA.vb" />
+    <Compile Include="PMO\INSUMOS\detalleitem_equivalenciasSA.vb" />
+    <Compile Include="PMO\INSUMOS\detalleitem_preciosSA.vb" />
+    <Compile Include="PMO\INSUMOS\itemSA.vb" />
+    <Compile Include="PMO\INSUMOS\itemServicioSA.vb" />
+    <Compile Include="PMO\INSUMOS\mascaraContable2SA.vb" />
+    <Compile Include="PMO\INSUMOS\mascaraContableExistenciaSA.vb" />
+    <Compile Include="PMO\Liquidacion\totalesLiquidacionSA.vb" />
+    <Compile Include="PMO\PLANILLA\ingresoSunatSA.vb" />
+    <Compile Include="PMO\PLANILLA\ocupacion\ocupacionSA.vb" />
+    <Compile Include="PMO\Proyectos\ProyectoPlaneacionSA.vb" />
+    <Compile Include="PMO\TRABAJADOR\Trabajador_PLSA.vb" />
+    <Compile Include="Recurso\actividadRecursoSA.vb" />
+    <Compile Include="SoftPack\ClientesSoftPackSA.vb" />
+    <Compile Include="TablaGeneral\tablaDetalleSA.vb" />
+    <Compile Include="TablaGeneral\TablaSA.vb" />
+    <Compile Include="Tipo Cambio\tipoCambioSA.vb" />
+    <Compile Include="UnidadDeNegocio\Transportes\configuracionReservaSA.vb" />
+    <Compile Include="UnidadDeNegocio\Transportes\distritosSA.vb" />
+    <Compile Include="UnidadDeNegocio\Transportes\DocumentoventaTransporteSA.vb" />
+    <Compile Include="UnidadDeNegocio\Transportes\PlantillaActivoSA.vb" />
+    <Compile Include="UnidadDeNegocio\Transportes\provinciasSA.vb" />
+    <Compile Include="UnidadDeNegocio\Transportes\regionesSA.vb" />
+    <Compile Include="UnidadDeNegocio\Transportes\RutaProgramacionSalidasSA.vb" />
+    <Compile Include="UnidadDeNegocio\Transportes\RutasSA.vb" />
+    <Compile Include="UnidadDeNegocio\Transportes\RutaTareoAutoSA.vb" />
+    <Compile Include="UnidadDeNegocio\Transportes\RutaTareoDetalleSA.vb" />
+    <Compile Include="UnidadDeNegocio\Transportes\RutaTareoEncomiendaDetalleSA.vb" />
+    <Compile Include="UnidadDeNegocio\Transportes\RutaTareoEncomiendaSA.vb" />
+    <Compile Include="UnidadDeNegocio\Transportes\Ruta_HorarioServiciosSA.vb" />
+    <Compile Include="UnidadDeNegocio\Transportes\ServicioInfraestructuraDetSA.vb" />
+    <Compile Include="UnidadDeNegocio\Transportes\ServicioInfraestructuraSA.vb" />
+    <Compile Include="UnidadDeNegocio\Transportes\VehiculoAsiento_PreciosSA.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\DataSources\DocumentoCompraSA.datasource" />
+    <None Include="My Project\DataSources\Helios.Cont.Business.Entity.documentocompra.datasource" />
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Helios.Cont.Business.Entity\Helios.Cont.Business.Entity.vbproj">
+      <Project>{48FA6C66-AD41-4CEB-85EB-530A8C02427C}</Project>
+      <Name>Helios.Cont.Business.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Helios.Cont.WCFService.Contract\Helios.Cont.WCFService.ServiceContract.vbproj">
+      <Project>{FCB5C927-EB12-4AA8-B373-BA90B5FFC5FD}</Project>
+      <Name>Helios.Cont.WCFService.ServiceContract</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CONTABILIDAD\Cronograma\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

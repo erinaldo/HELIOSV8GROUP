@@ -1,0 +1,2572 @@
+﻿Imports Helios.General
+Imports Helios.Cont.Business.Entity
+Imports Helios.Seguridad.Business.Entity
+Imports Helios.Cont.WCFService.ServiceAccess
+Imports Helios.Seguridad.WCFService.ServiceAccess
+Imports Syncfusion.Windows.Forms
+Imports Syncfusion.Windows.Forms.Grid.Grouping
+Imports Syncfusion.Windows.Forms.Grid
+Imports Syncfusion.Grouping
+Imports Syncfusion.Windows.Forms.Tools
+
+Public Class FrmPagosGeneral
+
+    Public Sub New()
+
+        ' This call is required by the designer.
+        InitializeComponent()
+
+        ' Add any initialization after the InitializeComponent() call.
+        GridCFG(dgvPagosVarios)
+        GridCFG(dgvPagosVarios2)
+        GridCFG2(GridGroupingControl1)
+        GridCFG(GridGroupingControl2)
+        'GridCFG2(dgvProcesoCrono)
+        GridCFG(dgvExcedente)
+        EstadoPAgos()
+
+        TabPagoProveedor.Parent = TabControlAdv1
+        TabPageAnticipos.Parent = Nothing
+        TabPageCobranzaPersonal.Parent = Nothing
+        TabPageDevolucion.Parent = Nothing
+        Me.WindowState = FormWindowState.Maximized
+        txtPeriodo.Value = New DateTime(AnioGeneral, MesGeneral, DateTime.Now.Day)
+        txtPeriodo2.Value = New DateTime(AnioGeneral, MesGeneral, DateTime.Now.Day)
+        txtPeriodoDev.Value = New DateTime(AnioGeneral, MesGeneral, DateTime.Now.Day)
+        'getConfigGrid()
+    End Sub
+
+
+    '#Region "Métodos"
+    '    Private Sub btnNuevoPagoAnticipo(strMoneda As String, IDDocumentoCompra As Integer)
+    '        Me.Cursor = Cursors.WaitCursor
+    '        Dim objLista As New DocumentoCajaDetalleSA
+    '        Dim saldomn As Decimal = 0
+    '        Dim saldome As Decimal = 0
+    '        Dim cTotalmn As Decimal = 0
+    '        Dim cTotalme As Decimal = 0
+    '        Dim cCreditomn As Decimal = 0
+    '        Dim cCreditome As Decimal = 0
+    '        Dim cDebitomn As Decimal = 0
+    '        Dim cDebitome As Decimal = 0
+    '        Dim detalle As New documentocompradetalle
+    '        Dim detalleSA As New DocumentoCompraDetalleSA
+
+    '        With FrmPagosConAnticipo
+    '            '.dgvDetalleItems.Rows.Clear()
+    '            .dgvDetalleItems.Table.Records.DeleteAll()
+    '            .GridGroupingControl1.Table.Records.DeleteAll()
+    '            .manipulacionEstado = ENTITY_ACTIONS.INSERT
+    '            Select Case strMoneda
+    '                Case "NAC"
+    '                    If TabPageCobranzaCli Is TabControlAdv1.SelectedTab Then
+    '                        .lblIdProveedor = txtCliente.Tag
+    '                        .lblNomProveedor = txtCliente.Text
+    '                        .lblCuentaProveedor = "4212"
+    '                        .lblIdDocumento.Text = IDDocumentoCompra
+
+    '                        .txtProveedor.Text = txtCliente.Text
+    '                        .txtProveedor.Tag = txtCliente.Tag
+    '                    ElseIf TabPageDevolucion Is TabControlAdv1.SelectedTab Then
+    '                        .lblIdProveedor = txtcliDev.Tag
+    '                        .lblNomProveedor = txtcliDev.Text
+    '                        .lblCuentaProveedor = "4212"
+    '                        .lblIdDocumento.Text = IDDocumentoCompra
+    '                        .txtProveedor.Text = txtcliDev.Text
+    '                        .txtProveedor.Tag = txtcliDev.Tag
+    '                    End If
+
+    '                    Dim listaPago As List(Of documentoAnticipoDetalle)
+    '                    listaPago = objLista.ObtenerCuentasPagadasAnticipo(IDDocumentoCompra)
+
+    '                    For Each i As documentoCajaDetalle In objLista.ObtenerCuentasPorPagarPorDetails(IDDocumentoCompra)
+    '                        If Not i.EstadoCobro = "PG" Then
+    '                            detalle = detalleSA.SumaNotasXidPadreItem(i.secuencia)
+
+    '                            Dim consulta = (From c In listaPago _
+    '                                            Where c.secuencia = i.secuencia).FirstOrDefault
+    '                            cTotalmn = CDec(i.MontoDeudaSoles) - detalle.importe - CDec(i.MontoPagadoSoles) + detalle.ImporteDBMN - detalle.ImporteAJmn - consulta.MontoPagadoSoles
+    '                            cTotalme = CDec(i.MontoDeudaUSD) - detalle.importeUS - CDec(i.MontoPagadoUSD) + detalle.ImporteDBME - detalle.ImporteAJme - consulta.MontoPagadoUSD
+
+    '                            If cTotalmn < 0 Then
+    '                                cTotalmn = 0
+    '                            End If
+    '                            If cTotalme < 0 Then
+    '                                cTotalme = 0
+    '                            End If
+    '                            saldomn += cTotalmn
+    '                            saldome += cTotalme
+    '                            If cTotalmn > 0 Or cTotalme > 0 Then
+    '                                '.dgvDetalleItems.Rows.Add(i.idItem, i.DetalleItem, Nothing,
+    '                                '                           Nothing, cTotalmn, cTotalme,
+    '                                '                           "0.00", "0.00", "0.00", "0.00", Helios.Cont.Business.Entity.BaseBE.EntityAction.INSERT, i.secuencia)
+
+    '                                .dgvDetalleItems.Table.AddNewRecord.SetCurrent()
+    '                                .dgvDetalleItems.Table.AddNewRecord.BeginEdit()
+    '                                .dgvDetalleItems.Table.CurrentRecord.SetValue("id", i.idItem)
+    '                                .dgvDetalleItems.Table.CurrentRecord.SetValue("descripcion", i.DetalleItem)
+    '                                '.dgvDetalleItems.Table.CurrentRecord.SetValue("unidad", Nothing)
+    '                                '.dgvDetalleItems.Table.CurrentRecord.SetValue("precUnit", Nothing)
+    '                                .dgvDetalleItems.Table.CurrentRecord.SetValue("importeMN", cTotalmn)
+    '                                .dgvDetalleItems.Table.CurrentRecord.SetValue("importeME", cTotalme)
+    '                                .dgvDetalleItems.Table.CurrentRecord.SetValue("PagoMN", CDec(0.0))
+    '                                .dgvDetalleItems.Table.CurrentRecord.SetValue("PagoME", CDec(0.0))
+    '                                .dgvDetalleItems.Table.CurrentRecord.SetValue("SaldoMN", cTotalmn)
+    '                                .dgvDetalleItems.Table.CurrentRecord.SetValue("SaldoME", cTotalme)
+    '                                .dgvDetalleItems.Table.CurrentRecord.SetValue("estado", Helios.Cont.Business.Entity.BaseBE.EntityAction.INSERT)
+    '                                .dgvDetalleItems.Table.CurrentRecord.SetValue("secuencia", i.secuencia)
+    '                                .dgvDetalleItems.Table.AddNewRecord.EndEdit()
+
+    '                            End If
+    '                        End If
+    '                    Next
+
+    '                    .lblDeudaPendiente.Text = CDec(saldomn)
+    '                    .lblDeudaPendienteme.Text = CDec(saldome)
+
+    '                    Dim tablaSA As New tablaDetalleSA
+    '                    Dim tablaBL As New tabladetalle
+
+    '                    tablaBL = tablaSA.GetUbicarTablaID(10, CStr(dgvPagosVarios.Table.CurrentRecord.GetValue("tipoDoc")))
+
+    '                    .txtComprobante.Text = tablaBL.descripcion
+    '                    .txtComprobante.Tag = tablaBL.codigoDetalle
+    '                    .txtNumeroCompr.Text = dgvPagosVarios.Table.CurrentRecord.GetValue("numero")
+    '                    .txtSerieCompr.Text = dgvPagosVarios.Table.CurrentRecord.GetValue("serie")
+    '                    .txtTipoCambio.Value = dgvPagosVarios.Table.CurrentRecord.GetValue("tipoCambio")
+    '                    .lblTipoCambio.Text = dgvPagosVarios.Table.CurrentRecord.GetValue("tipoCambio")
+    '                    .txtFechaComprobante.Text = dgvPagosVarios.Table.CurrentRecord.GetValue("fecha")
+
+    '                    Select Case dgvPagosVarios.Table.CurrentRecord.GetValue("moneda")
+    '                        Case "NAC"
+    '                            .tb19.ToggleState = ToggleButton2.ToggleButtonState.ON
+    '                        Case "EXT"
+    '                            .tb19.ToggleState = ToggleButton2.ToggleButtonState.OFF
+    '                    End Select
+
+    '                Case "EXT"
+    '                    If TabPageCobranzaCli Is TabControlAdv1.SelectedTab Then
+    '                        .lblIdProveedor = CInt(txtCliente.Tag)
+    '                        .lblNomProveedor = txtCliente.Text
+    '                        .lblCuentaProveedor = "4212"
+    '                        .lblIdDocumento.Text = IDDocumentoCompra
+    '                        'Nuevo Maykol correccion
+    '                        .txtProveedor.Text = txtCliente.Text
+    '                        .txtProveedor.Tag = txtCliente.Tag
+    '                    ElseIf TabPageDevolucion Is TabControlAdv1.SelectedTab Then
+    '                        .lblIdProveedor = txtcliDev.Tag
+    '                        .lblNomProveedor = txtcliDev.Text
+    '                        .lblCuentaProveedor = "4212"
+    '                        .lblIdDocumento.Text = IDDocumentoCompra
+    '                        .txtProveedor.Text = txtcliDev.Text
+    '                        .txtProveedor.Tag = txtcliDev.Tag
+    '                    End If
+
+    '                    For Each i As documentoCajaDetalle In objLista.ObtenerCuentasPorPagarPorDetails(IDDocumentoCompra)
+    '                        If Not i.EstadoCobro = "PG" Then
+    '                            detalle = detalleSA.SumaNotasXidPadreItem(i.secuencia)
+    '                            cTotalmn = CDec(i.MontoDeudaSoles) - detalle.importe - CDec(i.MontoPagadoSoles) + detalle.ImporteDBMN - detalle.ImporteAJmn
+    '                            cTotalme = CDec(i.MontoDeudaUSD) - detalle.importeUS - CDec(i.MontoPagadoUSD) + detalle.ImporteDBME - detalle.ImporteAJme
+    '                            If cTotalmn < 0 Then
+    '                                cTotalmn = 0
+    '                            End If
+    '                            If cTotalme < 0 Then
+    '                                cTotalme = 0
+    '                            End If
+    '                            saldomn += cTotalmn
+    '                            saldome += cTotalme
+    '                            If cTotalmn > 0 Or cTotalme > 0 Then
+    '                                '.dgvDetalleItems.Rows.Add(i.idItem, i.DetalleItem, Nothing,
+    '                                '                           Nothing, cTotalmn, cTotalme,
+    '                                '                           "0.00", "0.00", "0.00", "0.00", Helios.Cont.Business.Entity.BaseBE.EntityAction.INSERT, i.secuencia)
+
+    '                                .dgvDetalleItems.Table.AddNewRecord.SetCurrent()
+    '                                .dgvDetalleItems.Table.AddNewRecord.BeginEdit()
+    '                                .dgvDetalleItems.Table.CurrentRecord.SetValue("id", i.idItem)
+    '                                .dgvDetalleItems.Table.CurrentRecord.SetValue("descripcion", i.DetalleItem)
+    '                                '.dgvDetalleItems.Table.CurrentRecord.SetValue("unidad", Nothing)
+    '                                '.dgvDetalleItems.Table.CurrentRecord.SetValue("precUnit", Nothing)
+    '                                .dgvDetalleItems.Table.CurrentRecord.SetValue("importeMN", cTotalmn)
+    '                                .dgvDetalleItems.Table.CurrentRecord.SetValue("importeME", cTotalme)
+    '                                .dgvDetalleItems.Table.CurrentRecord.SetValue("PagoMN", CDec(0.0))
+    '                                .dgvDetalleItems.Table.CurrentRecord.SetValue("PagoME", CDec(0.0))
+    '                                .dgvDetalleItems.Table.CurrentRecord.SetValue("SaldoMN", cTotalmn)
+    '                                .dgvDetalleItems.Table.CurrentRecord.SetValue("SaldoME", cTotalme)
+    '                                .dgvDetalleItems.Table.CurrentRecord.SetValue("estado", Helios.Cont.Business.Entity.BaseBE.EntityAction.INSERT)
+    '                                .dgvDetalleItems.Table.CurrentRecord.SetValue("secuencia", i.secuencia)
+    '                                .dgvDetalleItems.Table.AddNewRecord.EndEdit()
+
+    '                            End If
+    '                        End If
+    '                    Next
+
+    '                    .lblDeudaPendiente.Text = CDec(saldomn)
+    '                    .lblDeudaPendienteme.Text = CDec(saldome)
+
+    '                    Dim tablaSA As New tablaDetalleSA
+    '                    Dim tablaBL As New tabladetalle
+
+    '                    tablaBL = tablaSA.GetUbicarTablaID(10, CStr(dgvPagosVarios.Table.CurrentRecord.GetValue("tipoDoc")))
+
+    '                    .txtComprobante.Text = tablaBL.descripcion
+    '                    .txtComprobante.Tag = tablaBL.codigoDetalle
+    '                    .txtNumeroCompr.Text = dgvPagosVarios.Table.CurrentRecord.GetValue("numero")
+    '                    .txtSerieCompr.Text = dgvPagosVarios.Table.CurrentRecord.GetValue("serie")
+    '                    .txtTipoCambio.Value = dgvPagosVarios.Table.CurrentRecord.GetValue("tipoCambio")
+    '                    .lblTipoCambio.Text = dgvPagosVarios.Table.CurrentRecord.GetValue("tipoCambio")
+    '                    .txtFechaComprobante.Text = dgvPagosVarios.Table.CurrentRecord.GetValue("fecha")
+    '                    Dim DSFS As String = dgvPagosVarios.Table.CurrentRecord.GetValue("moneda")
+    '                    Select Case dgvPagosVarios.Table.CurrentRecord.GetValue("moneda")
+    '                        Case "NAC"
+    '                            .tb19.ToggleState = ToggleButton2.ToggleButtonState.ON
+    '                        Case "EXT"
+    '                            .tb19.ToggleState = ToggleButton2.ToggleButtonState.OFF
+    '                    End Select
+
+    '            End Select
+
+    '            If CDec(saldomn) <= 0 Then
+
+    '                lblEstado.Text = "El documento ya se encuentra pagado."
+    '                Timer1.Enabled = True
+    '                PanelError.Visible = True
+    '                TiempoEjecutar(10)
+
+    '                Me.Cursor = Cursors.Arrow
+    '                Exit Sub
+    '            Else
+
+    '                .lblPerido.Text = PeriodoGeneral
+
+    '                .getTableAnticiposPorTipoProveedor(txtCliente.Tag)
+    '                '.cboTipoDoc.Enabled = True
+    '                '.cboTipoDoc.ReadOnly = False
+    '                .StartPosition = FormStartPosition.CenterParent
+    '                .ShowDialog()
+
+    '            End If
+    '        End With
+
+    '        Me.Cursor = Cursors.Arrow
+    '    End Sub
+
+
+    '    Sub GrabarCronograma()
+    '        'Dim cronoSA As New CronogramaSA
+    '        'Dim obj As New Cronograma
+    '        'Dim lista As New List(Of Cronograma)
+    '        'Try
+
+    '        '    For Each i As Record In dgvProcesoCrono.Table.Records
+    '        '        obj = New Cronograma
+    '        '        obj.tipo = "CM"
+    '        '        obj.fechaoperacion = Convert.ToDateTime(i.GetValue("fechaOper"))
+    '        '        obj.identidad = Val(TxtCronoProveedor.Tag)
+    '        '        obj.idDocumentoRef = CInt(i.GetValue("idDocumento"))
+    '        '        obj.moneda = IIf(i.GetValue("moneda") = "EXTRANJERA", "2", "1")
+    '        '        obj.tipocambio = CDec(i.GetValue("tipocambio"))
+    '        '        obj.montoAutorizadoMN = CDec(i.GetValue("montoPactadoMN"))
+    '        '        obj.montoAutorizadoME = CDec(i.GetValue("montoPactadoME"))
+    '        '        obj.usuarioResponssable = Val(i.GetValue("userResponsable"))
+    '        '        obj.usuarioActualizacion = usuario.IDUsuario
+    '        '        obj.fechaActualizacion = DateTime.Now
+    '        '        lista.Add(obj)
+    '        '    Next
+    '        '    cronoSA.GrabarRecepcionDePagos(lista)
+    '        '    Dispose()
+    '        'Catch ex As Exception
+    '        '    lblEstado.Text = ex.Message
+    '        '    PanelError.Visible = True
+    '        '    Timer1.Enabled = True
+    '        '    TiempoEjecutar(10)
+    '        'End Try
+    '    End Sub
+
+    '    Sub combosDGV()
+    '        Dim usuarioSA As New UsuarioSA
+    '        Dim tablaSA As New tablaDetalleSA
+
+    '        Dim ggcStyle As GridTableCellStyleInfo = dgvProcesoCrono.TableDescriptor.Columns(11).Appearance.AnyRecordFieldCell
+    '        ggcStyle.CellType = "ComboBox"
+    '        ggcStyle.DataSource = usuarioSA.GetListaUsuarios()
+    '        ggcStyle.ValueMember = "IDUsuario"
+    '        ggcStyle.DisplayMember = "Full_Name"
+    '        ggcStyle.DropDownStyle = GridDropDownStyle.Exclusive
+
+
+    '        Dim ggcStyle2 As GridTableCellStyleInfo = dgvProcesoCrono.TableDescriptor.Columns(7).Appearance.AnyRecordFieldCell
+    '        ggcStyle2.CellType = "ComboBox"
+    '        ggcStyle2.DataSource = tablaSA.GetListaTablaDetalle(4, "1")
+    '        ggcStyle2.ValueMember = "descripcion"
+    '        ggcStyle2.DisplayMember = "codigoDetalle"
+    '        ggcStyle2.DropDownStyle = GridDropDownStyle.Exclusive
+    '    End Sub
+
+    '    Sub getConfigGrid()
+    '        Dim dt As New DataTable()
+
+    '        dt.Columns.Add("idDocumento")
+    '        dt.Columns.Add("fechaOper", GetType(DateTime))
+    '        dt.Columns.Add("tipodoc")
+    '        dt.Columns.Add("nro")
+    '        dt.Columns.Add("compraMN")
+    '        dt.Columns.Add("monedaCompra")
+    '        dt.Columns.Add("compraME")
+
+    '        dt.Columns.Add("moneda")
+    '        dt.Columns.Add("tipocambio")
+    '        dt.Columns.Add("montoPactadoMN", GetType(Decimal))
+    '        dt.Columns.Add("montoPactadoME", GetType(Decimal))
+    '        dt.Columns.Add("userResponsable")
+
+    '        dgvProcesoCrono.DataSource = dt
+
+    '    End Sub
+
+    '    Sub AgregarAcronograma(r As Record)
+    '        Me.dgvProcesoCrono.Table.AddNewRecord.SetCurrent()
+    '        Me.dgvProcesoCrono.Table.AddNewRecord.BeginEdit()
+    '        Me.dgvProcesoCrono.Table.CurrentRecord.SetValue("idDocumento", r.GetValue("idDocumento"))
+    '        Me.dgvProcesoCrono.Table.CurrentRecord.SetValue("fechaOper", DateTime.Now)
+    '        Me.dgvProcesoCrono.Table.CurrentRecord.SetValue("tipodoc", r.GetValue("tipoDoc"))
+    '        Me.dgvProcesoCrono.Table.CurrentRecord.SetValue("nro", String.Concat(r.GetValue("serie"), "-", r.GetValue("numero")))
+    '        Me.dgvProcesoCrono.Table.CurrentRecord.SetValue("compraMN", r.GetValue("importeMN"))
+    '        Me.dgvProcesoCrono.Table.CurrentRecord.SetValue("monedaCompra", r.GetValue("moneda"))
+    '        Me.dgvProcesoCrono.Table.CurrentRecord.SetValue("compraME", r.GetValue("importeME"))
+
+    '        Me.dgvProcesoCrono.Table.CurrentRecord.SetValue("moneda", 1)
+    '        Me.dgvProcesoCrono.Table.CurrentRecord.SetValue("tipocambio", TmpTipoCambio)
+    '        Me.dgvProcesoCrono.Table.CurrentRecord.SetValue("montoPactadoMN", 0)
+    '        Me.dgvProcesoCrono.Table.CurrentRecord.SetValue("montoPactadoME", 0)
+    '        Me.dgvProcesoCrono.Table.CurrentRecord.SetValue("userResponsable", 0)
+
+    '        Me.dgvProcesoCrono.Table.AddNewRecord.EndEdit()
+    '    End Sub
+
+    '    Sub MostrarPagosVarios(intIdDocumento As Integer)
+    '        Dim libroSA As New documentoLibroDiarioSA
+    '        '
+    '        Dim dt As New DataTable("Notas de credito, debito y ajustes")
+    '        dt.Columns.Add("id")
+    '        dt.Columns.Add("fechaMov")
+    '        dt.Columns.Add("tipo")
+    '        dt.Columns.Add("tipoDoc")
+    '        dt.Columns.Add("serie")
+    '        dt.Columns.Add("numero")
+    '        dt.Columns.Add("importeOmn")
+    '        dt.Columns.Add("importeOme")
+
+    '        For Each i In libroSA.MostrarPagosVariosCP(intIdDocumento)
+    '            Dim dr As DataRow = dt.NewRow
+    '            dr(0) = i.idDocumento
+    '            dr(1) = i.fecha
+    '            dr(2) = i.tipoRegistro
+    '            dr(3) = i.tipoDoc
+    '            dr(4) = i.serie
+    '            dr(5) = i.nroDoc
+    '            dr(6) = FormatNumber(i.importeMN, 2)
+    '            dr(7) = FormatNumber(i.importeME, 2)
+    '            dt.Rows.Add(dr)
+    '        Next
+    '        GridGroupingControl1.DataSource = dt
+    '    End Sub
+    '#End Region
+
+#Region "Métodos Cobranza a Clientes"
+    Private Sub btnNuevoPagoAnticipo2(strMoneda As String, IDDocumentoCompra As Integer)
+        Me.Cursor = Cursors.WaitCursor
+        Dim objLista As New DocumentoCajaDetalleSA
+        Dim objLista2 As New documentoAnticipoDetalleSA
+        Dim saldomn As Decimal = 0
+        Dim saldome As Decimal = 0
+
+        Dim cTotalmn As Decimal = 0
+        Dim cTotalme As Decimal = 0
+        Dim cCreditomn As Decimal = 0
+        Dim cCreditome As Decimal = 0
+        Dim cDebitomn As Decimal = 0
+        Dim cDebitome As Decimal = 0
+        Dim detalle As New documentocompradetalle
+        Dim detalleSA As New DocumentoCompraDetalleSA
+
+        With FrmPagosConAnticipo
+            '.dgvDetalleItems.Rows.Clear()
+            .dgvDetalleItems.Table.Records.DeleteAll()
+            .GridGroupingControl1.Table.Records.DeleteAll()
+            .manipulacionEstado = ENTITY_ACTIONS.INSERT
+            Select Case strMoneda
+                Case "NAC"
+                    If TabPageAdv1 Is TabControlAdv1.SelectedTab Then
+                        .lblIdProveedor = txtCliente2.Tag
+                        .lblNomProveedor = txtCliente2.Text
+                        .lblCuentaProveedor = "4212"
+                        .lblIdDocumento.Text = IDDocumentoCompra
+                        .txtProveedor.Text = txtCliente2.Text
+                        .txtProveedor.Tag = txtCliente2.Tag
+
+                    End If
+
+                    Dim listaPago As List(Of documentoAnticipoDetalle)
+                    listaPago = objLista2.ObtenerCuentasPagadasAnticipo(IDDocumentoCompra)
+
+                    For Each i As documentoCajaDetalle In objLista.ObtenerCuentasPorPagarPorDetails(IDDocumentoCompra)
+                        If Not i.EstadoCobro = "PG" Then
+                            detalle = detalleSA.SumaNotasXidPadreItem(i.secuencia)
+
+                            Dim consulta = (From c In listaPago _
+                                            Where c.secuencia = i.secuencia).FirstOrDefault
+
+                            cTotalmn = CDec(i.MontoDeudaSoles) - detalle.importe - CDec(i.MontoPagadoSoles) + detalle.ImporteDBMN - detalle.ImporteAJmn - consulta.MontoPagadoSoles
+                            cTotalme = CDec(i.MontoDeudaUSD) - detalle.importeUS - CDec(i.MontoPagadoUSD) + detalle.ImporteDBME - detalle.ImporteAJme - consulta.MontoPagadoUSD
+
+
+                            If cTotalmn < 0 Then
+                                cTotalmn = 0
+                            End If
+                            If cTotalme < 0 Then
+                                cTotalme = 0
+                            End If
+                            saldomn += cTotalmn
+                            saldome += cTotalme
+                            If cTotalmn > 0 Or cTotalme > 0 Then
+                                '.dgvDetalleItems.Rows.Add(i.idItem, i.DetalleItem, Nothing,
+                                '                           Nothing, cTotalmn, cTotalme,
+                                '                           "0.00", "0.00", "0.00", "0.00", Helios.Cont.Business.Entity.BaseBE.EntityAction.INSERT, i.secuencia)
+
+                                .dgvDetalleItems.Table.AddNewRecord.SetCurrent()
+                                .dgvDetalleItems.Table.AddNewRecord.BeginEdit()
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("id", i.idItem)
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("descripcion", i.DetalleItem)
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("importeMN", cTotalmn)
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("importeME", cTotalme)
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("PagoMN", CDec(0.0))
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("PagoME", CDec(0.0))
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("SaldoMN", cTotalmn)
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("SaldoME", cTotalme)
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("estado", Helios.Cont.Business.Entity.BaseBE.EntityAction.INSERT)
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("secuencia", i.secuencia)
+                                .dgvDetalleItems.Table.AddNewRecord.EndEdit()
+
+                            End If
+                        End If
+                    Next
+
+                    .lblDeudaPendiente.Text = CDec(saldomn)
+                    .lblDeudaPendienteme.Text = CDec(saldome)
+
+                    Dim tablaSA As New tablaDetalleSA
+                    Dim tablaBL As New tabladetalle
+
+                    tablaBL = tablaSA.GetUbicarTablaID(10, CStr(dgvPagosVarios2.Table.CurrentRecord.GetValue("tipoDoc")))
+
+                    .txtComprobante.Text = tablaBL.descripcion
+                    .txtComprobante.Tag = tablaBL.codigoDetalle
+                    .txtNumeroCompr.Text = dgvPagosVarios2.Table.CurrentRecord.GetValue("numero")
+                    .txtSerieCompr.Text = dgvPagosVarios2.Table.CurrentRecord.GetValue("serie")
+                    .txtTipoCambio.Value = dgvPagosVarios2.Table.CurrentRecord.GetValue("tipoCambio")
+                    .lblTipoCambio.Text = dgvPagosVarios2.Table.CurrentRecord.GetValue("tipoCambio")
+                    .txtFechaComprobante.Text = dgvPagosVarios2.Table.CurrentRecord.GetValue("fecha")
+
+                    Select Case dgvPagosVarios2.Table.CurrentRecord.GetValue("moneda")
+                        Case "NAC"
+                            .tb19.ToggleState = ToggleButton2.ToggleButtonState.ON
+                        Case "EXT"
+                            .tb19.ToggleState = ToggleButton2.ToggleButtonState.OFF
+                    End Select
+
+                Case "EXT"
+                    If TabPageAdv1 Is TabControlAdv1.SelectedTab Then
+                        .lblIdProveedor = CInt(txtCliente2.Tag)
+                        .lblNomProveedor = txtCliente2.Text
+                        .lblCuentaProveedor = "4212"
+                        .lblIdDocumento.Text = IDDocumentoCompra
+                        'Nuevo Maykol correccion
+                        .txtProveedor.Text = txtCliente2.Text
+                        .txtProveedor.Tag = txtCliente2.Tag
+
+                    End If
+
+                    For Each i As documentoCajaDetalle In objLista.ObtenerCuentasPorPagarPorDetails(IDDocumentoCompra)
+                        If Not i.EstadoCobro = "PG" Then
+                            detalle = detalleSA.SumaNotasXidPadreItem(i.secuencia)
+                            cTotalmn = CDec(i.MontoDeudaSoles) - detalle.importe - CDec(i.MontoPagadoSoles) + detalle.ImporteDBMN - detalle.ImporteAJmn
+                            cTotalme = CDec(i.MontoDeudaUSD) - detalle.importeUS - CDec(i.MontoPagadoUSD) + detalle.ImporteDBME - detalle.ImporteAJme
+                            If cTotalmn < 0 Then
+                                cTotalmn = 0
+                            End If
+                            If cTotalme < 0 Then
+                                cTotalme = 0
+                            End If
+                            saldomn += cTotalmn
+                            saldome += cTotalme
+                            If cTotalmn > 0 Or cTotalme > 0 Then
+                                '.dgvDetalleItems.Rows.Add(i.idItem, i.DetalleItem, Nothing,
+                                '                           Nothing, cTotalmn, cTotalme,
+                                '                           "0.00", "0.00", "0.00", "0.00", Helios.Cont.Business.Entity.BaseBE.EntityAction.INSERT, i.secuencia)
+
+                                .dgvDetalleItems.Table.AddNewRecord.SetCurrent()
+                                .dgvDetalleItems.Table.AddNewRecord.BeginEdit()
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("id", i.idItem)
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("descripcion", i.DetalleItem)
+                                '.dgvDetalleItems.Table.CurrentRecord.SetValue("unidad", Nothing)
+                                '.dgvDetalleItems.Table.CurrentRecord.SetValue("precUnit", Nothing)
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("importeMN", cTotalmn)
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("importeME", cTotalme)
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("PagoMN", CDec(0.0))
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("PagoME", CDec(0.0))
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("SaldoMN", cTotalmn)
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("SaldoME", cTotalme)
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("estado", Helios.Cont.Business.Entity.BaseBE.EntityAction.INSERT)
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("secuencia", i.secuencia)
+                                .dgvDetalleItems.Table.AddNewRecord.EndEdit()
+
+                            End If
+                        End If
+                    Next
+
+                    .lblDeudaPendiente.Text = CDec(saldomn)
+                    .lblDeudaPendienteme.Text = CDec(saldome)
+
+                    Dim tablaSA As New tablaDetalleSA
+                    Dim tablaBL As New tabladetalle
+
+                    tablaBL = tablaSA.GetUbicarTablaID(10, CStr(dgvPagosVarios2.Table.CurrentRecord.GetValue("tipoDoc")))
+
+                    .txtComprobante.Text = tablaBL.descripcion
+                    .txtComprobante.Tag = tablaBL.codigoDetalle
+                    .txtNumeroCompr.Text = dgvPagosVarios2.Table.CurrentRecord.GetValue("numero")
+                    .txtSerieCompr.Text = dgvPagosVarios2.Table.CurrentRecord.GetValue("serie")
+                    .txtTipoCambio.Value = dgvPagosVarios2.Table.CurrentRecord.GetValue("tipoCambio")
+                    .lblTipoCambio.Text = dgvPagosVarios2.Table.CurrentRecord.GetValue("tipoCambio")
+                    .txtFechaComprobante.Text = dgvPagosVarios2.Table.CurrentRecord.GetValue("fecha")
+                    Dim DSFS As String = dgvPagosVarios2.Table.CurrentRecord.GetValue("moneda")
+                    Select Case dgvPagosVarios2.Table.CurrentRecord.GetValue("moneda")
+                        Case "NAC"
+                            .tb19.ToggleState = ToggleButton2.ToggleButtonState.ON
+                        Case "EXT"
+                            .tb19.ToggleState = ToggleButton2.ToggleButtonState.OFF
+                    End Select
+
+            End Select
+
+            If CDec(saldomn) <= 0 Then
+
+                lblEstado.Text = "El documento ya se encuentra pagado."
+                Timer1.Enabled = True
+                PanelError.Visible = True
+                TiempoEjecutar(10)
+
+                Me.Cursor = Cursors.Arrow
+                Exit Sub
+            Else
+
+                .lblPerido.Text = PeriodoGeneral
+
+                .getTableAnticiposPorTipoProveedor(txtCliente2.Tag)
+                '.cboTipoDoc.Enabled = True
+                '.cboTipoDoc.ReadOnly = False
+                .StartPosition = FormStartPosition.CenterParent
+                .ShowDialog()
+
+            End If
+        End With
+
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub btnNuevoPagoAnticipo(strMoneda As String, IDDocumentoCompra As Integer)
+        Me.Cursor = Cursors.WaitCursor
+        Dim objLista As New DocumentoCajaDetalleSA
+        Dim objLista2 As New documentoAnticipoDetalleSA
+        Dim saldomn As Decimal = 0
+        Dim saldome As Decimal = 0
+
+        Dim cTotalmn As Decimal = 0
+        Dim cTotalme As Decimal = 0
+        Dim cCreditomn As Decimal = 0
+        Dim cCreditome As Decimal = 0
+        Dim cDebitomn As Decimal = 0
+        Dim cDebitome As Decimal = 0
+        Dim detalle As New documentocompradetalle
+        Dim detalleSA As New DocumentoCompraDetalleSA
+
+        With FrmPagosConAnticipo
+            '.dgvDetalleItems.Rows.Clear()
+            .dgvDetalleItems.Table.Records.DeleteAll()
+            .GridGroupingControl1.Table.Records.DeleteAll()
+            .manipulacionEstado = ENTITY_ACTIONS.INSERT
+            Select Case strMoneda
+                Case "NAC"
+                    If TabPagoProveedor Is TabControlAdv1.SelectedTab Then
+                        .lblIdProveedor = txtCliente.Tag
+                        .lblNomProveedor = txtCliente.Text
+                        .lblCuentaProveedor = "4212"
+                        .lblIdDocumento.Text = IDDocumentoCompra
+                        .txtProveedor.Text = txtCliente.Text
+                        .txtProveedor.Tag = txtCliente.Tag
+                    ElseIf TabPageDevolucion Is TabControlAdv1.SelectedTab Then
+                        .lblIdProveedor = txtcliDev.Tag
+                        .lblNomProveedor = txtcliDev.Text
+                        .lblCuentaProveedor = "4212"
+                        .lblIdDocumento.Text = IDDocumentoCompra
+                        .txtProveedor.Text = txtcliDev.Text
+                        .txtProveedor.Tag = txtcliDev.Tag
+                    End If
+
+                    Dim listaPago As List(Of documentoAnticipoDetalle)
+                    listaPago = objLista2.ObtenerCuentasPagadasAnticipo(IDDocumentoCompra)
+
+                    For Each i As documentoCajaDetalle In objLista.ObtenerCuentasPorPagarPorDetails(IDDocumentoCompra)
+                        If Not i.EstadoCobro = "PG" Then
+                            detalle = detalleSA.SumaNotasXidPadreItem(i.secuencia)
+
+                            Dim consulta = (From c In listaPago _
+                                            Where c.secuencia = i.secuencia).FirstOrDefault
+
+                            cTotalmn = CDec(i.MontoDeudaSoles) - detalle.importe - CDec(i.MontoPagadoSoles) + detalle.ImporteDBMN - detalle.ImporteAJmn - consulta.MontoPagadoSoles
+                            cTotalme = CDec(i.MontoDeudaUSD) - detalle.importeUS - CDec(i.MontoPagadoUSD) + detalle.ImporteDBME - detalle.ImporteAJme - consulta.MontoPagadoUSD
+
+
+                            If cTotalmn < 0 Then
+                                cTotalmn = 0
+                            End If
+                            If cTotalme < 0 Then
+                                cTotalme = 0
+                            End If
+                            saldomn += cTotalmn
+                            saldome += cTotalme
+                            If cTotalmn > 0 Or cTotalme > 0 Then
+                                '.dgvDetalleItems.Rows.Add(i.idItem, i.DetalleItem, Nothing,
+                                '                           Nothing, cTotalmn, cTotalme,
+                                '                           "0.00", "0.00", "0.00", "0.00", Helios.Cont.Business.Entity.BaseBE.EntityAction.INSERT, i.secuencia)
+
+                                .dgvDetalleItems.Table.AddNewRecord.SetCurrent()
+                                .dgvDetalleItems.Table.AddNewRecord.BeginEdit()
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("id", i.idItem)
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("descripcion", i.DetalleItem)
+                                '.dgvDetalleItems.Table.CurrentRecord.SetValue("unidad", Nothing)
+                                '.dgvDetalleItems.Table.CurrentRecord.SetValue("precUnit", Nothing)
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("importeMN", cTotalmn)
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("importeME", cTotalme)
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("PagoMN", CDec(0.0))
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("PagoME", CDec(0.0))
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("SaldoMN", cTotalmn)
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("SaldoME", cTotalme)
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("estado", Helios.Cont.Business.Entity.BaseBE.EntityAction.INSERT)
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("secuencia", i.secuencia)
+                                .dgvDetalleItems.Table.AddNewRecord.EndEdit()
+
+                            End If
+                        End If
+                    Next
+
+                    .lblDeudaPendiente.Text = CDec(saldomn)
+                    .lblDeudaPendienteme.Text = CDec(saldome)
+
+                    Dim tablaSA As New tablaDetalleSA
+                    Dim tablaBL As New tabladetalle
+
+                    tablaBL = tablaSA.GetUbicarTablaID(10, CStr(dgvPagosVarios.Table.CurrentRecord.GetValue("tipoDoc")))
+
+                    .txtComprobante.Text = tablaBL.descripcion
+                    .txtComprobante.Tag = tablaBL.codigoDetalle
+                    .txtNumeroCompr.Text = dgvPagosVarios.Table.CurrentRecord.GetValue("numero")
+                    .txtSerieCompr.Text = dgvPagosVarios.Table.CurrentRecord.GetValue("serie")
+                    .txtTipoCambio.Value = dgvPagosVarios.Table.CurrentRecord.GetValue("tipoCambio")
+                    .lblTipoCambio.Text = dgvPagosVarios.Table.CurrentRecord.GetValue("tipoCambio")
+                    .txtFechaComprobante.Text = dgvPagosVarios.Table.CurrentRecord.GetValue("fecha")
+
+                    Select Case dgvPagosVarios.Table.CurrentRecord.GetValue("moneda")
+                        Case "NAC"
+                            .tb19.ToggleState = ToggleButton2.ToggleButtonState.ON
+                        Case "EXT"
+                            .tb19.ToggleState = ToggleButton2.ToggleButtonState.OFF
+                    End Select
+
+                Case "EXT"
+                    If TabPagoProveedor Is TabControlAdv1.SelectedTab Then
+                        .lblIdProveedor = CInt(txtCliente.Tag)
+                        .lblNomProveedor = txtCliente.Text
+                        .lblCuentaProveedor = "4212"
+                        .lblIdDocumento.Text = IDDocumentoCompra
+                        'Nuevo Maykol correccion
+                        .txtProveedor.Text = txtCliente.Text
+                        .txtProveedor.Tag = txtCliente.Tag
+                    ElseIf TabPageDevolucion Is TabControlAdv1.SelectedTab Then
+                        .lblIdProveedor = txtcliDev.Tag
+                        .lblNomProveedor = txtcliDev.Text
+                        .lblCuentaProveedor = "4212"
+                        .lblIdDocumento.Text = IDDocumentoCompra
+                        .txtProveedor.Text = txtcliDev.Text
+                        .txtProveedor.Tag = txtcliDev.Tag
+                    End If
+
+                    For Each i As documentoCajaDetalle In objLista.ObtenerCuentasPorPagarPorDetails(IDDocumentoCompra)
+                        If Not i.EstadoCobro = "PG" Then
+                            detalle = detalleSA.SumaNotasXidPadreItem(i.secuencia)
+                            cTotalmn = CDec(i.MontoDeudaSoles) - detalle.importe - CDec(i.MontoPagadoSoles) + detalle.ImporteDBMN - detalle.ImporteAJmn
+                            cTotalme = CDec(i.MontoDeudaUSD) - detalle.importeUS - CDec(i.MontoPagadoUSD) + detalle.ImporteDBME - detalle.ImporteAJme
+                            If cTotalmn < 0 Then
+                                cTotalmn = 0
+                            End If
+                            If cTotalme < 0 Then
+                                cTotalme = 0
+                            End If
+                            saldomn += cTotalmn
+                            saldome += cTotalme
+                            If cTotalmn > 0 Or cTotalme > 0 Then
+                                '.dgvDetalleItems.Rows.Add(i.idItem, i.DetalleItem, Nothing,
+                                '                           Nothing, cTotalmn, cTotalme,
+                                '                           "0.00", "0.00", "0.00", "0.00", Helios.Cont.Business.Entity.BaseBE.EntityAction.INSERT, i.secuencia)
+
+                                .dgvDetalleItems.Table.AddNewRecord.SetCurrent()
+                                .dgvDetalleItems.Table.AddNewRecord.BeginEdit()
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("id", i.idItem)
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("descripcion", i.DetalleItem)
+                                '.dgvDetalleItems.Table.CurrentRecord.SetValue("unidad", Nothing)
+                                '.dgvDetalleItems.Table.CurrentRecord.SetValue("precUnit", Nothing)
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("importeMN", cTotalmn)
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("importeME", cTotalme)
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("PagoMN", CDec(0.0))
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("PagoME", CDec(0.0))
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("SaldoMN", cTotalmn)
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("SaldoME", cTotalme)
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("estado", Helios.Cont.Business.Entity.BaseBE.EntityAction.INSERT)
+                                .dgvDetalleItems.Table.CurrentRecord.SetValue("secuencia", i.secuencia)
+                                .dgvDetalleItems.Table.AddNewRecord.EndEdit()
+
+                            End If
+                        End If
+                    Next
+
+                    .lblDeudaPendiente.Text = CDec(saldomn)
+                    .lblDeudaPendienteme.Text = CDec(saldome)
+
+                    Dim tablaSA As New tablaDetalleSA
+                    Dim tablaBL As New tabladetalle
+
+                    tablaBL = tablaSA.GetUbicarTablaID(10, CStr(dgvPagosVarios.Table.CurrentRecord.GetValue("tipoDoc")))
+
+                    .txtComprobante.Text = tablaBL.descripcion
+                    .txtComprobante.Tag = tablaBL.codigoDetalle
+                    .txtNumeroCompr.Text = dgvPagosVarios.Table.CurrentRecord.GetValue("numero")
+                    .txtSerieCompr.Text = dgvPagosVarios.Table.CurrentRecord.GetValue("serie")
+                    .txtTipoCambio.Value = dgvPagosVarios.Table.CurrentRecord.GetValue("tipoCambio")
+                    .lblTipoCambio.Text = dgvPagosVarios.Table.CurrentRecord.GetValue("tipoCambio")
+                    .txtFechaComprobante.Text = dgvPagosVarios.Table.CurrentRecord.GetValue("fecha")
+                    Dim DSFS As String = dgvPagosVarios.Table.CurrentRecord.GetValue("moneda")
+                    Select Case dgvPagosVarios.Table.CurrentRecord.GetValue("moneda")
+                        Case "NAC"
+                            .tb19.ToggleState = ToggleButton2.ToggleButtonState.ON
+                        Case "EXT"
+                            .tb19.ToggleState = ToggleButton2.ToggleButtonState.OFF
+                    End Select
+
+            End Select
+
+            If CDec(saldomn) <= 0 Then
+
+                lblEstado.Text = "El documento ya se encuentra pagado."
+                Timer1.Enabled = True
+                PanelError.Visible = True
+                TiempoEjecutar(10)
+
+                Me.Cursor = Cursors.Arrow
+                Exit Sub
+            Else
+
+                .lblPerido.Text = PeriodoGeneral
+
+                .getTableAnticiposPorTipoProveedor(txtCliente.Tag)
+                '.cboTipoDoc.Enabled = True
+                '.cboTipoDoc.ReadOnly = False
+                .StartPosition = FormStartPosition.CenterParent
+                .ShowDialog()
+
+            End If
+        End With
+
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+
+
+    Dim colorx As New GridMetroColors()
+    Sub MostrarPagosVarios(intIdDocumento As Integer)
+        Dim libroSA As New documentoLibroDiarioSA
+        '
+        Dim dt As New DataTable("Notas de credito, debito y ajustes")
+        dt.Columns.Add("id")
+        dt.Columns.Add("fechaMov")
+        dt.Columns.Add("tipo")
+        dt.Columns.Add("tipoDoc")
+        dt.Columns.Add("serie")
+        dt.Columns.Add("numero")
+        dt.Columns.Add("importeOmn")
+        dt.Columns.Add("importeOme")
+
+        For Each i In libroSA.MostrarPagosVariosCP(intIdDocumento)
+            Dim dr As DataRow = dt.NewRow
+            dr(0) = i.idDocumento
+            dr(1) = i.fecha
+            dr(2) = i.tipoRegistro
+            dr(3) = i.tipoDoc
+            dr(4) = i.serie
+            dr(5) = i.nroDoc
+            dr(6) = FormatNumber(i.importeMN, 2)
+            dr(7) = FormatNumber(i.importeME, 2)
+            dt.Rows.Add(dr)
+        Next
+        GridGroupingControl1.DataSource = dt
+    End Sub
+
+    Public Sub EstadoPAgos()
+        'Dim CompraSA As New DocumentoCompraSA
+        'Dim Compra As New documentocompra
+        'Dim documentoCaja As New List(Of documentoCaja)
+        'Dim documentoCajaSA As New DocumentoCajaSA
+
+        'Compra = CompraSA.GetSumaCuentasXpagar(GEstableciento.IdEstablecimiento, "30")
+
+        'lbl1a30.Text = FormatNumber(Compra.Monto30mn, 2)
+
+        '' Compra = CompraSA.GetSumaCuentasXpagar(GEstableciento.IdEstablecimiento, "60")
+
+        'lbl31a60.Text = FormatNumber(Compra.Monto60mn, 2)
+
+        ''  Compra = CompraSA.GetSumaCuentasXpagar(GEstableciento.IdEstablecimiento, "90")
+
+        'lbl61a90.Text = FormatNumber(Compra.Monto90mn, 2)
+
+        ''   Compra = CompraSA.GetSumaCuentasXpagar(GEstableciento.IdEstablecimiento, "90+")
+
+        'lbl90mas.Text = FormatNumber(Compra.Monto90Masmn, 2)
+
+        'Label15.Text = "S/." & FormatNumber(CDec(lbl1a30.Text) + CDec(lbl31a60.Text) + CDec(lbl61a90.Text) + CDec(lbl90mas.Text), 2)
+
+        'documentoCaja = documentoCajaSA.SumaxINgresosEgresosAnual()
+
+        'For Each i In documentoCaja
+        '    Select Case i.tipoMovimiento
+        '        Case "DC"
+        '            '        Label19.Text = "PENS/." & FormatNumber(i.montoSoles, 2)
+        '        Case "PG"
+        '            Label19.Text = "PENS/." & FormatNumber(i.montoSoles, 2)
+        '    End Select
+        'Next
+    End Sub
+
+
+    Private Sub btnNuevoPago2(strMoneda As String, IDDocumentoCompra As Integer)
+        Me.Cursor = Cursors.WaitCursor
+        Dim objLista As New DocumentoCajaDetalleSA
+        Dim objLista2 As New documentoAnticipoDetalleSA
+        Dim saldomn As Decimal = 0
+        Dim saldome As Decimal = 0
+
+        Dim cTotalmn As Decimal = 0
+        Dim cTotalme As Decimal = 0
+        Dim cCreditomn As Decimal = 0
+        Dim cCreditome As Decimal = 0
+        Dim cDebitomn As Decimal = 0
+        Dim cDebitome As Decimal = 0
+        Dim detalle As New documentocompradetalle
+        Dim detalleSA As New DocumentoCompraDetalleSA
+
+        'Select Case TipoCompra
+
+        '    Case TIPO_VENTA.VENTA_NORMAL_CREDITO
+        With frmPagos
+            .dgvDetalleItems.Rows.Clear()
+            .manipulacionEstado = ENTITY_ACTIONS.INSERT
+            Select Case strMoneda
+                Case "NAC"
+                    If TabPageAdv1 Is TabControlAdv1.SelectedTab Then
+                        .lblIdProveedor = txtCliente2.Tag
+                        .lblNomProveedor = txtCliente2.Text
+                        .lblCuentaProveedor = "4212"
+                        .lblIdDocumento.Text = IDDocumentoCompra
+                        'Nuevo Maykol correccion
+                        .txtProveedor.Text = txtCliente2.Text
+                        .txtProveedor.Tag = txtCliente2.Tag
+
+                    End If
+
+                    'martin
+                    Dim listaPago As List(Of documentoAnticipoDetalle)
+                    listaPago = objLista2.ObtenerCuentasPagadasAnticipo(IDDocumentoCompra)
+
+                    For Each i As documentoCajaDetalle In objLista.ObtenerCuentasPorPagarPorDetails(IDDocumentoCompra)
+                        If Not i.EstadoCobro = "PG" Then
+                            detalle = detalleSA.SumaNotasXidPadreItem(i.secuencia)
+
+                            'martin
+                            Dim consulta = (From c In listaPago _
+                                          Where c.secuencia = i.secuencia).FirstOrDefault
+
+
+                            cTotalmn = CDec(i.MontoDeudaSoles) - detalle.importe - CDec(i.MontoPagadoSoles) + detalle.ImporteDBMN - detalle.ImporteAJmn - consulta.MontoPagadoSoles
+                            cTotalme = CDec(i.MontoDeudaUSD) - detalle.importeUS - CDec(i.MontoPagadoUSD) + detalle.ImporteDBME - detalle.ImporteAJme - consulta.MontoPagadoUSD
+
+                            If cTotalmn < 0 Then
+                                cTotalmn = 0
+                            End If
+                            If cTotalme < 0 Then
+                                cTotalme = 0
+                            End If
+                            saldomn += cTotalmn
+                            saldome += cTotalme
+                            If cTotalmn > 0 Or cTotalme > 0 Then
+                                .dgvDetalleItems.Rows.Add(i.idItem, i.DetalleItem, Nothing,
+                                                           Nothing, cTotalmn, cTotalme,
+                                                           "0.00", "0.00", "0.00", "0.00", Helios.Cont.Business.Entity.BaseBE.EntityAction.INSERT, i.secuencia)
+                            End If
+                        End If
+                    Next
+                    'txtImporteCompramn.Text = saldomn.ToString("N2")
+                    'txtImporteComprame.Text = saldome.ToString("N2")
+
+                    '.nudImporteNac.Maximum = CDec(lblPagoMN.Text)
+                    .txtSaldoPorPagar.DecimalValue = CDec(saldomn)
+                    .lblDeudaPendienteme.Text = CDec(saldome)
+
+                    Dim tablaSA As New tablaDetalleSA
+                    Dim tablaBL As New tabladetalle
+
+                    tablaBL = tablaSA.GetUbicarTablaID(10, CStr(dgvPagosVarios2.Table.CurrentRecord.GetValue("tipoDoc")))
+
+                    .txtComprobante.Text = tablaBL.descripcion
+                    .txtComprobante.Tag = tablaBL.codigoDetalle
+                    .txtNumeroCompr.Text = dgvPagosVarios2.Table.CurrentRecord.GetValue("numero")
+                    .txtSerieCompr.Text = dgvPagosVarios2.Table.CurrentRecord.GetValue("serie")
+                    .txtTipoCambio.DoubleValue = dgvPagosVarios2.Table.CurrentRecord.GetValue("tipoCambio")
+                    .lblTipoCambio.Text = dgvPagosVarios2.Table.CurrentRecord.GetValue("tipoCambio")
+                    .txtFechaComprobante.Text = dgvPagosVarios2.Table.CurrentRecord.GetValue("fecha")
+
+                    Select Case dgvPagosVarios2.Table.CurrentRecord.GetValue("moneda")
+                        Case "NAC"
+                            .tb19.ToggleState = ToggleButton2.ToggleButtonState.ON
+                        Case "EXT"
+                            .tb19.ToggleState = ToggleButton2.ToggleButtonState.OFF
+                    End Select
+
+                Case "EXT"
+                    If TabPageAdv1 Is TabControlAdv1.SelectedTab Then
+                        .lblIdProveedor = CInt(txtCliente2.Tag)
+                        .lblNomProveedor = txtCliente2.Text
+                        .lblCuentaProveedor = "4212"
+                        .lblIdDocumento.Text = IDDocumentoCompra
+                        'Nuevo Maykol correccion
+                        .txtProveedor.Text = txtCliente2.Text
+                        .txtProveedor.Tag = txtCliente2.Tag
+
+                    End If
+
+                    For Each i As documentoCajaDetalle In objLista.ObtenerCuentasPorPagarPorDetails(IDDocumentoCompra)
+                        If Not i.EstadoCobro = "PG" Then
+                            detalle = detalleSA.SumaNotasXidPadreItem(i.secuencia)
+                            cTotalmn = CDec(i.MontoDeudaSoles) - detalle.importe - CDec(i.MontoPagadoSoles) + detalle.ImporteDBMN - detalle.ImporteAJmn
+                            cTotalme = CDec(i.MontoDeudaUSD) - detalle.importeUS - CDec(i.MontoPagadoUSD) + detalle.ImporteDBME - detalle.ImporteAJme
+                            If cTotalmn < 0 Then
+                                cTotalmn = 0
+                            End If
+                            If cTotalme < 0 Then
+                                cTotalme = 0
+                            End If
+                            saldomn += cTotalmn
+                            saldome += cTotalme
+                            If cTotalmn > 0 Or cTotalme > 0 Then
+                                .dgvDetalleItems.Rows.Add(i.idItem, i.DetalleItem, Nothing,
+                                                           Nothing, cTotalmn, cTotalme,
+                                                           "0.00", "0.00", "0.00", "0.00", Helios.Cont.Business.Entity.BaseBE.EntityAction.INSERT, i.secuencia)
+                            End If
+                        End If
+                    Next
+                    'txtImporteCompramn.Text = saldomn.ToString("N2")
+                    'txtImporteComprame.Text = saldome.ToString("N2")
+
+                    '.nudImporteNac.Maximum = CDec(lblPagoMN.Text)
+                    .txtSaldoPorPagar.DecimalValue = CDec(saldomn)
+                    .lblDeudaPendienteme.Text = CDec(saldome)
+
+                    Dim tablaSA As New tablaDetalleSA
+                    Dim tablaBL As New tabladetalle
+
+                    tablaBL = tablaSA.GetUbicarTablaID(10, CStr(dgvPagosVarios2.Table.CurrentRecord.GetValue("tipoDoc")))
+
+                    .txtComprobante.Text = tablaBL.descripcion
+                    .txtComprobante.Tag = tablaBL.codigoDetalle
+                    .txtNumeroCompr.Text = dgvPagosVarios2.Table.CurrentRecord.GetValue("numero")
+                    .txtSerieCompr.Text = dgvPagosVarios2.Table.CurrentRecord.GetValue("serie")
+                    .txtTipoCambio.DoubleValue = dgvPagosVarios2.Table.CurrentRecord.GetValue("tipoCambio")
+                    .lblTipoCambio.Text = dgvPagosVarios2.Table.CurrentRecord.GetValue("tipoCambio")
+                    .txtFechaComprobante.Text = dgvPagosVarios2.Table.CurrentRecord.GetValue("fecha")
+                    Dim DSFS As String = dgvPagosVarios2.Table.CurrentRecord.GetValue("moneda")
+                    Select Case dgvPagosVarios2.Table.CurrentRecord.GetValue("moneda")
+                        Case "NAC"
+                            .tb19.ToggleState = ToggleButton2.ToggleButtonState.ON
+                        Case "EXT"
+                            .tb19.ToggleState = ToggleButton2.ToggleButtonState.OFF
+                    End Select
+
+            End Select
+
+            If CDec(saldomn) <= 0 Then
+                '    MsgBox("El documento ya se encuentra pagado.", MsgBoxStyle.Information, "Aviso del Sistema")
+                lblEstado.Text = "El documento ya se encuentra pagado."
+                Timer1.Enabled = True
+                PanelError.Visible = True
+                TiempoEjecutar(10)
+                '   EditarEstadoPagoCompra(TIPO_COMPRA.PAGO.PAGADO)
+                Me.Cursor = Cursors.Arrow
+                Exit Sub
+            Else
+                '    EditarEstadoPagoCompra(TIPO_COMPRA.PAGO.PENDIENTE_PAGO)
+
+                'If .TieneCuentaFinanciera = True Then
+                '.txtFechaComprobante.Value = New Date(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day)
+                '.txtFechaComprobante.CustomFormat = "dd/MM/yyyy"
+                '.txtFechaComprobante.Enabled = False
+                .lblPerido.Text = PeriodoGeneral
+                .cboTipoDoc.Enabled = True
+                .cboTipoDoc.ReadOnly = False
+                .StartPosition = FormStartPosition.CenterParent
+                .ShowDialog()
+                'Else
+                '    lblEstado.Text = "Debe indicar una caja activa para realizar esta acción!"
+                '    Timer1.Enabled = True
+                '    PanelError.Visible = True
+                '    TiempoEjecutar(10)
+                'End If
+            End If
+        End With
+        'End Select
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+
+
+    Private Sub btnNuevoPago(strMoneda As String, IDDocumentoCompra As Integer)
+        Me.Cursor = Cursors.WaitCursor
+        Dim objLista As New DocumentoCajaDetalleSA
+        Dim objLista2 As New documentoAnticipoDetalleSA
+        Dim saldomn As Decimal = 0
+        Dim saldome As Decimal = 0
+
+        Dim cTotalmn As Decimal = 0
+        Dim cTotalme As Decimal = 0
+        Dim cCreditomn As Decimal = 0
+        Dim cCreditome As Decimal = 0
+        Dim cDebitomn As Decimal = 0
+        Dim cDebitome As Decimal = 0
+        Dim detalle As New documentocompradetalle
+        Dim detalleSA As New DocumentoCompraDetalleSA
+
+        'Select Case TipoCompra
+
+        '    Case TIPO_VENTA.VENTA_NORMAL_CREDITO
+        With frmPagos
+            .dgvDetalleItems.Rows.Clear()
+            .manipulacionEstado = ENTITY_ACTIONS.INSERT
+            Select Case strMoneda
+                Case "NAC"
+                    If TabPagoProveedor Is TabControlAdv1.SelectedTab Then
+                        .lblIdProveedor = txtCliente.Tag
+                        .lblNomProveedor = txtCliente.Text
+                        .lblCuentaProveedor = "4212"
+                        .lblIdDocumento.Text = IDDocumentoCompra
+                        'Nuevo Maykol correccion
+                        .txtProveedor.Text = txtCliente.Text
+                        .txtProveedor.Tag = txtCliente.Tag
+                    ElseIf TabPageDevolucion Is TabControlAdv1.SelectedTab Then
+                        .lblIdProveedor = txtcliDev.Tag
+                        .lblNomProveedor = txtcliDev.Text
+                        .lblCuentaProveedor = "4212"
+                        .lblIdDocumento.Text = IDDocumentoCompra
+                        .txtProveedor.Text = txtcliDev.Text
+                        .txtProveedor.Tag = txtcliDev.Tag
+                    End If
+
+                    'martin
+                    Dim listaPago As List(Of documentoAnticipoDetalle)
+                    listaPago = objLista2.ObtenerCuentasPagadasAnticipo(IDDocumentoCompra)
+
+                    For Each i As documentoCajaDetalle In objLista.ObtenerCuentasPorPagarPorDetails(IDDocumentoCompra)
+                        If Not i.EstadoCobro = "PG" Then
+                            detalle = detalleSA.SumaNotasXidPadreItem(i.secuencia)
+
+                            'martin
+                            Dim consulta = (From c In listaPago _
+                                          Where c.secuencia = i.secuencia).FirstOrDefault
+
+
+                            cTotalmn = CDec(i.MontoDeudaSoles) - detalle.importe - CDec(i.MontoPagadoSoles) + detalle.ImporteDBMN - detalle.ImporteAJmn - consulta.MontoPagadoSoles
+                            cTotalme = CDec(i.MontoDeudaUSD) - detalle.importeUS - CDec(i.MontoPagadoUSD) + detalle.ImporteDBME - detalle.ImporteAJme - consulta.MontoPagadoUSD
+
+                            If cTotalmn < 0 Then
+                                cTotalmn = 0
+                            End If
+                            If cTotalme < 0 Then
+                                cTotalme = 0
+                            End If
+                            saldomn += cTotalmn
+                            saldome += cTotalme
+                            If cTotalmn > 0 Or cTotalme > 0 Then
+
+
+
+                                'Dim dr As DataRow = .DT.NewRow()
+
+                                'dr(0) = CDec(i.idItem)
+                                'dr(1) = i.DetalleItem
+                                'dr(2) = Nothing
+                                'dr(3) = 0
+                                'dr(4) = cTotalmn
+                                'dr(5) = cTotalme
+                                'dr(6) = 0
+                                'dr(7) = 0
+                                'dr(8) = 0
+                                'dr(9) = Helios.Cont.Business.Entity.BaseBE.EntityAction.INSERT
+                                'dr(10) = i.secuencia
+                                '.DT.Rows.Add(dr)
+                                '.dgvPagos.DataSource = .DT
+
+                                '.dgvDetalleItems.Rows.Add(i.idItem, i.DetalleItem, Nothing,
+                                '                          Nothing, cTotalmn, cTotalme,
+                                '                          "0.00", "0.00", "0.00", "0.00", Helios.Cont.Business.Entity.BaseBE.EntityAction.INSERT, i.secuencia)
+
+                                .dgvDetalleItems.Rows.Add(i.idItem, i.DetalleItem, Nothing,
+                                                       Nothing, cTotalmn, (cTotalmn / TmpTipoCambioTransaccionVenta).ToString("N2"),
+                                                       "0.00", "0.00", "0.00", "0.00", Helios.Cont.Business.Entity.BaseBE.EntityAction.INSERT, i.secuencia)
+                            End If
+                        End If
+                    Next
+                    'txtImporteCompramn.Text = saldomn.ToString("N2")
+                    'txtImporteComprame.Text = saldome.ToString("N2")
+
+                    '.nudImporteNac.Maximum = CDec(lblPagoMN.Text)
+                    .txtSaldoPorPagar.DecimalValue = CDec(saldomn)
+                    .lblDeudaPendienteme.Text = CDec(saldome)
+
+                    Dim tablaSA As New tablaDetalleSA
+                    Dim tablaBL As New tabladetalle
+
+                    tablaBL = tablaSA.GetUbicarTablaID(10, CStr(dgvPagosVarios.Table.CurrentRecord.GetValue("tipoDoc")))
+
+                    .txtComprobante.Text = tablaBL.descripcion
+                    .txtComprobante.Tag = tablaBL.codigoDetalle
+                    .txtNumeroCompr.Text = dgvPagosVarios.Table.CurrentRecord.GetValue("numero")
+                    .txtSerieCompr.Text = dgvPagosVarios.Table.CurrentRecord.GetValue("serie")
+                    .txtTipoCambio.DoubleValue = dgvPagosVarios.Table.CurrentRecord.GetValue("tipoCambio")
+                    .lblTipoCambio.Text = dgvPagosVarios.Table.CurrentRecord.GetValue("tipoCambio")
+                    .txtFechaComprobante.Text = dgvPagosVarios.Table.CurrentRecord.GetValue("fecha")
+
+                    Select Case dgvPagosVarios.Table.CurrentRecord.GetValue("moneda")
+                        Case "NAC"
+                            .tb19.ToggleState = ToggleButton2.ToggleButtonState.ON
+                        Case "EXT"
+                            .tb19.ToggleState = ToggleButton2.ToggleButtonState.OFF
+                    End Select
+                    .cargarDatosCompra(0)
+
+                Case "EXT"
+                    If TabPagoProveedor Is TabControlAdv1.SelectedTab Then
+                        .lblIdProveedor = CInt(txtCliente.Tag)
+                        .lblNomProveedor = txtCliente.Text
+                        .lblCuentaProveedor = "4212"
+                        .lblIdDocumento.Text = IDDocumentoCompra
+                        'Nuevo Maykol correccion
+                        .txtProveedor.Text = txtCliente.Text
+                        .txtProveedor.Tag = txtCliente.Tag
+                    ElseIf TabPageDevolucion Is TabControlAdv1.SelectedTab Then
+                        .lblIdProveedor = txtcliDev.Tag
+                        .lblNomProveedor = txtcliDev.Text
+                        .lblCuentaProveedor = "4212"
+                        .lblIdDocumento.Text = IDDocumentoCompra
+                        .txtProveedor.Text = txtcliDev.Text
+                        .txtProveedor.Tag = txtcliDev.Tag
+                    End If
+
+
+                    Dim tablaSA As New tablaDetalleSA
+                    Dim tablaBL As New tabladetalle
+                    Dim tipoCambio As Decimal
+                    tablaBL = tablaSA.GetUbicarTablaID(10, CStr(dgvPagosVarios.Table.CurrentRecord.GetValue("tipoDoc")))
+
+                    .txtComprobante.Text = tablaBL.descripcion
+                    .txtComprobante.Tag = tablaBL.codigoDetalle
+                    .txtNumeroCompr.Text = dgvPagosVarios.Table.CurrentRecord.GetValue("numero")
+                    .txtSerieCompr.Text = dgvPagosVarios.Table.CurrentRecord.GetValue("serie")
+                    tipoCambio = dgvPagosVarios.Table.CurrentRecord.GetValue("tipoCambio")
+                    .lblTipoCambio.Text = dgvPagosVarios.Table.CurrentRecord.GetValue("tipoCambio")
+                    .txtFechaComprobante.Text = dgvPagosVarios.Table.CurrentRecord.GetValue("fecha")
+                    Dim DSFS As String = dgvPagosVarios.Table.CurrentRecord.GetValue("moneda")
+                    Select Case dgvPagosVarios.Table.CurrentRecord.GetValue("moneda")
+                        Case "NAC"
+                            .tb19.ToggleState = ToggleButton2.ToggleButtonState.ON
+                        Case "EXT"
+                            .tb19.ToggleState = ToggleButton2.ToggleButtonState.OFF
+                    End Select
+
+
+                    For Each i As documentoCajaDetalle In objLista.ObtenerCuentasPorPagarPorDetailsME(IDDocumentoCompra)
+                        If Not i.EstadoCobro = "PG" Then
+                            detalle = detalleSA.SumaNotasXidPadreItem(i.secuencia)
+                            'cTotalmn = CDec(i.MontoDeudaSoles) - detalle.importe - CDec(i.MontoPagadoSoles) + detalle.ImporteDBMN - detalle.ImporteAJmn
+                            cTotalme = CDec(i.MontoDeudaUSD) - detalle.importeUS - CDec(i.montoUsdTransacc) + detalle.ImporteDBME - detalle.ImporteAJme
+                            cTotalmn = CDec(cTotalme * tipoCambio).ToString("N2")
+                            If cTotalmn < 0 Then
+                                cTotalmn = 0
+                            End If
+                            If cTotalme < 0 Then
+                                cTotalme = 0
+                            End If
+                            saldomn += cTotalmn
+                            saldome += cTotalme
+                            If cTotalmn > 0 Or cTotalme > 0 Then
+
+                                'Dim dr As DataRow = .DT.NewRow()
+
+                                'dr(0) = CDec(i.idItem)
+                                'dr(1) = i.DetalleItem
+                                'dr(2) = Nothing
+                                'dr(3) = 0
+                                'dr(4) = cTotalmn
+                                'dr(5) = cTotalme
+                                'dr(6) = 0
+                                'dr(7) = 0
+                                'dr(8) = 0
+                                'dr(9) = Helios.Cont.Business.Entity.BaseBE.EntityAction.INSERT
+                                'dr(10) = i.secuencia
+                                '.DT.Rows.Add(dr)
+                                '.dgvPagos.DataSource = .DT
+
+                                '.dgvPagos.DataSource = .UbicarCajasHijas()
+                                '.dgvPagos.Table.AddNewRecord.SetCurrent()
+                                '.dgvPagos.Table.AddNewRecord.BeginEdit()
+                                '.dgvPagos.Table.CurrentRecord.SetValue("colId", CDec(i.idItem))
+                                '.dgvPagos.Table.CurrentRecord.SetValue("colNameItem", i.DetalleItem)
+                                '.dgvPagos.Table.CurrentRecord.SetValue("colum", Nothing)
+                                '.dgvPagos.Table.CurrentRecord.SetValue("ColPrecUnit", 0)
+                                '.dgvPagos.Table.CurrentRecord.SetValue("colMN", cTotalmn)
+                                '.dgvPagos.Table.CurrentRecord.SetValue("colME", cTotalme)
+                                '.dgvPagos.Table.CurrentRecord.SetValue("colPagoMN", 0)
+                                '.dgvPagos.Table.CurrentRecord.SetValue("colPagoME", 0)
+                                '.dgvPagos.Table.CurrentRecord.SetValue("colSaldoMN", 0)
+                                '.dgvPagos.Table.CurrentRecord.SetValue("colSaldoME", 0)
+                                '.dgvPagos.Table.CurrentRecord.SetValue("colEstado", Helios.Cont.Business.Entity.BaseBE.EntityAction.INSERT)
+                                '.dgvPagos.Table.CurrentRecord.SetValue("colSecuencia", i.secuencia)
+                                '.dgvPagos.Table.AddNewRecord.EndEdit()
+
+
+                                .dgvDetalleItems.Rows.Add(i.idItem, i.DetalleItem, Nothing,
+                                                           Nothing, cTotalmn, cTotalme,
+                                                           "0.00", "0.00", "0.00", "0.00", Helios.Cont.Business.Entity.BaseBE.EntityAction.INSERT, i.secuencia)
+                            End If
+                        End If
+                    Next
+
+                    'txtImporteCompramn.Text = saldomn.ToString("N2")
+                    'txtImporteComprame.Text = saldome.ToString("N2")
+                    '.nudImporteNac.Maximum = CDec(lblPagoMN.Text)
+                    .txtSaldoPorPagar.DecimalValue = CDec(saldomn)
+                    .lblDeudaPendienteme.Text = CDec(saldome)
+                    .cargarDatosCompra(1)
+
+            End Select
+
+            If CDec(saldomn) <= 0 Then
+                '    MsgBox("El documento ya se encuentra pagado.", MsgBoxStyle.Information, "Aviso del Sistema")
+                lblEstado.Text = "El documento ya se encuentra pagado."
+                Timer1.Enabled = True
+                PanelError.Visible = True
+                TiempoEjecutar(10)
+                '   EditarEstadoPagoCompra(TIPO_COMPRA.PAGO.PAGADO)
+                Me.Cursor = Cursors.Arrow
+                Exit Sub
+            Else
+                '    EditarEstadoPagoCompra(TIPO_COMPRA.PAGO.PENDIENTE_PAGO)
+
+                'If .TieneCuentaFinanciera = True Then
+                '.txtFechaComprobante.Value = New Date(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day)
+                '.txtFechaComprobante.CustomFormat = "dd/MM/yyyy"
+                '.txtFechaComprobante.Enabled = False
+                .lblPerido.Text = PeriodoGeneral
+                .cboTipoDoc.Enabled = True
+                .cboTipoDoc.ReadOnly = False
+                .PanelDetallePagos.Enabled = False
+                .StartPosition = FormStartPosition.CenterParent
+                .ShowDialog()
+                'Else
+                '    lblEstado.Text = "Debe indicar una caja activa para realizar esta acción!"
+                '    Timer1.Enabled = True
+                '    PanelError.Visible = True
+                '    TiempoEjecutar(10)
+                'End If
+            End If
+        End With
+        'End Select
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub devolverExcedente(strMoneda As String, IDDocumentoCompra As Integer)
+        Me.Cursor = Cursors.WaitCursor
+        Dim objLista As New DocumentoCajaDetalleSA
+        Dim saldomn As Decimal = 0
+        Dim saldome As Decimal = 0
+
+        Dim cTotalmn As Decimal = 0
+        Dim cTotalme As Decimal = 0
+        Dim cCreditomn As Decimal = 0
+        Dim cCreditome As Decimal = 0
+        Dim cDebitomn As Decimal = 0
+        Dim cDebitome As Decimal = 0
+
+        'Select Case TipoCompra
+
+        '    Case TIPO_VENTA.VENTA_NORMAL_CREDITO
+        With frmDevolucionAproveedor
+            .dgvDetalleItems.Rows.Clear()
+            ' .manipulacionEstado = ENTITY_ACTIONS.INSERT
+            Select Case strMoneda
+                Case "NAC"
+                    If TabPagoProveedor Is TabControlAdv1.SelectedTab Then
+                        .lblIdProveedor = txtCliente.Tag
+                        .lblNomProveedor = txtCliente.Text
+                        .lblCuentaProveedor = "4212"
+                        .lblIdDocumento = IDDocumentoCompra
+                    ElseIf TabPageDevolucion Is TabControlAdv1.SelectedTab Then
+                        .lblIdProveedor = txtcliDev.Tag
+                        .lblNomProveedor = txtcliDev.Text
+                        .lblCuentaProveedor = "4212"
+                        .lblIdDocumento = IDDocumentoCompra
+                    End If
+
+                    For Each i As documentoCajaDetalle In objLista.ObtenerCuentasPorPagarPorDetails(IDDocumentoCompra)
+
+                        cTotalmn = CDec(i.MontoDeudaSoles) - CDec(i.MontoPagadoSoles)
+                        cTotalme = CDec(i.MontoDeudaUSD) - CDec(i.MontoPagadoUSD)
+                        saldomn += cTotalmn
+                        saldome += cTotalme
+                        If cTotalmn > 0 Or cTotalme > 0 Then
+                            .dgvDetalleItems.Rows.Add(i.idItem, i.DetalleItem, Nothing,
+                                                       Nothing, cTotalmn, cTotalme,
+                                                       "0.00", "0.00", "0.00", "0.00", Helios.Cont.Business.Entity.BaseBE.EntityAction.INSERT, i.secuencia)
+                        End If
+
+                    Next
+
+                    .lblDeudaPendiente.Text = CDec(saldomn)
+                    .lblDeudaPendienteme.Text = CDec(saldome)
+                Case Else
+
+            End Select
+
+            If CDec(saldomn) <= 0 Then
+                '    MsgBox("El documento ya se encuentra pagado.", MsgBoxStyle.Information, "Aviso del Sistema")
+                lblEstado.Text = "El documento ya se encuentra pagado."
+                Timer1.Enabled = True
+                PanelError.Visible = True
+                TiempoEjecutar(10)
+                '   EditarEstadoPagoCompra(TIPO_COMPRA.PAGO.PAGADO)
+                Me.Cursor = Cursors.Arrow
+                Exit Sub
+            Else
+                '    EditarEstadoPagoCompra(TIPO_COMPRA.PAGO.PENDIENTE_PAGO)
+
+                'If .TieneCuentaFinanciera = True Then
+                .txtFechaComprobante.Text = DateTime.Now ' New Date(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day)
+                '    .txtFechaComprobante.CustomFormat = "dd/MM/yyyy"
+                '     .txtFechaComprobante.Enabled = False
+                '  .lblPerido.Text = PeriodoGeneral
+                .cboTipoDocumento.Enabled = True
+                .cboTipoDocumento.ReadOnly = False
+                .StartPosition = FormStartPosition.CenterParent
+                .ShowDialog()
+                'Else
+                '    lblEstado.Text = "Debe indicar una caja activa para realizar esta acción!"
+                '    Timer1.Enabled = True
+                '    PanelError.Visible = True
+                '    TiempoEjecutar(10)
+                'End If
+            End If
+        End With
+        'End Select
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Sub GridCFG(GGC As GridGroupingControl)
+        GGC.TableOptions.ShowRowHeader = False
+        GGC.TopLevelGroupOptions.ShowCaption = False
+        GGC.ShowColumnHeaders = True
+
+        colorx = New GridMetroColors()
+        colorx.HeaderColor.HoverColor = Color.FromArgb(20, 128, 128, 128)
+        colorx.HeaderTextColor.HoverTextColor = Color.Gray
+        colorx.HeaderBottomBorderColor = Color.FromArgb(168, 178, 189)
+        GGC.SetMetroStyle(colorx)
+        GGC.BorderStyle = System.Windows.Forms.BorderStyle.None
+
+        '  GGC.BrowseOnly = True
+        GGC.ShowCurrentCellBorderBehavior = GridShowCurrentCellBorder.HideAlways
+        GGC.TableOptions.ListBoxSelectionCurrentCellOptions = Syncfusion.Windows.Forms.Grid.Grouping.GridListBoxSelectionCurrentCellOptions.HideCurrentCell
+        GGC.TableOptions.ListBoxSelectionMode = SelectionMode.One
+        GGC.TableOptions.SelectionBackColor = Color.Gray
+        GGC.AllowProportionalColumnSizing = False
+        GGC.TableDescriptor.Appearance.AnyCell.VerticalAlignment = GridVerticalAlignment.Middle
+        GGC.TableDescriptor.Appearance.AnyCell.HorizontalAlignment = GridHorizontalAlignment.Center
+        GGC.Table.DefaultColumnHeaderRowHeight = 23
+        GGC.Table.DefaultRecordRowHeight = 20
+        GGC.TableDescriptor.Appearance.AnyCell.Font.Size = 7.5F
+
+    End Sub
+
+    Sub GridCFG2(GGC As GridGroupingControl)
+        GGC.TableOptions.ShowRowHeader = False
+        GGC.TopLevelGroupOptions.ShowCaption = True
+        GGC.ShowColumnHeaders = True
+
+        colorx = New GridMetroColors()
+        colorx.HeaderColor.HoverColor = Color.FromArgb(20, 128, 128, 128)
+        colorx.HeaderTextColor.HoverTextColor = Color.Gray
+        colorx.HeaderBottomBorderColor = Color.FromArgb(168, 178, 189)
+        GGC.SetMetroStyle(colorx)
+        GGC.BorderStyle = System.Windows.Forms.BorderStyle.None
+
+        '  GGC.BrowseOnly = True
+        GGC.ShowCurrentCellBorderBehavior = GridShowCurrentCellBorder.HideAlways
+        GGC.TableOptions.ListBoxSelectionCurrentCellOptions = Syncfusion.Windows.Forms.Grid.Grouping.GridListBoxSelectionCurrentCellOptions.HideCurrentCell
+        GGC.TableOptions.ListBoxSelectionMode = SelectionMode.One
+        GGC.TableOptions.SelectionBackColor = Color.Gray
+        GGC.AllowProportionalColumnSizing = False
+        GGC.TableDescriptor.Appearance.AnyCell.VerticalAlignment = GridVerticalAlignment.Middle
+        GGC.TableDescriptor.Appearance.AnyCell.HorizontalAlignment = GridHorizontalAlignment.Center
+        GGC.Table.DefaultColumnHeaderRowHeight = 23
+        GGC.Table.DefaultRecordRowHeight = 20
+        GGC.TableDescriptor.Appearance.AnyCell.Font.Size = 8.0F
+
+    End Sub
+
+    'Private Function GetParentTable(RucCliente As Integer) As DataTable
+    '    Dim dt As New DataTable("ParentTable")
+    '    Dim documentoVentaSA As New documentoVentaAbarrotesSA
+    '    Dim documentoVenta As New List(Of documentoventaAbarrotes)
+    '    Dim tablaSA As New tablaDetalleSA
+    '    Dim strPeriodo As String = String.Format("{0:00}", Convert.ToInt32(txtPeriodo.Value.Month)) & "/" & txtPeriodo.Value.Year
+
+    '    dt = New DataTable("ParentTable")
+
+    '    dt.Columns.Add("idDocumento", GetType(Integer))
+    '    dt.Columns.Add("fecha", GetType(String))
+    '    dt.Columns.Add("tipoVenta", GetType(String))
+    '    dt.Columns.Add("tipoDoc", GetType(String))
+    '    dt.Columns.Add("serie", GetType(String))
+    '    dt.Columns.Add("numero", GetType(String))
+    '    dt.Columns.Add("moneda", GetType(String))
+    '    dt.Columns.Add("importeMN", GetType(Decimal))
+    '    dt.Columns.Add("tipoCambio", GetType(Decimal))
+    '    dt.Columns.Add("importeME", GetType(Decimal))
+    '    dt.Columns.Add("estadoPago", GetType(String))
+
+    '    documentoVenta = documentoVentaSA.UbicarVentaPorClienteXperiodo2(Gempresas.IdEmpresaRuc, GEstableciento.IdEstablecimiento, RucCliente, strPeriodo)
+    '    Dim str As String
+    '    If Not IsNothing(documentoVenta) Then
+    '        For Each i In documentoVenta
+    '            Dim dr As DataRow = dt.NewRow()
+    '            str = Nothing
+    '            str = CDate(i.fechaDoc).ToString("dd-MMM hh:mm tt ")
+    '            dr(0) = i.idDocumento
+    '            dr(1) = str
+    '            dr(2) = i.tipoVenta
+    '            dr(3) = i.tipoDocumento
+    '            dr(4) = i.serie
+    '            dr(5) = i.numeroDoc
+    '            Select Case i.moneda
+    '                Case 1
+    '                    dr(6) = "NAC"
+    '                Case Else
+    '                    dr(6) = "EXT"
+    '            End Select
+    '            dr(7) = i.ImporteNacional
+    '            dr(8) = i.tipoCambio
+    '            dr(9) = i.ImporteExtranjero
+    '            Select Case i.estadoCobro
+    '                Case TIPO_VENTA.PAGO.COBRADO
+    '                    dr(10) = "Saldado"
+    '                Case TIPO_VENTA.PAGO.PENDIENTE_PAGO
+    '                    dr(10) = "Pendiente"
+    '            End Select
+    '            dt.Rows.Add(dr)
+    '        Next
+    '    End If
+    '    Return dt
+    'End Function
+
+    'Private Function GetChildTable() As DataTable
+    '    Dim dt As New DataTable("ChildTable")
+    '    dt = New DataTable("ChildTable")
+
+    '    Dim cajaSA As New DocumentoCajaSA
+
+    '    dt.Columns.Add(New DataColumn("Item", GetType(String)))
+    '    dt.Columns.Add(New DataColumn("Tipo Doc.", GetType(String)))
+    '    dt.Columns.Add(New DataColumn("Número", GetType(String)))
+    '    dt.Columns.Add(New DataColumn("Monto mn.", GetType(Decimal)))
+    '    dt.Columns.Add(New DataColumn("T/c", GetType(Decimal)))
+    '    dt.Columns.Add(New DataColumn("Monto me.", GetType(Decimal)))
+    '    dt.Columns.Add(New DataColumn("ref", GetType(Integer)))
+    '    'upper case P
+    '    For Each x As documentoCajaDetalle In cajaSA.ListarDetallePagosXcodigoLibro(New documentoCaja With {.idEmpresa = Gempresas.IdEmpresaRuc, .idEstablecimiento = GEstableciento.IdEstablecimiento, .codigoLibro = "9908"})
+    '        Dim dr As DataRow = dt.NewRow()
+    '        dr(0) = x.DetalleItem
+    '        dr(1) = x.tipoDocumento
+    '        dr(2) = x.numeroDoc
+    '        dr(3) = x.montoSoles
+    '        dr(4) = x.tipoCambio
+    '        dr(5) = x.montoUsd
+    '        dr(6) = x.documentoAfectado
+    '        dt.Rows.Add(dr)
+    '    Next
+
+    '    Return dt
+    'End Function
+
+    'Dim parentTable As New DataTable
+    'Dim childTable As New DataTable
+    'Sub CargarCobrosXperiodo()
+    '    Dim dSet As New DataSet()
+    '    parentTable = GetParentTable(txtCliente.Tag)
+    '    If parentTable.Rows.Count > 0 Then
+    '        childTable = GetChildTable()
+
+    '        dSet.Tables.AddRange(New DataTable() {parentTable, childTable})
+
+    '        'setup the relations
+    '        Dim parentColumn As DataColumn = parentTable.Columns("idDocumento")
+    '        Dim childColumn As DataColumn = childTable.Columns("ref")
+    '        dSet.Relations.Add("ParentToChild", parentColumn, childColumn)
+
+    '        Me.dgvCobranzaCli.DataSource = parentTable
+    '        Me.dgvCobranzaCli.Engine.BindToCurrencyManager = False
+
+    '        'Me.dgvCajasAssig.GridVisualStyles = GridVisualStyles.Metro
+    '        'Me.dgvCajasAssig.GridOfficeScrollBars = OfficeScrollBars.Metro
+    '        Me.dgvCobranzaCli.TopLevelGroupOptions.ShowAddNewRecordBeforeDetails = False
+    '        Me.dgvCobranzaCli.TopLevelGroupOptions.ShowCaption = False
+
+    '        dgvCobranzaCli.ChildGroupOptions.ShowAddNewRecordAfterDetails = False
+    '        dgvCobranzaCli.ChildGroupOptions.ShowCaption = False
+    '    End If
+
+
+    '    'dgvCajasAssig.TableDescriptor.Relations.Clear()
+    '    'parentToChildRelationDescriptor.RelationKeys.Clear()
+    '    'Me.dgvCajasAssig.Engine.SourceListSet.Clear()
+    '    ''parentToChildRelationDescriptor = New GridRelationDescriptor()
+
+    '    'parentToChildRelationDescriptor.ChildTableName = "MyChildTable"
+    '    '' same as SourceListSetEntry.Name for childTable (see below)
+    '    'parentToChildRelationDescriptor.RelationKind = RelationKind.RelatedMasterDetails
+    '    'parentToChildRelationDescriptor.RelationKeys.Add("idcajaUsuario", "idPadre")
+
+    '    ' Add relation to ParentTable 
+
+    '    'dgvCajasAssig.TableDescriptor.Relations.Add(parentToChildRelationDescriptor)
+    '    ''parentToChildRelationDescriptor.ChildTableDescriptor.Columns.Clear()
+
+    '    'Me.dgvCajasAssig.Engine.SourceListSet.Add("MyParentTable", parentTable)
+    '    'Me.dgvCajasAssig.Engine.SourceListSet.Add("MyChildTable", ChildTable)
+    '    ''Me.dgvCajasAssig.Engine.SourceListSet.Add("MyGrandChildTable", grandChildTable)
+
+    '    'Me.dgvCajasAssig.DataSource = parentTable
+
+    '    ''Me.dgvCajasAssig.GridVisualStyles = GridVisualStyles.Metro
+    '    ''Me.dgvCajasAssig.GridOfficeScrollBars = OfficeScrollBars.Metro
+    '    'Me.dgvCajasAssig.TopLevelGroupOptions.ShowAddNewRecordBeforeDetails = False
+    '    'Me.dgvCajasAssig.TopLevelGroupOptions.ShowCaption = False
+
+
+    '    'parentToChildRelationDescriptor.ChildTableDescriptor.VisibleColumns.Remove("idcajaUsuario")
+
+    '    'parentToChildRelationDescriptor.ChildTableDescriptor.Columns(0).Width = 0
+    '    'parentToChildRelationDescriptor.ChildTableDescriptor.Columns(1).Width = 190
+    '    'parentToChildRelationDescriptor.ChildTableDescriptor.Columns(2).Width = 95
+    'End Sub
+
+    Public Sub CargarEntidadesXtipo2(strBusqueda As String)
+        Dim entidadSA As New entidadSA
+        Try
+            lsvProveedor2.Items.Clear()
+            For Each i As entidad In entidadSA.BuscarEntidadXdescripcion(Gempresas.IdEmpresaRuc, TIPO_ENTIDAD.PROVEEDOR, strBusqueda)
+                Dim n As New ListViewItem(i.idEntidad)
+                n.SubItems.Add(i.nombreCompleto)
+                n.SubItems.Add(i.cuentaAsiento)
+                n.SubItems.Add(i.nrodoc)
+                lsvProveedor2.Items.Add(n)
+            Next
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+
+    Public Sub CargarEntidadesXtipo(strBusqueda As String)
+        Dim entidadSA As New entidadSA
+        Try
+            lsvProveedor.Items.Clear()
+            For Each i As entidad In entidadSA.BuscarEntidadXdescripcion(Gempresas.IdEmpresaRuc, TIPO_ENTIDAD.PROVEEDOR, strBusqueda)
+                Dim n As New ListViewItem(i.idEntidad)
+                n.SubItems.Add(i.nombreCompleto)
+                n.SubItems.Add(i.cuentaAsiento)
+                n.SubItems.Add(i.nrodoc)
+                lsvProveedor.Items.Add(n)
+            Next
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub GetComprasXvencer(RucProveedor As Integer)
+        Dim documentoVentaSA As New DocumentoCompraSA
+        Dim documentoVenta As New List(Of documentocompra)
+        Dim tablaSA As New tablaDetalleSA
+        Dim dt As New DataTable
+
+        dt.Columns.Add("idDocumento", GetType(Integer))
+        dt.Columns.Add("fecha", GetType(String))
+        dt.Columns.Add("fechaVcto", GetType(String))
+        dt.Columns.Add("tipoVenta", GetType(String))
+        dt.Columns.Add("tipoDoc", GetType(String))
+        dt.Columns.Add("serie", GetType(String))
+        dt.Columns.Add("numero", GetType(String))
+        dt.Columns.Add("moneda", GetType(String))
+        dt.Columns.Add("importeMN", GetType(Decimal))
+        dt.Columns.Add("tipoCambio", GetType(Decimal))
+        dt.Columns.Add("importeME", GetType(Decimal))
+        dt.Columns.Add("abonoMN", GetType(Decimal))
+        dt.Columns.Add("abonoME", GetType(Decimal))
+        dt.Columns.Add("estadoPago", GetType(String))
+
+        Select Case cboIntervalo.Text
+            Case "POR PERIODO"
+                Dim strPeriodo As String = String.Format("{0:00}", Convert.ToInt32(txtCronoPeriodo.Value.Month)) & "/" & txtCronoPeriodo.Value.Year
+
+                documentoVenta = documentoVentaSA.GetCuentasXpagarPorFechaPeriodo(Gempresas.IdEmpresaRuc, GEstableciento.IdEstablecimiento, RucProveedor, strPeriodo)
+            Case Else
+                documentoVenta = documentoVentaSA.GetCuentasXpagarPorFechaVencimiento(Gempresas.IdEmpresaRuc, GEstableciento.IdEstablecimiento, RucProveedor, cboCaso.Text)
+        End Select
+
+
+        Dim str As String
+        Dim str2 As String
+        If Not IsNothing(documentoVenta) Then
+            For Each i In documentoVenta
+                Dim dr As DataRow = dt.NewRow()
+                str = Nothing
+                str = CDate(i.fechaDoc).ToString("dd-MMM hh:mm tt ")
+
+                str2 = Nothing
+                str2 = CDate(i.fechaVcto).ToString("dd-MMM hh:mm tt ")
+                dr(0) = i.idDocumento
+                dr(1) = str
+                dr(2) = str2
+                dr(3) = i.tipoCompra
+                dr(4) = i.tipoDoc
+                dr(5) = i.serie
+                dr(6) = i.numeroDoc
+                Select Case i.monedaDoc
+                    Case 1
+                        dr(7) = "NAC"
+                    Case Else
+                        dr(7) = "EXT"
+                End Select
+                dr(8) = i.importeTotal
+                dr(9) = i.tcDolLoc
+                dr(10) = i.importeUS
+                dr(11) = i.PagoSumaMN
+                dr(12) = i.PagoSumaME
+
+                Select Case i.estadoPago
+                    Case TIPO_COMPRA.PAGO.PAGADO
+                        dr(13) = "Saldado"
+                    Case TIPO_COMPRA.PAGO.PENDIENTE_PAGO
+                        dr(13) = "Pendiente"
+                End Select
+                dt.Rows.Add(dr)
+            Next
+            GridGroupingControl2.DataSource = dt
+            Me.GridGroupingControl2.TableOptions.ListBoxSelectionMode = SelectionMode.One
+        Else
+
+        End If
+    End Sub
+
+
+    Private Sub UbicarVentaNroSerieAnt(RucCliente As Integer)
+        Dim documentoVentaSA As New DocumentoCompraSA
+        Dim documentoVenta As New List(Of documentocompra)
+        Dim tablaSA As New tablaDetalleSA
+        Dim dt As New DataTable
+        Dim strPeriodo As String = String.Format("{0:00}", Convert.ToInt32(txtPeriodo.Value.Month)) & "/" & txtPeriodo.Value.Year
+
+        dt.Columns.Add("idDocumento", GetType(Integer))
+        dt.Columns.Add("fecha", GetType(String))
+        dt.Columns.Add("tipoVenta", GetType(String))
+        dt.Columns.Add("tipoDoc", GetType(String))
+        dt.Columns.Add("serie", GetType(String))
+        dt.Columns.Add("numero", GetType(String))
+        dt.Columns.Add("moneda", GetType(String))
+        dt.Columns.Add("importeMN", GetType(Decimal))
+        dt.Columns.Add("tipoCambio", GetType(Decimal))
+        dt.Columns.Add("importeME", GetType(Decimal))
+        dt.Columns.Add("abonoMN", GetType(Decimal))
+        dt.Columns.Add("abonoME", GetType(Decimal))
+        dt.Columns.Add("saldoMN", GetType(Decimal))
+        dt.Columns.Add("saldoME", GetType(Decimal))
+        dt.Columns.Add("estadoPago", GetType(String))
+        documentoVenta = documentoVentaSA.UbicarCompraPorProveedorXperiodoAnt(Gempresas.IdEmpresaRuc, GEstableciento.IdEstablecimiento, RucCliente, strPeriodo)
+        Dim str As String
+        If Not IsNothing(documentoVenta) Then
+            For Each i In documentoVenta
+                Dim dr As DataRow = dt.NewRow()
+                str = Nothing
+                str = CDate(i.fechaDoc).ToString("dd-MMM hh:mm tt ")
+                dr(0) = i.idDocumento
+                dr(1) = str
+                dr(2) = i.tipoCompra
+                dr(3) = i.tipoDoc
+                dr(4) = i.serie
+                dr(5) = i.numeroDoc
+                Select Case i.monedaDoc
+                    Case 1
+                        dr(6) = "NAC"
+                    Case Else
+                        dr(6) = "EXT"
+                End Select
+                dr(7) = i.importeTotal
+                dr(8) = i.tcDolLoc
+                dr(9) = i.importeUS
+                dr(10) = i.PagoSumaMN
+                dr(11) = i.PagoSumaME
+                dr(12) = CDec(i.importeTotal - i.PagoSumaMN).ToString("N2")
+                dr(13) = CDec(i.importeUS - i.PagoSumaME).ToString("N2")
+
+                Select Case i.estadoPago
+                    Case TIPO_COMPRA.PAGO.PAGADO
+                        dr(14) = "Saldado"
+                    Case TIPO_COMPRA.PAGO.PENDIENTE_PAGO
+                        dr(14) = "Pendiente"
+                End Select
+                dt.Rows.Add(dr)
+            Next
+            dgvPagosVarios2.DataSource = dt
+            Me.dgvPagosVarios2.TableOptions.ListBoxSelectionMode = SelectionMode.One
+        Else
+
+        End If
+    End Sub
+
+
+
+
+    Private Sub UbicarVentaNroSerie(RucCliente As Integer, intMoneda As String)
+        Dim documentoVentaSA As New DocumentoCompraSA
+        Dim documentoVenta As New List(Of documentocompra)
+        Dim tablaSA As New tablaDetalleSA
+        Dim dt As New DataTable
+        Dim strPeriodo As String = String.Format("{0:00}", Convert.ToInt32(txtPeriodo.Value.Month)) & "/" & txtPeriodo.Value.Year
+
+        dt.Columns.Add("idDocumento", GetType(Integer))
+        dt.Columns.Add("fecha", GetType(String))
+        dt.Columns.Add("tipoVenta", GetType(String))
+        dt.Columns.Add("tipoDoc", GetType(String))
+        dt.Columns.Add("serie", GetType(String))
+        dt.Columns.Add("numero", GetType(String))
+        dt.Columns.Add("moneda", GetType(String))
+        dt.Columns.Add("importeMN", GetType(Decimal))
+        dt.Columns.Add("tipoCambio", GetType(Decimal))
+        dt.Columns.Add("importeME", GetType(Decimal))
+        dt.Columns.Add("abonoMN", GetType(Decimal))
+        dt.Columns.Add("abonoME", GetType(Decimal))
+        dt.Columns.Add("saldoMN", GetType(Decimal))
+        dt.Columns.Add("saldoME", GetType(Decimal))
+        dt.Columns.Add("estadoPago", GetType(String))
+
+
+        documentoVenta = documentoVentaSA.UbicarCompraPorProveedorXperiodo2(Gempresas.IdEmpresaRuc, GEstableciento.IdEstablecimiento, RucCliente, strPeriodo, intMoneda)
+        Dim str As String
+        If Not IsNothing(documentoVenta) Then
+            For Each i In documentoVenta
+                Dim dr As DataRow = dt.NewRow()
+                str = Nothing
+                str = CDate(i.fechaDoc).ToString("dd-MMM hh:mm tt ")
+                dr(0) = i.idDocumento
+                dr(1) = str
+                dr(2) = i.tipoCompra
+                dr(3) = i.tipoDoc
+                dr(4) = i.serie
+                dr(5) = i.numeroDoc
+                dr(10) = i.PagoSumaMN
+                dr(11) = i.PagoSumaME
+                dr(12) = CDec(i.importeTotal - i.PagoSumaMN).ToString("N2")
+                dr(13) = CDec(i.importeUS - i.PagoSumaME).ToString("N2")
+                Select Case i.monedaDoc
+                    Case 1
+                        dr(6) = "NAC"
+
+                        'dr(10) = i.ImportePagoMN
+                        'dr(11) = i.ImportePagoME
+                        'dr(12) = CDec(i.importeTotal - i.ImportePagoMN).ToString("N2")
+                        'dr(13) = CDec(i.importeUS - i.ImportePagoME).ToString("N2")
+                    Case Else
+                        dr(6) = "EXT"
+
+
+                End Select
+                dr(7) = i.importeTotal
+                dr(8) = i.tcDolLoc
+                dr(9) = i.importeUS
+
+
+                Select Case i.estadoPago
+                    Case TIPO_COMPRA.PAGO.PAGADO
+                        dr(14) = "Saldado"
+                    Case TIPO_COMPRA.PAGO.PENDIENTE_PAGO
+                        dr(14) = "Pendiente"
+                End Select
+                dt.Rows.Add(dr)
+            Next
+
+            Select Case cboMonedaProveedor.Text
+                Case "NACIONAL"
+                    dgvPagosVarios.TableDescriptor.Columns("importeMN").Width = 70
+                    dgvPagosVarios.TableDescriptor.Columns("abonoMN").Width = 70
+                    dgvPagosVarios.TableDescriptor.Columns("saldoMN").Width = 70
+                    dgvPagosVarios.TableDescriptor.Columns("tipoCambio").Width = 0
+                    dgvPagosVarios.TableDescriptor.Columns("importeME").Width = 0
+                    dgvPagosVarios.TableDescriptor.Columns("abonoME").Width = 0
+                    dgvPagosVarios.TableDescriptor.Columns("saldoME").Width = 0
+                Case "EXTRANJERA"
+                    dgvPagosVarios.TableDescriptor.Columns("tipoCambio").Width = 70
+                    dgvPagosVarios.TableDescriptor.Columns("importeME").Width = 70
+                    dgvPagosVarios.TableDescriptor.Columns("abonoME").Width = 70
+                    dgvPagosVarios.TableDescriptor.Columns("saldoME").Width = 70
+
+                    dgvPagosVarios.TableDescriptor.Columns("importeMN").Width = 0
+                    dgvPagosVarios.TableDescriptor.Columns("abonoMN").Width = 0
+                    dgvPagosVarios.TableDescriptor.Columns("saldoMN").Width = 0
+            End Select
+
+
+            dgvPagosVarios.DataSource = dt
+            Me.dgvPagosVarios.TableOptions.ListBoxSelectionMode = SelectionMode.One
+        Else
+
+
+
+
+        End If
+    End Sub
+
+    Private Sub UbicarCompraNroSerieExcedente(RucCliente As Integer)
+        Dim documentoVentaSA As New DocumentoCompraSA
+        Dim documentoVenta As New List(Of documentocompra)
+        Dim tablaSA As New tablaDetalleSA
+        Dim dt As New DataTable
+        Dim strPeriodo As String = String.Format("{0:00}", Convert.ToInt32(txtPeriodoDev.Value.Month)) & "/" & txtPeriodoDev.Value.Year
+
+        dt.Columns.Add("idDocumento", GetType(Integer))
+        dt.Columns.Add("fecha", GetType(String))
+        dt.Columns.Add("tipoVenta", GetType(String))
+        dt.Columns.Add("tipoDoc", GetType(String))
+        dt.Columns.Add("serie", GetType(String))
+        dt.Columns.Add("numero", GetType(String))
+        dt.Columns.Add("moneda", GetType(String))
+        dt.Columns.Add("importeMN", GetType(Decimal))
+        dt.Columns.Add("tipoCambio", GetType(Decimal))
+        dt.Columns.Add("importeME", GetType(Decimal))
+        dt.Columns.Add("abonoMN", GetType(Decimal))
+        dt.Columns.Add("abonoME", GetType(Decimal))
+        dt.Columns.Add("estadoPago", GetType(String))
+
+        '    documentoVenta = documentoVentaSA.UbicarExcedenteCompraPorProveedorXperiodo(Gempresas.IdEmpresaRuc, GEstableciento.IdEstablecimiento, RucCliente, strPeriodo)
+        Dim str As String
+        If Not IsNothing(documentoVenta) Then
+            For Each i In documentoVenta
+                Dim dr As DataRow = dt.NewRow()
+                str = Nothing
+                str = CDate(i.fechaDoc).ToString("dd-MMM hh:mm tt ")
+                dr(0) = i.idDocumento
+                dr(1) = str
+                dr(2) = i.tipoCompra
+                dr(3) = i.tipoDoc
+                dr(4) = i.serie
+                dr(5) = i.numeroDoc
+                Select Case i.monedaDoc
+                    Case 1
+                        dr(6) = "NAC"
+                    Case Else
+                        dr(6) = "EXT"
+                End Select
+                dr(7) = i.importeTotal
+                dr(8) = i.tcDolLoc
+                dr(9) = i.importeUS
+                dr(10) = i.PagoSumaMN
+                dr(11) = i.PagoSumaME
+                Select Case i.estadoPago
+                    Case TIPO_VENTA.PAGO.COBRADO
+                        dr(12) = "Saldado"
+                    Case TIPO_VENTA.PAGO.PENDIENTE_PAGO
+                        dr(12) = "Pendiente"
+                End Select
+
+                dt.Rows.Add(dr)
+            Next
+            dgvExcedente.DataSource = dt
+            Me.dgvExcedente.TableOptions.ListBoxSelectionMode = SelectionMode.One
+        Else
+
+        End If
+    End Sub
+#End Region
+
+
+#Region "TIMER"
+    Sub parpadeo()
+        Static parpadear As Boolean
+
+        'If Not parpadear Then
+        '    lblEstado.ForeColor = lblEstado.BackColor
+        '    lblEstado.BackColor = Color.Yellow
+        'Else
+        '    lblEstado.ForeColor = SystemColors.WindowText
+        'End If
+
+        parpadear = Not parpadear
+    End Sub
+
+    Private Sub Timer1_Tick(sender As System.Object, e As System.EventArgs) Handles Timer1.Tick
+        If TiempoRestante > 0 Then
+            parpadeo()
+
+            'lblAgregar.Visible = True
+            'lblMensaje.Visible = True
+            'tsSave.Enabled = False
+            'lblMensaje.Text = "Agregar otro en: " & TiempoRestante
+            TiempoRestante = TiempoRestante - 1
+        ElseIf TiempoRestante = 0 Then
+            Timer1.Enabled = False
+            'lblEstado.ForeColor = Color.Navy
+            'lblEstado.BackColor = Color.Transparent
+            PanelError.Visible = False
+            '      Dispose()
+        Else
+            Timer1.Enabled = False
+            'Ejecuta tu función cuando termina el tiempo
+            TiempoEjecutar(10)
+
+        End If
+    End Sub
+    Private TiempoRestante As Integer
+    Public Sub TimerOn(ByRef Interval As Short)
+        If Interval > 0 Then
+            Timer1.Enabled = True
+        Else
+            Timer1.Enabled = False
+        End If
+
+    End Sub
+    Public Function TiempoEjecutar(ByVal Tiempo As Integer)
+        TiempoEjecutar = ""
+        TiempoRestante = Tiempo  ' 1 minutos=60 segundos 
+        Timer1.Interval = 400
+
+        Call TimerOn(1000) ' Hechanos a andar el timer
+    End Function
+#End Region
+
+
+
+
+
+    Private Sub ButtonAdv1_Click(sender As Object, e As EventArgs) Handles ButtonAdv1.Click
+        Me.Cursor = Cursors.WaitCursor
+        If txtcliDev.Text.Trim.Length > 0 Then
+            UbicarCompraNroSerieExcedente(txtcliDev.Tag)
+        Else
+            lblEstado.Text = "Seleccione un proveedor antes de realizar la tarea!"
+            PanelError.Visible = True
+            Timer1.Enabled = True
+            TiempoEjecutar(10)
+        End If
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub FrmPagosGeneral_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        Dispose()
+    End Sub
+
+
+    Private Sub FrmPagosGeneral_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        treeViewAdv2.BackColor = Color.FromArgb(218, 79, 67)
+        TabPagoProveedor.Parent = TabControlAdv1
+        TabPageAnticipos.Parent = Nothing
+        TabPageDevolucion.Parent = Nothing
+        TabPageCronograma.Parent = Nothing
+        TabPageCobranzaPersonal.Parent = Nothing
+        TabPageAdv1.Parent = Nothing
+
+        'combosDGV()
+        dgvProcesoCrono.ActivateCurrentCellBehavior = GridCellActivateAction.DblClickOnCell
+        dgvProcesoCrono.ShowRowHeaders = False
+        dgvProcesoCrono.TableDescriptor.Columns("montoPactadoMN").Width = 0
+        dgvProcesoCrono.TableDescriptor.Columns("montoPactadoME").Width = 75
+    End Sub
+
+    Private Sub treeViewAdv2_AfterSelect(sender As Object, e As EventArgs) Handles treeViewAdv2.AfterSelect
+        Select Case treeViewAdv2.SelectedNode.Tag
+            Case "proveedor"
+                TabPagoProveedor.Parent = TabControlAdv1
+                TabPageAnticipos.Parent = Nothing
+                TabPageDevolucion.Parent = Nothing
+                TabPageCronograma.Parent = Nothing
+                TabPageCobranzaPersonal.Parent = Nothing
+            Case "anticipos"
+                TabPagoProveedor.Parent = Nothing
+                TabPageAnticipos.Parent = TabControlAdv1
+                TabPageDevolucion.Parent = Nothing
+                TabPageCronograma.Parent = Nothing
+                TabPageCobranzaPersonal.Parent = Nothing
+            Case "prestamos"
+                'TabPagoProveedor.Parent = Nothing
+                'TabPageAnticipos.Parent = TabControlAdv1
+                'TabPageDevolucion.Parent = TabControlAdv1
+                'TabPageCronograma.Parent = Nothing
+                'TabPageCobranzaPersonal.Parent = Nothing
+            Case "reclamaciones"
+                TabPagoProveedor.Parent = Nothing
+                TabPageAnticipos.Parent = Nothing
+                TabPageDevolucion.Parent = TabControlAdv1
+                TabPageCronograma.Parent = Nothing
+                TabPageCobranzaPersonal.Parent = Nothing
+        End Select
+    End Sub
+
+    Private Sub treeViewAdv2_Click(sender As Object, e As EventArgs) Handles treeViewAdv2.Click
+
+
+    End Sub
+
+    Private Sub treeViewAdv2_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles treeViewAdv2.MouseDoubleClick
+        ' LoadingAnimator.Wire(Me.dgvMov.TableControl)
+        Select Case treeViewAdv2.SelectedNode.Text
+            Case "Pagos a Proveedores"
+                TabPagoProveedor.Parent = TabControlAdv1
+                TabPageAnticipos.Parent = Nothing
+                TabPageCobranzaPersonal.Parent = Nothing
+                TabPageDevolucion.Parent = Nothing
+                TabPageAdv1.Parent = Nothing
+                GridCFG(dgvPagosVarios)
+
+            Case "Pago Anticipo Compra"
+
+                TabPagoProveedor.Parent = Nothing
+                TabPageAnticipos.Parent = Nothing
+                TabPageCobranzaPersonal.Parent = Nothing
+                TabPageDevolucion.Parent = Nothing
+                TabPageAdv1.Parent = TabControlAdv1
+                GridCFG(dgvPagosVarios2)
+
+                'TabPagoProveedor.Parent = Nothing
+                'TabPageAnticipos.Parent = Nothing
+                'TabPageCobranzaPersonal.Parent = Nothing
+                'TabPageDevolucion.Parent = Nothing
+                'TabPageAdv1.Parent = TabCompraAnticipada
+                'GridCFG(dgvPagosVarios)
+
+            Case "Pago con Anticipo"
+
+                If Not IsNothing(Me.dgvPagosVarios.Table.CurrentRecord) Then
+
+                    If dgvPagosVarios.Table.CurrentRecord.GetValue("moneda") = "NAC" Then
+
+                        btnNuevoPagoAnticipo(dgvPagosVarios.Table.CurrentRecord.GetValue("moneda"), dgvPagosVarios.Table.CurrentRecord.GetValue("idDocumento"))
+                    Else
+                        MessageBox.Show("Solo Se puede Compensar Documentos en Soles")
+                    End If
+                Else
+                    MessageBox.Show("Seleccione uan compra")
+                End If
+                'GetMovPorPeriodo(GEstableciento.IdEstablecimiento, PeriodoGeneral)
+        End Select
+        ' LoadingAnimator.UnWire(Me.dgvMov.TableControl)
+    End Sub
+
+    Private Sub txtCliente_KeyDown(sender As Object, e As KeyEventArgs) Handles txtCliente.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            Me.popupControlContainer1.ParentControl = Me.txtCliente
+            Me.popupControlContainer1.ShowPopup(Point.Empty)
+            CargarEntidadesXtipo(txtCliente.Text.Trim)
+        End If
+    End Sub
+
+    Private Sub popupControlContainer1_CloseUp(sender As Object, e As PopupClosedEventArgs) Handles popupControlContainer1.CloseUp
+        Me.Cursor = Cursors.WaitCursor
+        If e.PopupCloseType = PopupCloseType.Done Then
+            If lsvProveedor.SelectedItems.Count > 0 Then
+
+                If TabPagoProveedor Is TabControlAdv1.SelectedTab Then
+                    Me.txtCliente.Text = lsvProveedor.SelectedItems(0).SubItems(1).Text
+                    txtCliente.Tag = lsvProveedor.SelectedItems(0).SubItems(0).Text
+                    txtRuc.Text = lsvProveedor.SelectedItems(0).SubItems(3).Text
+
+                ElseIf TabPageDevolucion Is TabControlAdv1.SelectedTab Then
+                    Me.txtcliDev.Text = lsvProveedor.SelectedItems(0).SubItems(1).Text
+                    txtcliDev.Tag = lsvProveedor.SelectedItems(0).SubItems(0).Text
+                    txtRucDev.Text = lsvProveedor.SelectedItems(0).SubItems(3).Text
+
+
+                ElseIf TabPageCronograma Is TabControlAdv1.SelectedTab Then
+                    TxtCronoProveedor.Text = lsvProveedor.SelectedItems(0).SubItems(1).Text
+                    TxtCronoProveedor.Tag = lsvProveedor.SelectedItems(0).SubItems(0).Text
+                    txtRuccrono.Text = lsvProveedor.SelectedItems(0).SubItems(3).Text
+
+                End If
+
+
+                ' txtCuenta.Text = lsvProveedor.SelectedItems(0).SubItems(2).Text
+            End If
+        End If
+        ' Set focus back to textbox.
+        If e.PopupCloseType = PopupCloseType.Done OrElse e.PopupCloseType = PopupCloseType.Canceled Then
+
+            If TabPagoProveedor Is TabControlAdv1.SelectedTab Then
+                Me.txtCliente.Focus()
+            ElseIf TabPageDevolucion Is TabControlAdv1.SelectedTab Then
+                Me.txtcliDev.Focus()
+            End If
+        End If
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub lsvProveedor_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles lsvProveedor.MouseDoubleClick
+        If lsvProveedor.SelectedItems.Count > 0 Then
+            Me.popupControlContainer1.HidePopup(PopupCloseType.Done)
+        End If
+    End Sub
+
+    Private Sub ButtonAdv15_Click(sender As Object, e As EventArgs) Handles ButtonAdv15.Click
+        Me.Cursor = Cursors.WaitCursor
+        If txtCliente.Text.Trim.Length > 0 Then
+
+            Select Case cboMonedaProveedor.Text
+                Case "NACIONAL"
+                    UbicarVentaNroSerie(txtCliente.Tag, "1")
+                Case "EXTRANJERA"
+                    UbicarVentaNroSerie(txtCliente.Tag, "2")
+            End Select
+
+
+
+        Else
+            lblEstado.Text = "Seleccione un proveedor antes de realizar la tarea!"
+            PanelError.Visible = True
+            Timer1.Enabled = True
+            TiempoEjecutar(10)
+        End If
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs)
+        If dgvPagosVarios.Table.SelectedRecords.Count > 0 Then
+            'If IsNothing(GFichaUsuarios) Then
+            '    lblEstado.Text = "Debe asignar una caja válida!"
+            '    PanelError.Visible = True
+            '    Timer1.Enabled = True
+            '    TiempoEjecutar(10)
+            'Else
+            btnNuevoPago(dgvPagosVarios.Table.CurrentRecord.GetValue("moneda"), dgvPagosVarios.Table.CurrentRecord.GetValue("idDocumento"))
+            'End If
+        End If
+    End Sub
+
+    Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs)
+        Me.Cursor = Cursors.WaitCursor
+        If dgvPagosVarios.Table.SelectedRecords.Count > 0 Then
+            If txtCliente.Tag.Trim.Length > 0 Then
+                With frmHistorial
+                    .IdDocumentoCompra = dgvPagosVarios.Table.CurrentRecord.GetValue("idDocumento")
+                    .LoadHistorialCajasXcompra()
+                    ' .HistorialCompra(IDDocumentoCompra)
+                    .StartPosition = FormStartPosition.CenterParent
+                    .ShowDialog()
+                End With
+            End If
+        End If
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub txtcliDev_KeyDown(sender As Object, e As KeyEventArgs) Handles txtcliDev.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            Me.popupControlContainer1.ParentControl = Me.txtcliDev
+            Me.popupControlContainer1.ShowPopup(Point.Empty)
+            CargarEntidadesXtipo(txtcliDev.Text.Trim)
+        End If
+    End Sub
+
+    Private Sub ToolStripButton3_Click(sender As Object, e As EventArgs)
+        If dgvExcedente.Table.SelectedRecords.Count > 0 Then
+            'If IsNothing(GFichaUsuarios) Then
+            '    lblEstado.Text = "Debe asignar una caja válida!"
+            '    PanelError.Visible = True
+            '    Timer1.Enabled = True
+            '    TiempoEjecutar(10)
+            'Else
+            devolverExcedente(dgvExcedente.Table.CurrentRecord.GetValue("moneda"), dgvExcedente.Table.CurrentRecord.GetValue("idDocumento"))
+            'End If
+        End If
+    End Sub
+
+    Private Sub ToolStripButton4_Click(sender As Object, e As EventArgs)
+        Me.Cursor = Cursors.WaitCursor
+        If dgvExcedente.Table.SelectedRecords.Count > 0 Then
+            If txtcliDev.Tag.Trim.Length > 0 Then
+                With frmHistorial
+                    .IdDocumentoCompra = dgvExcedente.Table.CurrentRecord.GetValue("idDocumento")
+                    .LoadHistorialCajasXcompra()
+                    ' .HistorialCompra(IDDocumentoCompra)
+                    .StartPosition = FormStartPosition.CenterParent
+                    .ShowDialog()
+                End With
+            End If
+        End If
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub ToolStripButton5_Click(sender As Object, e As EventArgs)
+        Me.Cursor = Cursors.WaitCursor
+        Dim f As New frmAjustesContables(dgvPagosVarios.Table.CurrentRecord.GetValue("idDocumento"))
+        f.txtProveedor.Text = txtCliente.Text
+        f.txtProveedor.Tag = txtCliente.Tag
+        f.StartPosition = FormStartPosition.CenterParent
+        f.ShowDialog()
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub ToolStripButton6_Click(sender As Object, e As EventArgs)
+        Me.Cursor = Cursors.WaitCursor
+        If Not IsNothing(dgvPagosVarios.Table.CurrentRecord) Then
+            'MostrarPagosVarios(dgvPagosVarios.Table.CurrentRecord.GetValue("idDocumento"))
+        End If
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub dgvPagosVarios_SelectedRecordsChanged(sender As Object, e As SelectedRecordsChangedEventArgs) Handles dgvPagosVarios.SelectedRecordsChanged
+        GridGroupingControl1.Table.Records.DeleteAll()
+    End Sub
+
+    Private Sub ButtonAdv4_Click(sender As Object, e As EventArgs) Handles ButtonAdv4.Click
+        Me.Cursor = Cursors.WaitCursor
+
+        Select Case cboIntervalo.Text
+            Case "POR PERIODO"
+                If TxtCronoProveedor.Text.Trim.Length > 0 Then
+                    GetComprasXvencer(TxtCronoProveedor.Tag)
+                Else
+                    lblEstado.Text = "Seleccione un proveedor antes de realizar la tarea!"
+                    PanelError.Visible = True
+                    Timer1.Enabled = True
+                    TiempoEjecutar(10)
+                End If
+            Case Else
+                If TxtCronoProveedor.Text.Trim.Length > 0 Then
+                    GetComprasXvencer(TxtCronoProveedor.Tag)
+                Else
+                    lblEstado.Text = "Seleccione un proveedor antes de realizar la tarea!"
+                    PanelError.Visible = True
+                    Timer1.Enabled = True
+                    TiempoEjecutar(10)
+                End If
+
+        End Select
+
+
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub TxtCronoProveedor_KeyDown(sender As Object, e As KeyEventArgs) Handles TxtCronoProveedor.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            Me.popupControlContainer1.ParentControl = Me.TxtCronoProveedor
+            Me.popupControlContainer1.ShowPopup(Point.Empty)
+            CargarEntidadesXtipo(TxtCronoProveedor.Text.Trim)
+        End If
+    End Sub
+
+    Private Sub cboIntervalo_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboIntervalo.SelectedIndexChanged
+        If cboIntervalo.Text = "POR PERIODO" Then
+            Label23.Visible = True
+            txtCronoPeriodo.Visible = True
+
+            Label21.Visible = False
+            cboCaso.Visible = False
+        Else
+            Label23.Visible = False
+            txtCronoPeriodo.Visible = False
+
+            Label21.Visible = True
+            cboCaso.Visible = True
+
+        End If
+    End Sub
+
+    Private Sub GridGroupingControl2_TableControlCellDoubleClick(sender As Object, e As GridTableControlCellClickEventArgs) Handles GridGroupingControl2.TableControlCellDoubleClick
+        Me.Cursor = Cursors.WaitCursor
+        'AgregarAcronograma(GridGroupingControl2.Table.CurrentRecord)
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub ToolStripButton8_Click(sender As Object, e As EventArgs)
+        If Not IsNothing(dgvProcesoCrono.Table.CurrentRecord) Then
+            dgvProcesoCrono.Table.CurrentRecord.Delete()
+        Else
+            MessageBoxAdv.Show("Seleccione un item válido", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
+    End Sub
+
+    Private Sub ToolStripButton7_Click(sender As Object, e As EventArgs)
+        Me.Cursor = Cursors.WaitCursor
+        'GrabarCronograma()
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub dgvProcesoCrono_TableControlCurrentCellCloseDropDown(sender As Object, e As GridTableControlPopupClosedEventArgs) Handles dgvProcesoCrono.TableControlCurrentCellCloseDropDown
+        e.TableControl.CurrentCell.EndEdit()
+        e.TableControl.Table.TableDirty = True
+        e.TableControl.Table.EndEdit()
+
+        Dim ColIndex As Integer = DirectCast(sender, Syncfusion.Windows.Forms.Grid.Grouping.GridGroupingControl).TableControl.CurrentCell.ColIndex
+        Select Case ColIndex
+            Case 8
+                If dgvProcesoCrono.Table.CurrentRecord.GetValue("moneda") = "NACIONAL" Then
+                    dgvProcesoCrono.TableDescriptor.Columns("montoPactadoMN").Width = 75
+                    dgvProcesoCrono.TableDescriptor.Columns("montoPactadoME").Width = 0
+
+                Else
+
+                    dgvProcesoCrono.TableDescriptor.Columns("montoPactadoMN").Width = 0
+                    dgvProcesoCrono.TableDescriptor.Columns("montoPactadoME").Width = 75
+                End If
+
+        End Select
+    End Sub
+
+    Private Sub ToolStripButton13_Click(sender As Object, e As EventArgs) Handles ToolStripButton13.Click
+        If dgvPagosVarios.Table.SelectedRecords.Count > 0 Then
+            btnNuevoPago(dgvPagosVarios.Table.CurrentRecord.GetValue("moneda"), dgvPagosVarios.Table.CurrentRecord.GetValue("idDocumento"))
+        End If
+    End Sub
+
+    Private Sub ToolStripButton17_Click(sender As Object, e As EventArgs) Handles ToolStripButton17.Click
+        Me.Cursor = Cursors.WaitCursor
+        If dgvPagosVarios.Table.SelectedRecords.Count > 0 Then
+            If txtCliente.Tag.Trim.Length > 0 Then
+                With frmHistorial
+                    .IdDocumentoCompra = dgvPagosVarios.Table.CurrentRecord.GetValue("idDocumento")
+                    .lbltipoanticipo.Text = "ANTICIPO"
+                    .LoadHistorialCajasXcompra()
+
+                    .StartPosition = FormStartPosition.CenterParent
+                    .ShowDialog()
+                End With
+            End If
+        End If
+        Me.Cursor = Cursors.Arrow
+        'Me.Cursor = Cursors.WaitCursor
+        'If dgvPagosVarios.Table.SelectedRecords.Count > 0 Then
+        '    If txtCliente.Tag.Trim.Length > 0 Then
+        '        With frmHistorial
+        '            .IdDocumentoCompra = dgvPagosVarios.Table.CurrentRecord.GetValue("idDocumento")
+        '            .LoadHistorialCajasXcompra()
+        '            .StartPosition = FormStartPosition.CenterParent
+        '            .ShowDialog()
+        '        End With
+        '    End If
+        'End If
+        'Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub ToolStripButton18_Click(sender As Object, e As EventArgs) Handles ToolStripButton18.Click
+        Me.Cursor = Cursors.WaitCursor
+        Dim f As New frmAjustesContables(dgvPagosVarios.Table.CurrentRecord.GetValue("idDocumento"))
+        f.txtProveedor.Text = txtCliente.Text
+        f.txtProveedor.Tag = txtCliente.Tag
+        f.StartPosition = FormStartPosition.CenterParent
+        f.ShowDialog()
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub ToolStripButton19_Click(sender As Object, e As EventArgs) Handles ToolStripButton19.Click
+        Me.Cursor = Cursors.WaitCursor
+        If Not IsNothing(dgvPagosVarios.Table.CurrentRecord) Then
+            MostrarPagosVarios(dgvPagosVarios.Table.CurrentRecord.GetValue("idDocumento"))
+        End If
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub ToolStripButton20_Click(sender As Object, e As EventArgs) Handles ToolStripButton20.Click
+        If dgvExcedente.Table.SelectedRecords.Count > 0 Then
+            devolverExcedente(dgvExcedente.Table.CurrentRecord.GetValue("moneda"), dgvExcedente.Table.CurrentRecord.GetValue("idDocumento"))
+        End If
+    End Sub
+
+    Private Sub ToolStripButton21_Click(sender As Object, e As EventArgs) Handles ToolStripButton21.Click
+        Me.Cursor = Cursors.WaitCursor
+        If dgvExcedente.Table.SelectedRecords.Count > 0 Then
+            If txtcliDev.Tag.Trim.Length > 0 Then
+                With frmHistorial
+                    .IdDocumentoCompra = dgvExcedente.Table.CurrentRecord.GetValue("idDocumento")
+                    .LoadHistorialCajasXcompra()
+                    .StartPosition = FormStartPosition.CenterParent
+                    .ShowDialog()
+                End With
+            End If
+        End If
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub ButtonAdv2_Click(sender As Object, e As EventArgs) Handles ButtonAdv2.Click
+        Me.Cursor = Cursors.WaitCursor
+        If txtcliDev.Text.Trim.Length > 0 Then
+            UbicarCompraNroSerieExcedente(txtcliDev.Tag)
+        Else
+            lblEstado.Text = "Seleccione un proveedor antes de realizar la tarea!"
+            PanelError.Visible = True
+            Timer1.Enabled = True
+            TiempoEjecutar(10)
+        End If
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub txtCliente_TextChanged(sender As Object, e As EventArgs) Handles txtCliente.TextChanged
+
+    End Sub
+
+    Private Sub ToolStripButton1_Click_1(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
+        If Not IsNothing(Me.dgvPagosVarios.Table.CurrentRecord) Then
+
+            If dgvPagosVarios.Table.CurrentRecord.GetValue("moneda") = "NAC" Then
+
+                btnNuevoPagoAnticipo(dgvPagosVarios.Table.CurrentRecord.GetValue("moneda"), dgvPagosVarios.Table.CurrentRecord.GetValue("idDocumento"))
+            Else
+                MessageBox.Show("Solo Se puede Compensar Documentos en Soles")
+            End If
+        Else
+            MessageBox.Show("Seleccione uan compra")
+        End If
+    End Sub
+
+    Private Sub txtCliente2_KeyDown(sender As Object, e As KeyEventArgs) Handles txtCliente2.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            Me.PopupControlContainer5.ParentControl = Me.txtCliente2
+            Me.PopupControlContainer5.ShowPopup(Point.Empty)
+            CargarEntidadesXtipo2(txtCliente2.Text.Trim)
+        End If
+    End Sub
+
+    Private Sub txtCliente2_TextChanged(sender As Object, e As EventArgs) Handles txtCliente2.TextChanged
+
+    End Sub
+
+    Private Sub lsvProveedor_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lsvProveedor.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub lsvProveedor2_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles lsvProveedor2.MouseDoubleClick
+        If lsvProveedor2.SelectedItems.Count > 0 Then
+            Me.PopupControlContainer5.HidePopup(PopupCloseType.Done)
+        End If
+    End Sub
+
+    Private Sub lsvProveedor2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lsvProveedor2.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub PopupControlContainer5_CloseUp(sender As Object, e As PopupClosedEventArgs) Handles PopupControlContainer5.CloseUp
+        Me.Cursor = Cursors.WaitCursor
+        If e.PopupCloseType = PopupCloseType.Done Then
+            If lsvProveedor2.SelectedItems.Count > 0 Then
+
+                Me.txtCliente2.Text = lsvProveedor2.SelectedItems(0).SubItems(1).Text
+                txtCliente2.Tag = lsvProveedor2.SelectedItems(0).SubItems(0).Text
+                txtRuc2.Text = lsvProveedor2.SelectedItems(0).SubItems(3).Text
+
+            End If
+        End If
+        ' Set focus back to textbox.
+        If e.PopupCloseType = PopupCloseType.Done OrElse e.PopupCloseType = PopupCloseType.Canceled Then
+
+
+            Me.txtCliente2.Focus()
+
+        End If
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub ButtonAdv8_Click(sender As Object, e As EventArgs) Handles ButtonAdv8.Click
+        Me.Cursor = Cursors.WaitCursor
+        If txtCliente2.Text.Trim.Length > 0 Then
+            UbicarVentaNroSerieAnt(txtCliente2.Tag)
+        Else
+            lblEstado.Text = "Seleccione un proveedor antes de realizar la tarea!"
+            PanelError.Visible = True
+            Timer1.Enabled = True
+            TiempoEjecutar(10)
+        End If
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub ToolStripButton3_Click_1(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
+        Me.Cursor = Cursors.WaitCursor
+        If dgvPagosVarios2.Table.SelectedRecords.Count > 0 Then
+            If txtCliente2.Tag.Trim.Length > 0 Then
+                With frmHistorial
+                    .IdDocumentoCompra = dgvPagosVarios2.Table.CurrentRecord.GetValue("idDocumento")
+                    .lbltipoanticipo.Text = "ANTICIPO"
+                    .LoadHistorialCajasXcompra()
+
+                    .StartPosition = FormStartPosition.CenterParent
+                    .ShowDialog()
+                End With
+            End If
+        End If
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub ToolStripButton6_Click_1(sender As Object, e As EventArgs) Handles ToolStripButton6.Click
+        If Not IsNothing(Me.dgvPagosVarios2.Table.CurrentRecord) Then
+
+            If dgvPagosVarios2.Table.CurrentRecord.GetValue("moneda") = "NAC" Then
+
+                btnNuevoPagoAnticipo2(dgvPagosVarios2.Table.CurrentRecord.GetValue("moneda"), dgvPagosVarios2.Table.CurrentRecord.GetValue("idDocumento"))
+            Else
+                MessageBox.Show("Solo Se puede Compensar Documentos en Soles")
+            End If
+        Else
+            MessageBox.Show("Seleccione uan compra")
+        End If
+    End Sub
+
+    Private Sub ToolStripButton2_Click_1(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
+        If dgvPagosVarios2.Table.SelectedRecords.Count > 0 Then
+            btnNuevoPago2(dgvPagosVarios2.Table.CurrentRecord.GetValue("moneda"), dgvPagosVarios2.Table.CurrentRecord.GetValue("idDocumento"))
+        End If
+    End Sub
+
+    Private Sub dgvPagosVarios_TableControlCellClick(sender As Object, e As GridTableControlCellClickEventArgs) Handles dgvPagosVarios.TableControlCellClick
+
+    End Sub
+End Class

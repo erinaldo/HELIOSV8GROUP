@@ -1,0 +1,1281 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>
+    </SchemaVersion>
+    <ProjectGuid>{48FA6C66-AD41-4CEB-85EB-530A8C02427C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Helios.Cont.Business.Entity</RootNamespace>
+    <AssemblyName>Helios.Cont.Business.Entity</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>Helios.Cont.Business.Entity.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>Helios.Cont.Business.Entity.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="JNetFx.Framework.General">
+      <HintPath>..\librerias\varios\JNetFx.Framework.General.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="accionistasOtros.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Actividades.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="actividadGasto.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="actividadPersonal.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="actividadRecurso.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="actividadRecursoCalculo.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="actividadSeguimiento.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ActivoDistribucion.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="activoInmovilizado.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="activosFijos.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="activosfijosDatosRelacionados.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="almacen.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="almacenPM.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="anticipos.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="areaOperativa.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="articuloplantilla.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="asiento.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="asientoContablePlantilla.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="asistenciaTrabajador.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="asistenciaTrabajadorConcepto.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Base\BaseBE.vb" />
+    <Compile Include="beneficio.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="beneficioConsumo.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="beneficioDetalle.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="beneficioProduccionConsumo.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="blocDetalle.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="blocOcurrencias.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cajaUsuario.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cajaUsuarioBE.vb" />
+    <Compile Include="cajaUsuariodetalle.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cajaUsuarioDineroEntregado.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Calzados\recursoCostoLoteTallaBE.vb" />
+    <Compile Include="Calzados\tallaBE.vb" />
+    <Compile Include="Calzados\talla_equivalenciasBE.vb" />
+    <Compile Include="Calzados\totalesAlmacenOthersBE.vb" />
+    <Compile Include="caracteristicaItem.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="categoriaInfraestructura.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="centrocosto.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="centroCostoHorario.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="centroCostosXNComercial.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cierreCaja.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cierrecontable.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cierreCostoVenta.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cierreEntregables.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cierreinventario.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cierreResultados.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="clasehorarios.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="clasehorario_actividadPersonal.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="clientecontrato.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="clientecontratodetalle.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="clientesSoftPack.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="comercioEspecializado_Precio.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Comision\detalleitemcatalogo_comisionBE.vb" />
+    <Compile Include="Comision\detalleitemcatalogo_comisiondetalleBE.vb" />
+    <Compile Include="Comision\registrocomision_autorizacionBE.vb" />
+    <Compile Include="Comision\registrocomision_usuariosBE.vb" />
+    <Compile Include="Comision\registrocomision_usuarios_detalleBE.vb" />
+    <Compile Include="Compensacion.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="componente.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="componenteXDistribucion.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="composicion.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="compraexternadetalle.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="compraexterna_sc.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="comprasexternas_cc.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="conceptosActivos.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="conceptosDetalleActivo.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="conceptosInversiones.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="configuracionInicio.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="configuracionPrecio.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="configuracionPrecioProducto.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="configuracionReserva.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="controlInversionesMoviliarias.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="correoEntidades.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Cronograma.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CronogramaRepartos.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cuentaMascara.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cuentaplancontable.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cuentaplanContableEmpresa.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Custom\activosFijos\activosFijosBE.vb" />
+    <Compile Include="Custom\Activo\activoInmovilizadoBE.vb" />
+    <Compile Include="Custom\almacen\almacenBE.vb" />
+    <Compile Include="Custom\almacen\almacenPMBE.vb" />
+    <Compile Include="Custom\almacen\configuracionPrecioProductoBE.vb" />
+    <Compile Include="Custom\anticipos\anticiposBE.vb" />
+    <Compile Include="Custom\Asiento\asientoBE.vb" />
+    <Compile Include="Custom\Asiento\movimientoBE.vb" />
+    <Compile Include="Custom\Beneficios\beneficioBE.vb" />
+    <Compile Include="Custom\Beneficios\beneficioConsumoBE.vb" />
+    <Compile Include="Custom\Beneficios\beneficioDetalleBE.vb" />
+    <Compile Include="Custom\Beneficios\beneficioProduccionConsumoBE.vb" />
+    <Compile Include="Custom\Beneficios\EntidadAfiliacionBeneficioBE.vb" />
+    <Compile Include="Custom\Block\blocDetalleBE.vb" />
+    <Compile Include="Custom\Block\blocOcurrenciasBE.vb" />
+    <Compile Include="Custom\CajaUsuario\CajaUsuarioBE.vb" />
+    <Compile Include="Custom\CajaUsuario\cajaUsuarioDetalleBE.vb" />
+    <Compile Include="Custom\CajaUsuario\cajaUsuarioDineroEntregadoBE.vb" />
+    <Compile Include="Custom\Cierre\cierreCajaBE.vb" />
+    <Compile Include="Custom\Cierre\cierrecontableBE.vb" />
+    <Compile Include="Custom\Cierre\cierreinventarioBE.vb" />
+    <Compile Include="Custom\Costo\recursoCostoBE.vb" />
+    <Compile Include="Custom\Costo\recursoCostoDetalleBE.vb" />
+    <Compile Include="Custom\Costo\recursoCosto_compraDetalleBE.vb" />
+    <Compile Include="Custom\CronogramaBE.vb" />
+    <Compile Include="Custom\Cuentas mascaras\cuentaMascaraBE.vb" />
+    <Compile Include="Custom\detalleitemequivalencia_preciosBE.vb" />
+    <Compile Include="Custom\detalleitem_equivalenciasBE.vb" />
+    <Compile Include="Custom\Documento\Anticipo\documentoAnticipoConciliacionBE.vb" />
+    <Compile Include="Custom\Documento\Compra\compraexternadetalleBE.vb" />
+    <Compile Include="Custom\Documento\Compra\compraexterna_scBE.vb" />
+    <Compile Include="Custom\Documento\Compra\comprasexternas_ccBE.vb" />
+    <Compile Include="Custom\Documento\Compra\documentocompraBE.vb" />
+    <Compile Include="Custom\Conceptos\conceptosActivosBE.vb" />
+    <Compile Include="Custom\Conceptos\conceptosDetalleActivoBE.vb" />
+    <Compile Include="Custom\Conceptos\conceptosInversionesBE.vb" />
+    <Compile Include="Custom\controlInversionesMoviliarias\controlInversionesMoviliariasBE.vb" />
+    <Compile Include="Custom\correoEntidades\correoEntidadesBE.vb" />
+    <Compile Include="Custom\Detalle\detallecompraexterna_scBE.vb" />
+    <Compile Include="Custom\Detalle\detalleHojaGastoBE.vb" />
+    <Compile Include="Custom\Documento\documentoGuiaBE.vb" />
+    <Compile Include="Custom\Documento\Anticipo\documentoAnticipoBE.vb" />
+    <Compile Include="Custom\Documento\Anticipo\documentoAnticipoDetalleBE.vb" />
+    <Compile Include="Custom\Documento\documentoAportesBE.vb" />
+    <Compile Include="Custom\Documento\documentoAportesDetalleBE.vb" />
+    <Compile Include="Custom\Documento\Compra\documentoBE.vb" />
+    <Compile Include="Custom\Documento\documentoCajaBE.vb" />
+    <Compile Include="Custom\Documento\documentoCajaDetalleBE.vb" />
+    <Compile Include="Custom\Documento\Compra\documentocompradetalleBE.vb" />
+    <Compile Include="Custom\Documento\documentocompradetalle_scBE.vb" />
+    <Compile Include="Custom\Documento\documentocompra_scBE.vb" />
+    <Compile Include="Custom\Documento\documentoEntregaDetalleBE.vb" />
+    <Compile Include="Custom\Documento\documentoEntregaProductosBE.vb" />
+    <Compile Include="Custom\Documento\documentoguiaDetalleCondicionBE.vb" />
+    <Compile Include="Custom\Documento\documentoGuiaPropertiesBE.vb" />
+    <Compile Include="Custom\Documento\documentoLibroDiarioBE.vb" />
+    <Compile Include="Custom\Documento\documentoLibroDiarioDetalleBE.vb" />
+    <Compile Include="Custom\Documento\documentoNotasAbarrotesBE.vb" />
+    <Compile Include="Custom\Documento\documentoNotasBE.vb" />
+    <Compile Include="Custom\Documento\documentoNotasdetalleBE.vb" />
+    <Compile Include="Custom\Documento\documentoOperacionesPrestamoBE.vb" />
+    <Compile Include="Custom\Documento\documentoOtrosDatosBE.vb" />
+    <Compile Include="Custom\Documento\documentoPrestamoDetalleBE.vb" />
+    <Compile Include="Custom\Documento\documentoPrestamosBE.vb" />
+    <Compile Include="Custom\Documento\documentoventaAbarrotesBE.vb" />
+    <Compile Include="Custom\Documento\documentoventaAbarrotesDetBE.vb" />
+    <Compile Include="Custom\Documento\documentoventaBE.vb" />
+    <Compile Include="Custom\Documento\documentoventadetalleBE.vb" />
+    <Compile Include="Custom\Documento\documentoVentaDetalle_scBE.vb" />
+    <Compile Include="Custom\Documento\documentoVentaExternaBE.vb" />
+    <Compile Include="Custom\Documento\documentoVentaExternaDetalleBE.vb" />
+    <Compile Include="Custom\Documento\documentoVentaExternaDetalle_scBE.vb" />
+    <Compile Include="Custom\Documento\documentoVentaExterna_scBE.vb" />
+    <Compile Include="Custom\Documento\documentoVenta_scBE.vb" />
+    <Compile Include="Custom\Documento\Obligacion tributaria\DocumentoObligacionTributariaBE.vb" />
+    <Compile Include="Custom\Empresa\datosGeneralesBE.vb" />
+    <Compile Include="Custom\Empresa\empresaBE.vb" />
+    <Compile Include="Custom\Empresa\empresaCierreMensualBE.vb" />
+    <Compile Include="Custom\Empresa\EmpresaEmailBE.vb" />
+    <Compile Include="Custom\Empresa\empresaPeriodoBE.vb" />
+    <Compile Include="Custom\Empresa\EmpresaSeriesBE.vb" />
+    <Compile Include="Custom\entesRegaludoresTC\entesRegaludoresTCBE.vb" />
+    <Compile Include="Custom\entidadAtributosBE.vb" />
+    <Compile Include="Custom\entidadBancaria\entidadBancariaBE.vb" />
+    <Compile Include="Custom\Establecimiento\centrocostoBE.vb" />
+    <Compile Include="Custom\estadosFinancieros\estadosFinancierosBE.vb" />
+    <Compile Include="Custom\estadosFinancieros\estadosFinancierosConfiguracionPagosBE.vb" />
+    <Compile Include="Custom\Existencias Insumos\detalleitemequivalencia_beneficioBE.vb" />
+    <Compile Include="Custom\Existencias Insumos\detalleitemequivalencia_catalogosBE.vb" />
+    <Compile Include="Custom\Existencias Insumos\detalleitemsBE.vb" />
+    <Compile Include="Custom\Existencias Insumos\detalleitems_conexoBE.vb" />
+    <Compile Include="Custom\Existencias Insumos\detalleitem_preciosBE.vb" />
+    <Compile Include="Custom\Existencias Insumos\itemBE.vb" />
+    <Compile Include="Custom\Existencias Insumos\itemServicioBE.vb" />
+    <Compile Include="Custom\Informacion\informacionBE.vb" />
+    <Compile Include="datosGenerales.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="detallecompraexterna_sc.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="detalleHojaGasto.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="detalleitemcatalogo_comision.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="detalleitemcatalogo_comisiondetalle.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="detalleitemequivalencia_beneficio.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="detalleitemequivalencia_catalogos.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="detalleitemequivalencia_precios.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="detalleitems.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="detalleitemsModifica.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="detalleitems_conexo.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="detalleitem_equivalencias.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="detalleitem_precios.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="distribucionComponente.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="distribucionInfraestructura.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="distribucionNumeracionAO.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="distribucionTipoServicio.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="distritos.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documento.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoAnticipo.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoAnticipoConciliacion.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoAnticipoConciliacionCompra.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoAnticipoDetalle.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoAportes.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoAportesDetalle.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoCaja.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoCajaDetalle.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentocompra.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentocompradetalle.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentocompradetalle_sc.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentocompra_sc.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoconsumodirecto.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoEntregaDetalle.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoEntregaProductos.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoGuia.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoguiaDetalle.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoguiaDetalleCondicion.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoGuiaProperties.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoLibroDiario.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoLibroDiarioDetalle.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoNotas.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoNotasAbarrotes.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoNotasdetalle.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoObligacionDetalle.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoObligacionTributaria.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoOperacionesPrestamo.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoOtrosDatos.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoPedido.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoPedidoDet.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoPrestamoDetalle.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoPrestamos.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoventa.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoventaAbarrotes.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoventaAbarrotesDet.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoventadetalle.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoVentaDetalle_sc.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoVentaExterna.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoVentaExternaDetalle.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoVentaExternaDetalle_sc.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoVentaExterna_sc.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoventaTransporte.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoventaTransporteDetalle.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="documentoVenta_sc.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="empresa.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="empresaCierreMensual.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmpresaEmail.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="empresaPeriodo.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmpresaSeries.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmpresaSoporte.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="entesRegaludoresTC.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="entidad.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntidadAfiliacionBeneficio.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="entidadAtributos.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="entidadBancaria.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidadmembresia_Gym.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="estadosFinancieros.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="estadosFinancierosConfiguracionPagos.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetSaldobyCuentaFinanciera_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetSaldoCuentasFinancieraCajeroActivo_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetSaldoCuentasFinancieraEmpresaXtipoFecha_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetSaldoCuentasFinancieraEmpresaXtipoXIdCaja_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetSaldoCuentasFinancieraEmpresaXtipo_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetSaldoCuentasFinancieraEmpresa_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Helios.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="hojaPlaneamiento.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="informacionComplementaria.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="infraestructura.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ingresoSunat.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="inventario.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InventarioDetalleSalida.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InventarioMovimiento.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InventarioTotal.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="inventarioTransito.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="item.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="itemServicio.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="iter_charlist_to_tbl_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="jerarquia.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="laborRecurso.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="laborRecursoPersona.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LiquidacionPlaneacion.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ListaDistribucionInfraestructuraAndHospedados_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ListaDistribucionInfraestructura_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ListaDocumentoCaja_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="listadoPrecios.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ListaInfraestructuraTransporte_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ListaInfraestructura_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ListaPersonasXCaja_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ListaTransporteXProgramacion_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LoteDetalle.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="mascaracontable.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="mascaraContable2.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="mascaraContableExistencia.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="mascaraGastosEmpresa.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="mascaraGeneral.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="mascaraGeneralExistencia.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="mascaraProdTerminado.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="mascaraProdTerminadoEmpresa.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="mascaraServicios.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="membresia_congelamiento.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="membresia_Gym.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="mensajeriaGOP.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="moduloApp.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="moduloConfiguracion.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="movimiento.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="movimientocajaextranjera.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MovimientosAlmacenXfecha_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MovimientosAlmacenXPeriodo_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MovimientosTransferenciaXAlmacen_Full_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MovimientosTransferenciaXAlmacen_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="negocioComercial.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="negocioComercialDetalle.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="notificacionAlmacen.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="notificacionAlmacenDetalle.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="numeracionBoletas.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ocupacion.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ocupacionInfraestructura.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="oferta.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ofertadetalle.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ordenCompras.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ordenDetalle.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="organizacion.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="otrasEntradas.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="otrasEntradasDetalle.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="otrasSalidas.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="otrasSalidasDetalle.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="perfilAnexo.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Persona.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="personaBeneficio.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="plancontable.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PL_LiquidacionIgv.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="preEvento.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="prestamos.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="presupuesto.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="productoBeneficio.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="productoTerminado.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductoXAreaOperativa.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="provincias.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="proyectoAvance.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="proyectoDetalleInfo.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="proyectoListaMateriales.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProyectoPlaneacion.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="recursoCosto.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="recursoCostoDetalle.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="recursoCostoLote.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="recursoCostoLoteTalla.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="recursoCosto_compraDetalle.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="regiones.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="registroautorizacion_desembolso.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="registrocomision_autorizacion.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="registrocomision_usuarios.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="registrocomision_usuarios_detalle.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="remuneracionPlanilla.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="remuneracionPlanillaDetalle.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="rutaProgramacionSalidas.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="rutas.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="rutaTareoAutos.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="rutaTareoDetalle.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="rutaTareoEncomienda.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="rutaTareoEncomiendaDetalle.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="rutaTareoTripulantes.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ruta_horarios.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ruta_HorarioServicios.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="saldoInicio.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="saldoInicioDetalle.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="servicio.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="servicioInfraestructura.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="servicioInfraestructuraDet.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sist_recaudacion.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagramdefinition_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagrams_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagrams.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="systemCode.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tabla.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tabladetalle.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="talla.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="talla_equivalencias.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tasaITF.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tipoCambio.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tipocambioTransaccion.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tipoServicioInfraestructura.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="totalesAlmacen.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="totalesAlmacenOthers.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="totalesCaja.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="totalesLiquidacion.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="totalesLiquidacionEmpresa.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="totalinventario.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="totalLiquidacionUtilidades.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="trabajadorOcupacion_PL.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Trabajador_PL.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ubigeo.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UnidadDeNegocio\Global\ActivoDistribucionBE.vb" />
+    <Compile Include="UnidadDeNegocio\Global\centroCostoHorarioBE.vb" />
+    <Compile Include="UnidadDeNegocio\Global\comercioEspecializado_PrecioBE.vb" />
+    <Compile Include="UnidadDeNegocio\Global\componenteXDistribucionBE.vb" />
+    <Compile Include="UnidadDeNegocio\Global\distribucionComponenteBE.vb" />
+    <Compile Include="UnidadDeNegocio\Global\distribucionNumeracionAOBE.vb" />
+    <Compile Include="UnidadDeNegocio\Infraestructura\areaOperativaBE.vb" />
+    <Compile Include="UnidadDeNegocio\Infraestructura\categoriaInfraestructuraBE.vb" />
+    <Compile Include="UnidadDeNegocio\Infraestructura\componenteBE.vb" />
+    <Compile Include="UnidadDeNegocio\Infraestructura\composicionBE.vb" />
+    <Compile Include="UnidadDeNegocio\Infraestructura\detalleItemTopBE.vb" />
+    <Compile Include="UnidadDeNegocio\Infraestructura\distribucionInfraestructuraBE.vb" />
+    <Compile Include="UnidadDeNegocio\Infraestructura\distribucionTipoServicioBE.vb" />
+    <Compile Include="UnidadDeNegocio\Infraestructura\documentoPedidoBE.vb" />
+    <Compile Include="UnidadDeNegocio\Infraestructura\documentoPedidoDetBE.vb" />
+    <Compile Include="UnidadDeNegocio\Infraestructura\infraestructuraBE.vb" />
+    <Compile Include="UnidadDeNegocio\Infraestructura\ocupacionInfraestructuraBE.vb" />
+    <Compile Include="UnidadDeNegocio\Infraestructura\personaBeneficioBE.vb" />
+    <Compile Include="UnidadDeNegocio\Infraestructura\relacionItemBE.vb" />
+    <Compile Include="UnidadDeNegocio\Infraestructura\tipoServicioInfraestructuraBE.vb" />
+    <Compile Include="Custom\inventario\inventarioBE.vb" />
+    <Compile Include="Custom\inventario\InventarioDetalleSalidaBE.vb" />
+    <Compile Include="Custom\inventario\InventarioMovimientoBE.vb" />
+    <Compile Include="Custom\inventario\InventarioTotalBE.vb" />
+    <Compile Include="Custom\inventario\inventarioTransitoBE.vb" />
+    <Compile Include="Custom\listadoPrecios\listadoPreciosBE.vb" />
+    <Compile Include="Custom\mascara\mascaraContable2BE.vb" />
+    <Compile Include="Custom\mascara\mascaracontableBE.vb" />
+    <Compile Include="Custom\mascara\mascaraContableExistenciaBE.vb" />
+    <Compile Include="Custom\mascara\mascaraGastosEmpresaBE.vb" />
+    <Compile Include="Custom\mascara\mascaraGeneralBE.vb" />
+    <Compile Include="Custom\mascara\mascaraGeneralExistenciaBE.vb" />
+    <Compile Include="Custom\mascara\mascaraProdTerminadoBE.vb" />
+    <Compile Include="Custom\mascara\mascaraProdTerminadoEmpresaBE.vb" />
+    <Compile Include="Custom\mascara\mascaraServiciosBE.vb" />
+    <Compile Include="Custom\mensajeriaGOP\mensajeriaGOPBE.vb" />
+    <Compile Include="Custom\movimientocajaextranjeraBE.vb" />
+    <Compile Include="Custom\notificacion\notificacionAlmacenBE.vb" />
+    <Compile Include="Custom\notificacion\notificacionAlmacenDetalleBE.vb" />
+    <Compile Include="Custom\numeracionBoletas\numeracionBoletasBE.vb" />
+    <Compile Include="Custom\ofertas\ofertaBE.vb" />
+    <Compile Include="Custom\orden\ordenComprasBE.vb" />
+    <Compile Include="Custom\orden\ordenDetalleBE.vb" />
+    <Compile Include="Custom\otras\otrasEntradasBE.vb" />
+    <Compile Include="Custom\otras\otrasEntradasDetalleBE.vb" />
+    <Compile Include="Custom\otras\otrasSalidasBE.vb" />
+    <Compile Include="Custom\otras\otrasSalidasDetalleBE.vb" />
+    <Compile Include="Custom\Persona\PersonaBE.vb" />
+    <Compile Include="Custom\Plan contable\cuentaplanContableEmpresaBE.vb" />
+    <Compile Include="Custom\pre\preEventoBE.vb" />
+    <Compile Include="Custom\pre\prestamosBE.vb" />
+    <Compile Include="Custom\pre\presupuestoBE.vb" />
+    <Compile Include="Custom\productoTerminado\productoTerminadoBE.vb" />
+    <Compile Include="Custom\productoTerminado\proyectoAvanceBE.vb" />
+    <Compile Include="Custom\recursoCostoLoteBE.vb" />
+    <Compile Include="Custom\Repositorio\RepositorioArchivoBE.vb" />
+    <Compile Include="Custom\Saldos\saldoInicioBE.vb" />
+    <Compile Include="Custom\Saldos\saldoInicioDetalleBE.vb" />
+    <Compile Include="Custom\servicioBE.vb" />
+    <Compile Include="Custom\systemCode\systemCodeBE.vb" />
+    <Compile Include="Custom\TablaGeneral\tablaBE.vb" />
+    <Compile Include="Custom\TablaGeneral\tabladetalleBE.vb" />
+    <Compile Include="Custom\tasaITF\tasaITFBE.vb" />
+    <Compile Include="Custom\tipoCambio\tipoCambioBE.vb" />
+    <Compile Include="Custom\totales\totalesAlmacenBE.vb" />
+    <Compile Include="Custom\totales\totalesCajaBE.vb" />
+    <Compile Include="Custom\totales\totalinventarioBE.vb" />
+    <Compile Include="Custom\UBIGEO\provinciasBE.vb" />
+    <Compile Include="Custom\UBIGEO\regionesBE.vb" />
+    <Compile Include="Custom\UsuariosEmpresa\UsuariosEmpresaBE.vb" />
+    <Compile Include="Custom\Documento\documentoguiaDetalleBE.vb" />
+    <Compile Include="Gimnasio\Entidadmembresia_GymBE.vb" />
+    <Compile Include="Gimnasio\membresia_congelamientoBE.vb" />
+    <Compile Include="Gimnasio\membresia_GymBE.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="PMO\Actividad\ActividadesBE.vb" />
+    <Compile Include="PMO\Entidades\Entidad\entidadBE.vb" />
+    <Compile Include="PMO\Entidades\Trabajador\Trabajador_PLBE.vb" />
+    <Compile Include="PMO\Liquidacion\totalesLiquidacionBE.vb" />
+    <Compile Include="PMO\Planilla\IngresoSunat\ingresoSunatBE.vb" />
+    <Compile Include="PMO\Planilla\Ocupacion\ocupacionBE.vb" />
+    <Compile Include="PMO\Proyectos\ProyectoPlaneacionBE.vb" />
+    <Compile Include="PMO\Recurso\actividadRecursoBE.vb" />
+    <Compile Include="Custom\totalesCuentas\totalesCuentasBE.vb" />
+    <Compile Include="Custom\totalesCuentas\totalesCuentasDetBE.vb" />
+    <Compile Include="SoftPack\clientesSoftPackBE.vb" />
+    <Compile Include="SoftPack\usp_GetValidacionLotesAlmacen_ResultBE.vb" />
+    <Compile Include="SoftPack\usp_GetValidacionLotes_ResultBE.vb" />
+    <Compile Include="UnidadDeNegocio\Global\centroCostosXNComercialBE.vb" />
+    <Compile Include="UnidadDeNegocio\Global\negocioComercialBE.vb" />
+    <Compile Include="UnidadDeNegocio\Global\productoxAreaOperativaBE.vb" />
+    <Compile Include="UnidadDeNegocio\Transportes\configuracionReservaBE.vb" />
+    <Compile Include="UnidadDeNegocio\Transportes\distribucionInfraestructuraBE.vb" />
+    <Compile Include="UnidadDeNegocio\Transportes\documentoventaTransporteBE.vb" />
+    <Compile Include="UnidadDeNegocio\Transportes\PlantillaActivoBE.vb" />
+    <Compile Include="UnidadDeNegocio\Transportes\provinciasBE.vb" />
+    <Compile Include="UnidadDeNegocio\Transportes\rutaProgramacionSalidasBE.vb" />
+    <Compile Include="UnidadDeNegocio\Transportes\rutasBE.vb" />
+    <Compile Include="UnidadDeNegocio\Transportes\rutaTareoAutosBE.vb" />
+    <Compile Include="UnidadDeNegocio\Transportes\rutaTareoEncomiendaBE.vb" />
+    <Compile Include="UnidadDeNegocio\Transportes\rutaTareoEncomiendaDetalleBE.vb" />
+    <Compile Include="UnidadDeNegocio\Transportes\ServicioInfraestructuraBE.vb" />
+    <Compile Include="UnidadDeNegocio\Transportes\ServicioInfraestructuraDetBE.vb" />
+    <Compile Include="UnidadDeNegocio\Transportes\vehiculoAsiento_PreciosBE.vb" />
+    <Compile Include="uspListarDetalleCompraPoridDocumentoControl_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="uspListarDetalleCompraPoridDocumento_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_EditarDetalleVenta_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_GetClientesXcobrar_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_GetCuentasXcobrarXclienteAnual_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_GetCuentasXpagarXComprobanteAnual_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_GetCuentasXpagarXproveedorAnual_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_GetProductInventoryID_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_GetProductsByEstable_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_GetProductsEmpresaWithParameters_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_GetProductsEmpresa_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_GetProductsServicioEmpresa_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_GetProductsSistema_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_GetProductsWithParameters_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_GetProveedoresXpagar_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_GetRecursosByProyectoGeneral_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_GetValidacionLotesAlmacen_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_GetValidacionLotes_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_HojaTrabajoCompras_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_HojaTrabajoMensual_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_HojaTrabajoMensual_Tributario_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_HojaTrabajoXmodulo_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_PleLibroDiario_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_ReporteHojaTrabajoAnual_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_ReporteHojaTrabajoMensual_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_ReporteHojaTrabajoMensual_V2_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_ResumenDetailVenta_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_ResumenTransaccionesXusuarioCajaXCierre_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_ResumenTransaccionesXusuarioCaja_Result.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UsuariosEmpresa.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vehiculoAsientos.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vehiculoAsiento_Precios.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ventaDetalle_oferta.vb">
+      <DependentUpon>Helios.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\DataSources\documentoventaAbarrotesDet.datasource" />
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Custom\AsignacionRecurso\" />
+    <Folder Include="Custom\General\" />
+    <Folder Include="Custom\hoja\" />
+    <Folder Include="Custom\sist_recaudacion\" />
+    <Folder Include="Custom\Venta\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Helios.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Helios.vb</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

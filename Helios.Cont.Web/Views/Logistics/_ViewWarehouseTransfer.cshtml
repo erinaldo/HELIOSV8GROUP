@@ -1,0 +1,41 @@
+﻿
+@model Helios.Cont.Business.Entity.documentoventaAbarrotes
+<div>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title" id="myModalLabel">Productos transferidos</h4>
+    </div>
+
+    <div class="modal-body">
+        <p>
+            <strong>Almacen de Partida: </strong> @Model.documentoventaAbarrotesDet.FirstOrDefault().CustomAlmacenPartida.descripcionAlmacen
+        </p>
+        <p>
+            <strong>Almacen de llegada: </strong> @Model.documentoventaAbarrotesDet.FirstOrDefault().CustomAlmacenLlegada.descripcionAlmacen
+</p>
+
+
+
+        <table style="width:100%">
+            <tr>
+                <th>Afecta.</th>
+                <th>Producto</th>
+                <th>U.M.</th>
+                <th>Cantidad</th>                
+            </tr>
+            @foreach (var item in Model.documentoventaAbarrotesDet.ToList())
+            {
+                <tr>
+                    <td>@item.CustomProducto.origenProducto</td>
+                    <td>@item.CustomProducto.descripcionItem</td>
+                    <td>@item.CustomEquivalencia.unidadComercial</td>
+                    <td>@item.monto1</td>                 
+                </tr>
+            }
+        </table>
+    </div>
+
+
+
+</div>

@@ -1,0 +1,335 @@
+﻿@model Helios.Cont.Web.Models.LogisticViewModel
+@{
+    ViewBag.Title = "Nueva Transferencia";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/session/keepAlive.js"></script>
+
+<!--listProductsGeneral = Helios.Cont.Web.Helpers.JavaScriptConvert.SerializeObject(Model.GetDetalleitems.ToList());-->
+
+<script>
+
+    ClienteVarios = @Helios.Cont.Web.Helpers.JavaScriptConvert.SerializeObject(Model.EntidadVarios);
+    almacenList = @Helios.Cont.Web.Helpers.JavaScriptConvert.SerializeObject(Model.almacens);
+</script>
+@*<script>
+        listCategorias = @Helios.Retail.Helpers.JavaScriptConvert.SerializeObject(Model.Categories.Where(o => o.tipo == "C").ToList());
+    </script>*@
+<!-- Content Wrapper. Contains page content
+
+ <style>
+    .label {
+        color: white;
+        padding: 8px;
+        font-family: Arial;
+    }
+
+    .success {
+        background-color: #4CAF50;
+    }
+    /* Green */
+    .info {
+        background-color: #2196F3;
+    }
+    /* Blue */
+    .warning {
+        background-color: #ff9800;
+    }
+    /* Orange */
+    .danger {
+        background-color: #f44336;
+    }
+    /* Red */
+    .other {
+        background-color: #FC71E9;
+        color: white;
+    }
+    /* Gray */
+</style>-->
+
+<style type="text/css">
+
+    input[type=text] {
+        text-transform: uppercase;
+    }
+
+    td {
+        color: #3D3D3D;
+        font-size: 12px;
+    }
+    /*font-family: 'Calibri'; }
+    font-family: 'Segoe UI';*/
+    .roundedcorner {
+        background: #fff;
+        font-size: 10pt;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1px;
+        margin-bottom: 1px;
+        padding: 3px;
+        border-top: 1px solid #CCCCCC;
+        border-left: 1px solid #CCCCCC;
+        border-right: 1px solid #999999;
+        border-bottom: 1px solid #999999;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+    }
+
+    .ui-button.ui-corner-all.ui-widget.ui-button-icon-only.ui-dialog-titlebar-close {
+        display: none;
+    }
+</style>
+
+<div class="content-wrapper">
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Transferencias entre almacénes
+            <small>Tienda</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Logistica</a></li>
+            <li class="active">Nueva operación</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+
+
+        <div class="row">
+
+            <!--<div class="col-md-3">
+                <div style="display:none" id="dialog-confirm" title="Ingrese codigo vendedor">
+                    <p>
+                        <input id="jps" type="text" class="form-control" name="jps" value="0" />
+                    </p>
+                </div>
+                <a href="#" id="btSaveOrderSale" class="btn bg-green-active btn-block margin-bottom btn-lg"><i class="fa fa-save pull-right-container fa-align-center"></i> Guardar Pedido</a>
+
+
+
+            </div>-->
+            <!-- /.col -->
+            <div class="col-md-4">
+                <div style="display:none" id="dialog-confirm" title="Ingrese codigo vendedor">
+                    <p>
+                        <input id="jps" type="text" class="form-control" name="jps" value="0" />
+                    </p>
+                </div>
+                <a href="#" id="btSaveTransfer" class="btn bg-green-active btn-block margin-bottom btn-lg"><i class="fa fa-save pull-right-container fa-align-center"></i> Guardar</a>
+
+                <div style="text-align:center;display:none" id="loaderDiv">
+                    <img src="~/Content/images/load.gif" />
+                </div>
+
+                <div class="input-group">
+                    <input id="TextFilterTransfer" type="text" name="message" placeholder="Buscar producto ..." class="form-control">
+                    <span class="input-group-btn">
+                        <button id="btnFilterProductTransfer" type="submit" class="btn bg-maroon-gradient btn-sm btn-flat" style="margin: 0px;">Buscar</button>
+                    </span>
+                </div>
+
+                <br />
+
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <i class="fa fa-television"></i>
+                        <h3 class="box-title" style="color:#37A0E0 ">Lista de Productos</h3>
+                        @*<div class="box-tools pull-right">
+                                <div class="has-feedback">
+                                    <input type="text" class="form-control input-sm" placeholder="Search Mail">
+                                    <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                                </div>
+                            </div>*@
+                        <!-- /.box-tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body no-padding">
+                        @*<div class="mailbox-controls">
+                                <!-- Check all button -->
+                                <button type="button" class="btn btn-default btn-sm checkbox-toggle">
+                                    <i class="fa fa-square-o"></i>
+                                </button>
+                                <div class="btn-group">
+                                    <button id="trash" type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
+                                    <button type="button" class="btn btn-default btn-sm"><i class="fa fa-reply"></i></button>
+                                    <button type="button" class="btn btn-default btn-sm"><i class="fa fa-share"></i></button>
+                                </div>
+                                <!-- /.btn-group -->
+                                <!-- /.pull-right -->
+                            </div>*@
+                        <div class="table-responsive mailbox-messages">
+
+                            <table id="dtProductsTransfer" class="table table-hover table-striped">
+                                <tbody>
+                                    @*<tr>
+                                            <td><input type="checkbox"></td>
+                                            <td class="mailbox-name"><a href="#">Caldo de Gallina</a></td>
+                                            <td class="mailbox-subject"><b>20.00</b></td>
+
+                                        </tr>*@
+                                </tbody>
+                            </table>
+                            <!-- /.table -->
+                        </div>
+                        <!-- /.mail-box-messages -->
+                    </div>
+                    <!-- /.box-body -->
+
+                </div>
+                <!-- /. box -->
+
+
+
+
+            </div>
+            <!-- /.col -->
+
+
+            <div class="col-md-8">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <select id="ComboAlmacen" style="width:120px;" class="form-control">
+                            <option id="0" value="-1"> -Selec almacén- </option>
+                            @*@foreach (var al in Model.almacens.ToList())
+                                {
+                                    <option id=@al.idAlmacen value=@al.idAlmacen>@al.descripcionAlmacen</option>
+                                }*@
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <select id="ComboAlmacenDestino" style="width:120px;" class="form-control">
+                            <option id="0" value="-1"> -Selec almacén- </option>
+                            @*@foreach (var al in Model.almacens.ToList())
+                                {
+                                    <option id=@al.idAlmacen value=@al.idAlmacen>@al.descripcionAlmacen</option>
+                                }*@
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <input id="chCliente" name="chCliente" type="checkbox" checked>
+                            </span>
+                            <input type="text" id="TextRuc" class="form-control" style="width:120px; padding:2px; background-color :#FCFCFC" value="" placeholder="Número doc...">
+                        </div>
+
+                        <input type="text" id="TextComprador" class="form-control" style="width:200px;padding:2px;background-color :#FCFCFC" value="VARIOS" placeholder="Ingrese el nombre del comprador...">
+                        <label>
+                            <input id="toggle-event" type="checkbox" class="form-control" data-toggle="toggle" data-size="small">
+                            Tránsito
+                        </label>
+
+                    </div>
+
+                    @*<button type="submit" class="btn btn-default">Send invitation</button>*@
+                </form>
+
+                <BR />
+                <div class="box box-warning">
+                    <div class="box-header with-border">
+                        <i class="fa fa-shopping-basket"></i>
+                        <h3 class="box-title">Detalle de la transferencia</h3>
+                        <div class="box-tools pull-right">
+                            <div class="has-feedback">
+                                <input type="text" class="form-control input-sm" placeholder="Buscar producto">
+                                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <!-- /.box-tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body no-padding">
+                        <div class="mailbox-controls">
+                            <!-- Check all button -->
+                            <button type="button" class="btn btn-default btn-sm checkbox-toggle">
+                                <i class="fa fa-square-o"></i>
+                            </button>
+                            <div class="btn-group">
+                                <!--  <button id="trash" type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button> -->
+                                @*<button type="button" class="btn btn-default btn-sm"><i class="fa fa-reply"></i></button>
+                                    <button type="button" class="btn btn-default btn-sm"><i class="fa fa-share"></i></button>*@
+
+                            </div>
+                            <span id="spanTotalventa" style="font-size:18px;" class='label label-danger pull-right'>0.00</span>
+
+                            <!-- /.btn-group -->
+                            <!-- /.pull-right -->
+                        </div>
+                        <div class="table-responsive mailbox-messages">
+
+                            <table id="dtBasquetTransfer" class="table table-hover table-striped">
+                                <tbody>
+                                    @*<tr>
+                                            <td> <input class="roundedcorner" style="width:45px;" type="number" aria-label="Amount (to the nearest dollar)"></td>
+                                            <td class="mailbox-subject" style="font-size:smaller">CALDO DE GALLIMA</td>
+                                            <td> <input class="roundedcorner"  style="width:65px;" type="number" value="20.00" ></td>
+                                            <td><input class="roundedcorner" type="text" id="Colinfo" value="Info extra"></td>
+                                            <td><input type="checkbox"></td>
+                                        </tr>*@
+                                </tbody>
+                            </table>
+                            <!-- /.table -->
+                        </div>
+                        <!-- /.mail-box-messages -->
+                    </div>
+                    <!-- /.box-body -->
+
+                </div>
+                <div class="form-group">
+                    <label for="comment">Comentarios y/o notas</label>
+                    <textarea class="form-control" rows="4" id="comment"></textarea>
+                </div>
+            </div>
+
+            <!-- /.col -->
+
+        </div>
+
+
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+@section Scripts
+{
+
+    <link href="~/Content/bootstrape-select/bootstrap-select.min.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrape-select/bootstrap-select.min.js"></script>
+    <script src="~/Scripts/Logistic/jLogisticTransfer.js"></script>
+
+    <link href="~/Content/bootstrap-toggle/bootstrap-toggle.min.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap-toggle/bootstrap-toggle.min.js"></script>
+
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+
+            //      ClienteSelected = ViewBag.ClienteVarios;
+
+            ClienteSelected = ClienteVarios;
+            $("#TextRuc").prop('disabled', true);
+            $("#TextComprador").prop('disabled', true);
+            $("#TextComprador").val("VARIOS");
+
+            FillStorePartida(almacenList, "#ComboAlmacen");
+
+            //    FillStorePartida(almacenList, "#ComboAlmacenDestino");
+            /**/
+        });
+
+    </script>
+
+    @*Scripts*@
+
+    @*  @Scripts.Render("~/bundles/bootstrap-select")*@
+
+    @*Styles*@
+    @*   @Styles.Render("~/Content/Bootstrap-Select/css")*@
+}

@@ -1,0 +1,334 @@
+﻿@model Helios.Cont.Web.Models.ItemViewModel
+@{
+    ViewBag.Title = "Nuevo Pedido";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/session/keepAlive.js"></script>
+<!-- listProductsGeneral = Helios.Cont.Web.Helpers.JavaScriptConvert.SerializeObject(Model.GetDetalleitems.ToList());-->
+<script>  
+    transferTransitCount = @Model.TransferTransitCount;
+</script>
+@*<script>
+        listCategorias = @Helios.Retail.Helpers.JavaScriptConvert.SerializeObject(Model.Categories.Where(o => o.tipo == "C").ToList());
+    </script>*@
+<!-- Content Wrapper. Contains page content
+
+ <style>
+    .label {
+        color: white;
+        padding: 8px;
+        font-family: Arial;
+    }
+
+    .success {
+        background-color: #4CAF50;
+    }
+    /* Green */
+    .info {
+        background-color: #2196F3;
+    }
+    /* Blue */
+    .warning {
+        background-color: #ff9800;
+    }
+    /* Orange */
+    .danger {
+        background-color: #f44336;
+    }
+    /* Red */
+    .other {
+        background-color: #FC71E9;
+        color: white;
+    }
+    /* Gray */
+</style>-->
+
+<style type="text/css">
+
+    input[type=text] {
+        text-transform: uppercase;
+    }
+
+    td {
+        color: #3D3D3D;
+        font-size: 12px;
+    }
+    /*font-family: 'Calibri'; }
+    font-family: 'Segoe UI';*/
+    .roundedcorner {
+        background: #fff;
+        font-size: 10pt;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1px;
+        margin-bottom: 1px;
+        padding: 3px;
+        border-top: 1px solid #CCCCCC;
+        border-left: 1px solid #CCCCCC;
+        border-right: 1px solid #999999;
+        border-bottom: 1px solid #999999;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+    }
+
+    .ui-button.ui-corner-all.ui-widget.ui-button-icon-only.ui-dialog-titlebar-close {
+        display: none;
+    }
+</style>
+
+<div class="content-wrapper">
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Pedidos
+            <small>Tienda</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Orden</a></li>
+            <li class="active">Nuevo Pedido</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <!--<div class="col-md-3">
+                <div style="display:none" id="dialog-confirm" title="Ingrese codigo vendedor">
+                    <p>
+                        <input id="jps" type="text" class="form-control" name="jps" value="0" />
+                    </p>
+                </div>
+                <a href="#" id="btSaveOrderSale" class="btn bg-green-active btn-block margin-bottom btn-lg"><i class="fa fa-save pull-right-container fa-align-center"></i> Guardar Pedido</a>
+
+
+
+            </div>-->
+            <!-- /.col -->
+            <div class="col-md-4">
+                <div style="display:none" id="dialog-confirm" title="Ingrese codigo vendedor">
+                    <p>
+                        <input id="jps" type="text" class="form-control" name="jps" value="0" />
+                    </p>
+                </div>
+                <a href="#" id="btSaveOrderSale" class="btn bg-green-active btn-block margin-bottom btn-lg"><i class="fa fa-save pull-right-container fa-align-center"></i> Guardar Pedido</a>
+
+                <div style="text-align:center;display:none" id="loaderDiv">
+                    <img src="~/Content/images/load.gif" />
+                </div>
+
+                <div class="input-group">
+                    <input id="TextFilter" type="text" name="message" placeholder="Buscar producto ..." class="form-control">
+                    <span class="input-group-btn">
+                        <button id="btnFilterProduct" type="submit" class="btn bg-maroon-gradient btn-sm btn-flat" style="margin: 0px;">Buscar</button>
+                    </span>
+                </div>
+
+                <br />
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <i class="fa fa-television"></i>
+                        <h3 class="box-title" style="color:#37A0E0 ">Lista de Productos</h3>
+                        @*<div class="box-tools pull-right">
+                                <div class="has-feedback">
+                                    <input type="text" class="form-control input-sm" placeholder="Search Mail">
+                                    <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                                </div>
+                            </div>*@
+                        <!-- /.box-tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body no-padding">
+                        @*<div class="mailbox-controls">
+                                <!-- Check all button -->
+                                <button type="button" class="btn btn-default btn-sm checkbox-toggle">
+                                    <i class="fa fa-square-o"></i>
+                                </button>
+                                <div class="btn-group">
+                                    <button id="trash" type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
+                                    <button type="button" class="btn btn-default btn-sm"><i class="fa fa-reply"></i></button>
+                                    <button type="button" class="btn btn-default btn-sm"><i class="fa fa-share"></i></button>
+                                </div>
+                                <!-- /.btn-group -->
+                                <!-- /.pull-right -->
+                            </div>*@
+                        <div class="table-responsive mailbox-messages">
+
+                            <table id="dtProducts" class="table table-hover table-striped">
+                                <tbody>
+                                    @*<tr>
+                                            <td><input type="checkbox"></td>
+                                            <td class="mailbox-name"><a href="#">Caldo de Gallina</a></td>
+                                            <td class="mailbox-subject"><b>20.00</b></td>
+
+                                        </tr>*@
+                                </tbody>
+                            </table>
+                            <!-- /.table -->
+                        </div>
+                        <!-- /.mail-box-messages -->
+                    </div>
+                    <!-- /.box-body -->
+
+                </div>
+                <!-- /. box -->
+            </div>
+            <!-- /.col -->
+
+            <div class="col-md-8">
+                <img class="img-responsive img-circle img-sm" src="/Content/adminlte/img/user4-128x128.jpg" alt="Alt Text">
+                <div class="img-push">
+
+                    <input type="text" id="TextComprador" class="form-control input-sm roundedcorner" value="VARIOS" placeholder="Ingrese el nombre del comprador...">
+                </div>
+                <BR />
+                <div class="box box-warning">
+                    <div class="box-header with-border">
+                        <i class="fa fa-shopping-basket"></i>
+                        <h3 class="box-title">Detalle del Pedido</h3>
+                        <div class="box-tools pull-right">
+                            <div class="has-feedback">
+                                <input type="text" class="form-control input-sm" placeholder="Buscar producto">
+                                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <!-- /.box-tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body no-padding">
+                        <div class="mailbox-controls">
+                            <!-- Check all button -->
+                            <button type="button" class="btn btn-default btn-sm checkbox-toggle">
+                                <i class="fa fa-square-o"></i>
+                            </button>
+                            <div class="btn-group">
+                                <!--  <button id="trash" type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button> -->
+                                @*<button type="button" class="btn btn-default btn-sm"><i class="fa fa-reply"></i></button>
+                                    <button type="button" class="btn btn-default btn-sm"><i class="fa fa-share"></i></button>*@
+
+                            </div>
+                            <span id="spanTotalventa" style="font-size:18px;" class='label label-danger pull-right'>0.00</span>
+
+                            <!-- /.btn-group -->
+                            <!-- /.pull-right -->
+                        </div>
+                        <div class="table-responsive mailbox-messages">
+
+                            <table id="dtBasquetSale" class="table table-hover table-striped">
+                                <tbody>
+                                    @*<tr>
+                                            <td> <input class="roundedcorner" style="width:45px;" type="number" aria-label="Amount (to the nearest dollar)"></td>
+                                            <td class="mailbox-subject" style="font-size:smaller">CALDO DE GALLIMA</td>
+                                            <td> <input class="roundedcorner"  style="width:65px;" type="number" value="20.00" ></td>
+                                            <td><input class="roundedcorner" type="text" id="Colinfo" value="Info extra"></td>
+                                            <td><input type="checkbox"></td>
+                                        </tr>*@
+                                </tbody>
+                            </table>
+                            <!-- /.table -->
+                        </div>
+                        <!-- /.mail-box-messages -->
+                    </div>
+                    <!-- /.box-body -->
+
+                </div>
+            </div>
+
+
+
+            <!-- /.col -->
+            @*<div class="col-md-8">
+                    <!-- Custom Tabs (Pulled to the right) -->
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs pull-right">
+                            <li class="active"><a href="#tab_1-1" data-toggle="tab">Tab 1</a></li>
+                            <li><a href="#tab_2-2" data-toggle="tab">Tab 2</a></li>
+                            <li><a href="#tab_3-2" data-toggle="tab">Tab 3</a></li>
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    Dropdown <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+                                    <li role="presentation" class="divider"></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+                                </ul>
+                            </li>
+                            <li class="pull-left header"><i class="fa fa-th"></i> Custom Tabs</li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab_1-1">
+                                <b>How to use:</b>
+                                <p>
+                                    Exactly like the original bootstrap tabs except you should use
+                                    the custom wrapper <code>.nav-tabs-custom</code> to achieve this style.
+                                </p>
+                                A wonderful serenity has taken possession of my entire soul,
+                                like these sweet mornings of spring which I enjoy with my whole heart.
+                                I am alone, and feel the charm of existence in this spot,
+                                which was created for the bliss of souls like mine. I am so happy,
+                                my dear friend, so absorbed in the exquisite sense of mere tranquil existence,
+                                that I neglect my talents. I should be incapable of drawing a single stroke
+                                at the present moment; and yet I feel that I never was a greater artist than now.
+                            </div>
+                            <!-- /.tab-pane -->
+                            <div class="tab-pane" id="tab_2-2">
+                                The European languages are members of the same family. Their separate existence is a myth.
+                                For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ
+                                in their grammar, their pronunciation and their most common words. Everyone realizes why a
+                                new common language would be desirable: one could refuse to pay expensive translators. To
+                                achieve this, it would be necessary to have uniform grammar, pronunciation and more common
+                                words. If several languages coalesce, the grammar of the resulting language is more simple
+                                and regular than that of the individual languages.
+                            </div>
+                            <!-- /.tab-pane -->
+                            <div class="tab-pane" id="tab_3-2">
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                                It has survived not only five centuries, but also the leap into electronic typesetting,
+                                remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
+                                sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
+                                like Aldus PageMaker including versions of Lorem Ipsum.
+                            </div>
+                            <!-- /.tab-pane -->
+                        </div>
+                        <!-- /.tab-content -->
+                    </div>
+                    <!-- nav-tabs-custom -->
+                </div>*@
+            <!-- /.col -->
+
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+@section Scripts
+{
+    @*   <script src="~/Scripts/General/orderJS.js"></script>*@
+    @*Scripts*@
+
+    @*  @Scripts.Render("~/bundles/bootstrap-select")*@
+
+    @*Styles*@
+    @*   @Styles.Render("~/Content/Bootstrap-Select/css")*@
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            /**/
+            //alert(transferTransitCount);
+
+            document.getElementById("transitTransfer").innerHTML = transferTransitCount;
+            /**/
+
+        });
+
+    </script>
+
+}

@@ -1,0 +1,77 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+Helios.General
+</name>
+</assembly>
+<members>
+<member name="T:Helios.General.My.Resources.Resources">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:Helios.General.My.Resources.Resources.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:Helios.General.My.Resources.Resources.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+<member name="F:Helios.General.Constantes.EstadoTransferenciaAlmacen.Pedido">
+ <summary>
+ Pedido de transferencia generada
+ </summary>
+</member>
+<member name="F:Helios.General.Constantes.EstadoTransferenciaAlmacen.GuiaGenerada">
+ <summary>
+ Guia de remision generada para entregar a almacen de destino
+ </summary>
+</member>
+<member name="F:Helios.General.Constantes.EstadoTransferenciaAlmacen.EntregaConExito">
+ <summary>
+ Guia de remision entregada con exito al destino sin problemas
+ </summary>
+</member>
+<member name="F:Helios.General.Constantes.EstadoTransferenciaAlmacen.EntregaConObservaciones">
+ <summary>
+ Productos entregados con exitos pero con observaciones
+ </summary>
+</member>
+<member name="F:Helios.General.Constantes.EstadoTransferenciaAlmacen.Rechazado">
+ <summary>
+ Rechazados por diversos motivos
+ </summary>
+</member>
+<member name="M:Helios.General.Constantes.IsInRange(System.DateTime,System.DateTime,System.DateTime)">
+ <summary>
+ True: Estan dentro del rango ::: False: Fuera del rango
+ </summary>
+ <param name="vFechaIni"></param>
+ <param name="vFechaFin"></param>
+ <param name="vFechaSeleccionada"></param>
+ <returns></returns>
+</member>
+<member name="M:Helios.General.Constantes.FormatoGridPequeño(Syncfusion.Windows.Forms.Grid.Grouping.GridGroupingControl,System.Boolean)">
+ <summary>
+ 
+ </summary>
+ <param name="GGC"></param>
+ <param name="FilaSel">Full Row Select</param>
+ <remarks></remarks>
+</member>
+<member name="M:Helios.General.ListExtension.ToDataTable``1(System.Collections.Generic.List{``0})">
+ <summary>
+ Gets a Datatable with all Browsable properties of T as columns containing all Items in the List.
+ </summary>
+ <typeparam name="T"></typeparam>
+ <param name="List">System.Collections.Generic.List(Of T)</param>
+ <returns>System.Data.DataTable</returns>
+ <remarks>http://aprendiendonet.blogspot.com</remarks>
+</member>
+</members>
+</doc>
